@@ -6,11 +6,13 @@ import tornado.httpserver
 import tornado.escape
 import tornado.websocket
 import json
+import pymongo
 from concurrent.futures import ThreadPoolExecutor
 from tornado import options
 
 executor = ThreadPoolExecutor(8)  # declare 8 threads
 json_data = []
+
 
 class WebSocket(tornado.websocket.WebSocketHandler):
     global json_data
@@ -37,13 +39,11 @@ class WebSocket(tornado.websocket.WebSocketHandler):
 class MainHandler(tornado.web.RequestHandler):
     @tornado.gen.coroutine
     def get(self):
-
         self.write("visit /api/users for api")
 
     def post(self):
         date = str(self.get_body_arguments("date", True))[2:-2]
         result = "Nothing started"
-
 
 
 class UserHandler(tornado.web.RequestHandler):
@@ -52,6 +52,7 @@ class UserHandler(tornado.web.RequestHandler):
         self.write(json.dumps(json_data))
     def post(self):
         pass
+
 
 class Application(tornado.web.Application):
     def __init__(self):
@@ -68,6 +69,10 @@ class Application(tornado.web.Application):
         }
 
         tornado.web.Application.__init__(self, handlers, **settings)
+
+
+def add_user(self):
+    client = pymongo.MongoClient()
 
 
 if __name__ == "__main__":
