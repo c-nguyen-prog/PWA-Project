@@ -10,7 +10,7 @@ Frontend:
 
 Backend:
 
-    python 3.6
+    python 3.6+
     tornado 5.1
-    pymongo 3.7.2
+    motor 2.0.0 
 
