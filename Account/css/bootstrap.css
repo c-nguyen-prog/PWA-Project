@@ -3442,7 +3442,8 @@ fieldset[disabled] .btn-link:focus {
   padding: 10px 16px;
   font-size: 18px;
   line-height: 1.3333333;
-  border-radius: 6px;
+  border-radius: 60px;
+  margin-inline-start: 70px;
 }
 .btn-sm,
 .btn-group-sm > .btn {
@@ -3458,10 +3459,10 @@ fieldset[disabled] .btn-link:focus {
   line-height: 1.5;
   border-radius: 3px;
 }
-.btn-block {
-  display: block;
-  width: 100%;
-}
+    .btn-block {
+      display: block;
+      width: 40%;
+    }
 .btn-block + .btn-block {
   margin-top: 5px;
 }

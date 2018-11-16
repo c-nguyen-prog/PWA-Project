@@ -16,37 +16,34 @@
 <div class="container">
     <h2 id="Digibank" class="form-signin-heading text-center">Digibank</h2>
     <form class="form-signin" action="index.html" method="post">
-        <label for="inputEmail" class="sr-only">Email address</label>
-        <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
-        <label for="inputPassword" class="sr-only">Password</label>
-        <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
-        <div class="checkbox">
+        <label for="inputEmail" class="sr-only ">Email address</label>
+        <input type="email" id="inputEmail" class="form-control labels" placeholder="Email address" required autofocus>
+        <label for="inputPassword" class="sr-only ">Password</label>
+        <input type="password" id="inputPassword" class="form-control labels" placeholder="Password" required>
+        <!--<div class="checkbox">
             <label>
                 <input type="checkbox" value="remember-me"> Remember me
             </label>
-        </div>
+        </div>-->
         <!-- <button id="login-btn" class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button> -->
-        <button id="login-btn" class="btn-custom-spin btn-lg btn-primary btn-block" type="submit">Log in</button>
-        <button id="register-btn" class="btn-custom-spin btn-lg btn-primary btn-block" type="submit">Sign up</button>
+       <div class="row buttons-section">
+           <div class="col-md-8 col-xs-12">
+               <button id="login-btn" class="btn-custom-spin btn-lg btn-primary btn-block no-border" type="submit">Log in</button>
+           </div>
+           <div class="col-md-4 col-xs-12 forgot-pwd">
+               <a href="#">Forgot Password?</a>
+           </div>
+
+            <div class="signup-btn">
+                <button id="register-btn" class="btn-custom-spin btn-lg btn-primary btn-block no-border" type="submit">Sign up</button>
+            </div>
+
+
+       </div>
+
     </form>
 
 </div>
-<footer>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12 col-xs-12">
-                <ul>
-                    <li><a href="/progappjs/Homepage/index.html">Home</a></li>
-                    <li><a href="/progappjs/Homepage/contact.html">Contact</a></li>
-                    <li><a href="/progappjs/Homepage/faq.html">FAQ - Frequently Asked Questions</a></li>
-                </ul>
-            </div>
-            <div class="col-md-6 col-xs-12">
-                <p>&copy; 2018 DigiBank</p>
-            </div>
-        </div>
-    </div>
-</footer>
 
 <!-- Bootstrap core JavaScript
 ================================================== -->
