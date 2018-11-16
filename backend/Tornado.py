@@ -8,6 +8,7 @@ import tornado.httpserver
 import tornado.escape
 import tornado.websocket
 import json
+import pymongo
 import motor.motor_tornado
 from concurrent.futures import ThreadPoolExecutor
 from tornado import options
@@ -50,39 +51,66 @@ class MainHandler(tornado.web.RequestHandler):
 
 class UserHandler(tornado.web.RequestHandler):
     def get(self):
-        json_data = {"Name": "Goethe in Frankfurt",
-                     "Fachgebiet": "Literatur",
-                     "Beschreibung": "Beschreibung der Aktivitaeten von J.W.v.Goethe in Frankfurt am Main",
-                     "Preis": "1,75",
-                     "ID": "1234566789"}
-        self.write(json.dumps(json_data))
-
+        pass
     def post(self):
         pass
 
 
 class LogIn(tornado.web.RequestHandler):
-    async def get(self):
-        username = str(self.get_body_arguments("username", True))[2:-2]
-        hashed_password = str(self.get_body_arguments("password", True))[2:-2]
-        username = "admin"
-        password = "admin"
-        query = {"username": username, "password": password}
-        executor.submit(self.check())
+    def set_default_headers(self):
+        self.set_header("Access-Control-Allow-Origin", "*")
+        self.set_header("Access-Control-Allow-Headers", "x-requested-with")
+        self.set_header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS')
+        self.set_header("Access-Control-Allow-Headers", "access-control-allow-origin,authorization,content-type")
 
-    def post(self):
-        pass
 
-    @tornado.gen.coroutine
-    def check(self):
-        client = motor.motor_tornado.MotorClient('mongodb://localhost:27017')
-        db = client.progappjs
-        document = yield db.users.find_one({"username": "chi", "password": "hashedpass"})
-        if document is not None:
-            print(document)
-            #self.write("Send successful acknowledgement API")
-        else:
-            #self.write("User data not found")
+    async def post(self):
+        data = json.loads(self.request.body)
+        username = data["email"]
+        password = data["password"]
+        #print(username)
+        #print(password)
+        executor.submit(await self.check(username, password))
+
+    def get(self):
+        json_data = {
+            "status": 'success',
+            "user": {
+                "name": "admin"
+            }
+        }
+        self.write(json.dumps(json_data))
+        print(json_data)
+
+    async def check(self, username, password):
+        try:
+            client = motor.motor_tornado.MotorClient('mongodb://localhost:27017')
+            db = client.progappjs
+            document = await db.users.find_one({"username": username, "password": password})
+            if document is not None:
+                print(document)
+
+                json_response = {
+                    "status": 'success',
+                    "user": {
+                        "name": document["username"]
+                    }
+                }
+                self.write(json.dumps(json_response))
+                self.set_header('Content-Type', 'application/json')
+                print(json_response)
+                self.finish()
+            else:
+                json_response = {"status": "failed"}
+                self.write(json.dumps(json_response))
+                self.set_header('Content-Type', 'application/json')
+                print(json_response)
+                self.finish()
+
+
+        except:
+            print("error")
+
 
 
 class SignUp(tornado.web.RequestHandler):

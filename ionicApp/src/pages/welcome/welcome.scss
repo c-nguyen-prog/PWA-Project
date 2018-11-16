@@ -1,9 +1,10 @@
 page-welcome {
   .splash-bg {
     position: relative;
-    background: url('../assets/img/splashbg.png') no-repeat transparent;
+    background: url('../assets/img/splashbg.jpeg') no-repeat transparent;
+    background-position: bottom right;
     background-size: cover;
-    height: 45%;
+    height: 60%;
     z-index: 1;
     background-repeat: repeat-x;
     animation: animatedBackground 40s linear infinite;

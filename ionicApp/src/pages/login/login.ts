@@ -14,10 +14,15 @@ export class LoginPage {
   // The account fields for the login form.
   // If you're using the username field with or without email, make
   // sure to add it to the type
-  account: { email: string, password: string } = {
-    email: 'test@example.com',
-    password: new Hashes.SHA256().hex('test')
 
+  account: {
+    email: string,
+    password: string
+  } =
+    {
+    email: "admin",
+    password: "admin"
+      //new Hashes.SHA256().hex('test')
   };
 
   // Our translated text strings
@@ -35,14 +40,29 @@ export class LoginPage {
 
   // Attempt to login in through our User service
   doLogin() {
-    this.user.login(this.account).subscribe((resp) => {
-      this.navCtrl.push(MainPage);
-    }, (err) => {
-      this.navCtrl.push(MainPage);
+    var result;
+    this.user.login(JSON.stringify(this.account)).subscribe((resp : any) => {
+      console.log(resp);
+      if (resp.status === "success") {
+          this.navCtrl.push(MainPage);
+      } else {
+        this.navCtrl.push(LoginPage);
       // Unable to log in
+      console.log("wrong pass login.ts");
       let toast = this.toastCtrl.create({
         message: this.loginErrorString,
-        duration: 3000,
+        duration: 1000,
+        position: 'top'
+      });
+      toast.present();
+      }
+    }, (err) => {
+      this.navCtrl.push(LoginPage);
+      // Unable to log in
+      console.log("error login.ts");
+      let toast = this.toastCtrl.create({
+        message: this.loginErrorString,
+        duration: 1000,
         position: 'top'
       });
       toast.present();
