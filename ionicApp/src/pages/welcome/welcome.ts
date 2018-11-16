@@ -1,34 +1,26 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController } from 'ionic-angular';
 
-import { LoginPage } from '../login/login';
-import { SignupPage } from '../signup/signup';
 /**
- * Generated class for the Welcome page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
+ * The Welcome Page is a splash page that quickly describes the app,
+ * and then directs the user to create an account or log in.
+ * If you'd like to immediately put the user onto a login/signup page,
+ * we recommend not using the Welcome page.
+*/
 @IonicPage()
 @Component({
   selector: 'page-welcome',
-  templateUrl: 'welcome.html',
+  templateUrl: 'welcome.html'
 })
-export class Welcome {
+export class WelcomePage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController) { }
+
+  login() {
+    this.navCtrl.push('LoginPage');
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad Welcome');
+  signup() {
+    this.navCtrl.push('SignupPage');
   }
-
-  login(){
-    this.navCtrl.push(LoginPage);
-  }
-
-  signup(){
-    this.navCtrl.push(SignupPage, {}, {animate:false});
-  }
-
 }
