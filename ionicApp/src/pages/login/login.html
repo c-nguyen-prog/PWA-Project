@@ -8,6 +8,7 @@
 
 
 <ion-content>
+  <div class="login-form">
   <form (submit)="doLogin()">
     <ion-list>
 
@@ -29,11 +30,11 @@
         <ion-label fixed>{{ 'PASSWORD' | translate }}</ion-label>
         <ion-input type="password" [(ngModel)]="account.password" name="password"></ion-input>
       </ion-item>
-
-      <div padding>
-        <button ion-button color="primary" block>{{ 'LOGIN_BUTTON' | translate }}</button>
-      </div>
+        <div class="login-button" padding>
+          <button ion-button color="primary" block>{{ 'LOGIN_BUTTON' | translate }}</button>
+        </div>
 
     </ion-list>
   </form>
+    </div>
 </ion-content>

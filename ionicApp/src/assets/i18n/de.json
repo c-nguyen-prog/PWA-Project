@@ -25,7 +25,9 @@
 
   "TUTORIAL_CONTINUE_BUTTON": "Fortfahren",
 
-  "WELCOME_INTRO": "Der Startpunkt für Deine nächste tolle Ionic App",
+  "WELCOME_INTRO": "Digibank",
+  "ABOUT_US": "Ein Online-Banking Projekt von FRA UAS",
+
 
   "SETTINGS_TITLE": "Einstellungen",
   "SETTINGS_OPTION1": "Option 1",

@@ -45,13 +45,19 @@ export class LoginPage {
       console.log(resp);
       if (resp.status === "success") {
           this.navCtrl.push(MainPage);
+          console.log("Successfully logged in");
+          let toast = this.toastCtrl.create({
+          message: "Hallo " + resp.user.name,
+          duration: 3000,
+          position: 'top'
+      });
+      toast.present();
       } else {
-        this.navCtrl.push(LoginPage);
       // Unable to log in
-      console.log("wrong pass login.ts");
-      let toast = this.toastCtrl.create({
+        console.log("ERROR: Wrong login info login.ts");
+        let toast = this.toastCtrl.create({
         message: this.loginErrorString,
-        duration: 1000,
+        duration: 3000,
         position: 'top'
       });
       toast.present();
@@ -59,10 +65,10 @@ export class LoginPage {
     }, (err) => {
       this.navCtrl.push(LoginPage);
       // Unable to log in
-      console.log("error login.ts");
+      console.log("ERROR login.ts");
       let toast = this.toastCtrl.create({
         message: this.loginErrorString,
-        duration: 1000,
+        duration: 3000,
         position: 'top'
       });
       toast.present();
