@@ -41,6 +41,7 @@
 
   "LOGIN_TITLE": "Anmelden",
   "LOGIN_ERROR": "Fehler beim Anmelden, bitte überprüfe deine Informationen und versuche es erneut.",
+  "SERVER_ERROR": "Fehler bei der Serverrückmeldung!",
   "LOGIN_BUTTON": "Anmelden",
   "SIGNUP_TITLE": "Registrieren",
   "SIGNUP_ERROR": "Fehler beim Registrieren, bitte überprüfe deine Informationen und versuche es erneut.",

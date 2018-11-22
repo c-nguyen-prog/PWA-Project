@@ -56,31 +56,23 @@ class UserHandler(tornado.web.RequestHandler):
         pass
 
 
-class LogIn(tornado.web.RequestHandler):
+class LogInHandler(tornado.web.RequestHandler):
     def set_default_headers(self):
         self.set_header("Access-Control-Allow-Origin", "*")
         self.set_header("Access-Control-Allow-Headers", "x-requested-with")
         self.set_header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS')
         self.set_header("Access-Control-Allow-Headers", "access-control-allow-origin,authorization,content-type")
 
+    def get(self):
+        pass
 
     async def post(self):
         data = json.loads(self.request.body)
         username = data["email"]
         password = data["password"]
-        #print(username)
-        #print(password)
+        print("Request from client: " + str(data))
         executor.submit(await self.check(username, password))
 
-    def get(self):
-        json_data = {
-            "status": 'success',
-            "user": {
-                "name": "admin"
-            }
-        }
-        self.write(json.dumps(json_data))
-        print(json_data)
 
     async def check(self, username, password):
         try:
@@ -101,7 +93,7 @@ class LogIn(tornado.web.RequestHandler):
                 print(json_response)
                 self.finish()
             else:
-                json_response = {"status": "failed"}
+                json_response = {"status": "fail"}
                 self.write(json.dumps(json_response))
                 self.set_header('Content-Type', 'application/json')
                 print(json_response)
@@ -113,11 +105,57 @@ class LogIn(tornado.web.RequestHandler):
 
 
 
-class SignUp(tornado.web.RequestHandler):
+class SignUpHandler(tornado.web.RequestHandler):
+    def set_default_headers(self):
+        self.set_header("Access-Control-Allow-Origin", "*")
+        self.set_header("Access-Control-Allow-Headers", "x-requested-with")
+        self.set_header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS')
+        self.set_header("Access-Control-Allow-Headers", "access-control-allow-origin,authorization,content-type")
+
     def get(self):
         pass
-    def post(self):
-        pass
+
+    # TODO: Get sign up info from frontend, checks username with database -> if available -> create new
+    # TODO: if not then send response username not available to frontend
+    async def post(self):
+        data = json.loads(self.request.body)
+        username = data["email"]
+        password = data["password"]
+        print("Request from client: " + str(data))
+        executor.submit(await self.check(username, password))
+
+    async def check(self, username, password):
+        try:
+            client = motor.motor_tornado.MotorClient('mongodb://localhost:27017')
+            db = client.progappjs
+            document = await db.users.find_one({"username": username, "password": password})
+            # Found username already existed
+            # TODO: Send back fail response
+            if document is not None:
+                print(document)
+
+                json_response = {
+                    "status": 'fail',
+                    "user": {
+                        "name": document["username"]
+                    }
+                }
+                self.write(json.dumps(json_response))
+                self.set_header('Content-Type', 'application/json')
+                print(json_response)
+                self.finish()
+            # Username is available
+            # TODO: Function to create username in database
+            else:
+                json_response = {"status": "fail"}
+                self.write(json.dumps(json_response))
+                self.set_header('Content-Type', 'application/json')
+                print(json_response)
+                self.finish()
+
+
+        except:
+            print("error")
 
 
 class Application(tornado.web.Application):
@@ -127,8 +165,8 @@ class Application(tornado.web.Application):
             (r"/", MainHandler),
             (r"/websocket", WebSocket),
             (r"/api/users", UserHandler),
-            (r"/login", LogIn),
-            (r"/signup", SignUp),
+            (r"/login", LogInHandler),
+            (r"/signup", SignUpHandler),
             # Add more paths here
         ]
 

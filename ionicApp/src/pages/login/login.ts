@@ -27,6 +27,7 @@ export class LoginPage {
 
   // Our translated text strings
   private loginErrorString: string;
+  private serverErrorString: string;
 
   constructor(public navCtrl: NavController,
     public user: User,
@@ -35,22 +36,24 @@ export class LoginPage {
 
     this.translateService.get('LOGIN_ERROR').subscribe((value) => {
       this.loginErrorString = value;
-    })
+    });
+    this.translateService.get('SERVER_ERROR').subscribe((value) => {
+      this.serverErrorString = value;
+    });
   }
 
   // Attempt to login in through our User service
   doLogin() {
-    var result;
     this.user.login(JSON.stringify(this.account)).subscribe((resp : any) => {
       console.log(resp);
       if (resp.status === "success") {
-          this.navCtrl.push(MainPage);
-          console.log("Successfully logged in");
-          let toast = this.toastCtrl.create({
+        this.navCtrl.push(MainPage);
+        console.log("Successfully logged in");
+        let toast = this.toastCtrl.create({
           message: "Hallo " + resp.user.name,
           duration: 3000,
           position: 'top'
-      });
+        });
       toast.present();
       } else {
       // Unable to log in
@@ -63,11 +66,10 @@ export class LoginPage {
       toast.present();
       }
     }, (err) => {
-      this.navCtrl.push(LoginPage);
       // Unable to log in
       console.log("ERROR login.ts");
       let toast = this.toastCtrl.create({
-        message: this.loginErrorString,
+        message: this.serverErrorString,
         duration: 3000,
         position: 'top'
       });
