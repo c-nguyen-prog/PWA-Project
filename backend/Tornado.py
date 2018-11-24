@@ -56,6 +56,9 @@ class UserHandler(tornado.web.RequestHandler):
         pass
 
 
+"""
+Function to handle login process
+"""
 class LogInHandler(tornado.web.RequestHandler):
     def set_default_headers(self):
         self.set_header("Access-Control-Allow-Origin", "*")
@@ -67,6 +70,12 @@ class LogInHandler(tornado.web.RequestHandler):
         print("get")
 
     async def post(self):
+        """ HTTP POST Request for log in:
+        {
+            "email": email,
+            "password": password
+        }
+        """
         data = json.loads(self.request.body)
         username = data["email"]
         password = data["password"]
@@ -76,12 +85,12 @@ class LogInHandler(tornado.web.RequestHandler):
 
     async def check(self, username, password):
         try:
-            client = motor.motor_tornado.MotorClient('mongodb://localhost:27017')
-            db = client.progappjs
-            document = await db.users.find_one({"username": username, "password": password})
+            client = motor.motor_tornado.MotorClient('mongodb://localhost:27017') # Connect to MongoDB Server
+            db = client.progappjs   # Get database progappjs
+            document = await db.users.find_one({"username": username,   # Find username and password in DB
+                                                "password": password})
             if document is not None:
                 print(document)
-
                 json_response = {
                     "status": 'success',
                     "user": {
@@ -141,7 +150,9 @@ class SignUpHandler(tornado.web.RequestHandler):
             # Username is available
             # TODO: Function to create username in database
             else:
-                new_user = await db.users.insert_one({"username": username, "password": password})
+                new_user = await db.users.insert_one({"username": username,
+                                                      "password": password,
+                                                      "status": "pending"})
                 json_response = {
                     "status": "success"
                 }
