@@ -64,7 +64,7 @@ class LogInHandler(tornado.web.RequestHandler):
         self.set_header("Access-Control-Allow-Headers", "access-control-allow-origin,authorization,content-type")
 
     def get(self):
-        pass
+        print("get")
 
     async def post(self):
         data = json.loads(self.request.body)
@@ -98,11 +98,8 @@ class LogInHandler(tornado.web.RequestHandler):
                 self.set_header('Content-Type', 'application/json')
                 print(json_response)
                 self.finish()
-
-
         except:
             print("error")
-
 
 
 class SignUpHandler(tornado.web.RequestHandler):
@@ -113,12 +110,13 @@ class SignUpHandler(tornado.web.RequestHandler):
         self.set_header("Access-Control-Allow-Headers", "access-control-allow-origin,authorization,content-type")
 
     def get(self):
-        pass
+        print("get")
 
     # TODO: Get sign up info from frontend, checks username with database -> if available -> create new
     # TODO: if not then send response username not available to frontend
     async def post(self):
         data = json.loads(self.request.body)
+        name = data["name"]
         username = data["email"]
         password = data["password"]
         print("Request from client: " + str(data))
@@ -128,17 +126,13 @@ class SignUpHandler(tornado.web.RequestHandler):
         try:
             client = motor.motor_tornado.MotorClient('mongodb://localhost:27017')
             db = client.progappjs
-            document = await db.users.find_one({"username": username, "password": password})
+            document = await db.users.find_one({"username": username})
             # Found username already existed
-            # TODO: Send back fail response
             if document is not None:
                 print(document)
 
                 json_response = {
-                    "status": 'fail',
-                    "user": {
-                        "name": document["username"]
-                    }
+                    "status": "fail"
                 }
                 self.write(json.dumps(json_response))
                 self.set_header('Content-Type', 'application/json')
@@ -147,13 +141,14 @@ class SignUpHandler(tornado.web.RequestHandler):
             # Username is available
             # TODO: Function to create username in database
             else:
-                json_response = {"status": "fail"}
+                new_user = await db.users.insert_one({"username": username, "password": password})
+                json_response = {
+                    "status": "success"
+                }
                 self.write(json.dumps(json_response))
                 self.set_header('Content-Type', 'application/json')
                 print(json_response)
                 self.finish()
-
-
         except:
             print("error")
 

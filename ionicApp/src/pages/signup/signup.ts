@@ -14,7 +14,11 @@ export class SignupPage {
   // The account fields for the login form.
   // If you're using the username field with or without email, make
   // sure to add it to the type
-  account: { name: string, email: string, password: string } = {
+  account: {
+    name: string,
+    email: string,
+    password: string
+  } = {
     name: 'Test Human',
     email: 'test@example.com',
     password: 'test'
@@ -35,8 +39,13 @@ export class SignupPage {
 
   doSignup() {
     // Attempt to login in through our User service
-    this.user.signup(this.account).subscribe((resp) => {
-      this.navCtrl.push(MainPage);
+    this.user.signup(JSON.stringify(this.account)).subscribe((resp : any) => {
+      console.log(resp);
+      if (resp.status === "success") {
+        console.log("Successfully created account")
+      } else {
+        console.log("email already existed")
+      }
     }, (err) => {
 
       this.navCtrl.push(MainPage);
