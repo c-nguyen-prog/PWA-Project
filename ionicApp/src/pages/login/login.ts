@@ -4,6 +4,8 @@ import { IonicPage, NavController, ToastController } from 'ionic-angular';
 import { User } from '../../providers';
 import { MainPage } from '../';
 
+import Hashes from "jshashes";
+
 @IonicPage()
 @Component({
   selector: 'page-login',
@@ -42,6 +44,7 @@ export class LoginPage {
 
   // Attempt to login in through our User service
   doLogin() {
+    this.account.password = new Hashes.SHA512().hex(this.account.password);
     this.user.login(JSON.stringify(this.account)).subscribe((resp : any) => {
       console.log(resp);
       if (resp.status === "success") {

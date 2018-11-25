@@ -60,6 +60,8 @@ class UserHandler(tornado.web.RequestHandler):
 """
 Function to handle login process
 """
+
+
 class LogInHandler(tornado.web.RequestHandler):
     def set_default_headers(self):
         self.set_header("Access-Control-Allow-Origin", "*")
@@ -80,13 +82,12 @@ class LogInHandler(tornado.web.RequestHandler):
     """
     async def post(self):
 
-        data = json.loads(self.request.body)
+        data = json.loads(self.request.body)                                      # Get body of POST request
         username = data["email"]
         password = data["password"]
         print("Request from client: " + str(data))
         executor.submit(await self.check(username, password))
 
-    # TODO: Implement salt and password hashing using bcrypt
     async def check(self, username, password):
         try:
             client = motor.motor_tornado.MotorClient('mongodb://localhost:27017') # Connect to MongoDB Server
@@ -94,11 +95,10 @@ class LogInHandler(tornado.web.RequestHandler):
             document = await db.users.find_one({"username": username})            # Search username DB
             if document is not None:                                              # Found matching user in DB
                 print(document)
-                salt = document["salt"]
-                print(salt)
-                hashed_pass = bcrypt.hashpw(password.encode("utf8"), salt)
-                print(hashed_pass)
-                if hashed_pass == document["password"]:
+                salt = document["salt"]                                           # Get user's salt from DB
+                hashed_pass = bcrypt.hashpw(password.encode("utf8"), salt)        # Hash input password with salt
+
+                if hashed_pass == document["password"]:                           # Input password matches
                     json_response = {
                         "status": 'success',
                         "user": {
@@ -109,7 +109,8 @@ class LogInHandler(tornado.web.RequestHandler):
                     self.set_header('Content-Type', 'application/json')
                     print(json_response)
                     self.finish()
-                else:
+
+                else:                                                             # Input password wrong
                     json_response = {
                         "status": 'fail',
                         "user": {
@@ -121,7 +122,12 @@ class LogInHandler(tornado.web.RequestHandler):
                     print(json_response)
                     self.finish()
             else:                                                                 # User doesn't exist
-                json_response = {"status": "fail"}
+                json_response = {
+                    "status": "fail",
+                    "user": {
+                        "name": "N/A"
+                    }
+                }
                 self.write(json.dumps(json_response))
                 self.set_header('Content-Type', 'application/json')
                 print(json_response)
@@ -129,9 +135,12 @@ class LogInHandler(tornado.web.RequestHandler):
         except:
             print("error")
 
+
 """
 Function to handle sign up process
 """
+
+
 class SignUpHandler(tornado.web.RequestHandler):
     def set_default_headers(self):
         self.set_header("Access-Control-Allow-Origin", "*")
@@ -142,10 +151,17 @@ class SignUpHandler(tornado.web.RequestHandler):
     def get(self):
         print("get")
 
-    # TODO: Get sign up info from frontend, checks username with database -> if available -> create new
-    # TODO: if not then send response username not available to frontend
+    """
+    Function to handle HTTP POST Request for Sign up from client
+    json format: (temp)
+    {
+        "name": name,
+        "email": email,
+        "password": password
+    }
+    """
     async def post(self):
-        data = json.loads(self.request.body)
+        data = json.loads(self.request.body)                                          # Get body of POST request
         name = data["name"]
         username = data["email"]
         password = data["password"]
@@ -153,10 +169,10 @@ class SignUpHandler(tornado.web.RequestHandler):
         executor.submit(await self.check(username, password))
 
     async def check(self, username, password):
-            client = motor.motor_tornado.MotorClient('mongodb://localhost:27017')
-            db = client.progappjs
-            document = await db.users.find_one({"username": username})
-            if document is not None:                                                 # Found username already existed
+            client = motor.motor_tornado.MotorClient('mongodb://localhost:27017')     # Connect to MongoDB server
+            db = client.progappjs                                                     # Get database progappjs
+            document = await db.users.find_one({"username": username})                # Checks DB for username
+            if document is not None:                                                  # Username already existed
                 print(document)
                 json_response = {
                     "status": "fail"
@@ -167,11 +183,9 @@ class SignUpHandler(tornado.web.RequestHandler):
                 self.finish()
 
             # TODO: Function to create username in database w/ hashed pass
-            else:                                                                       # Username is available
-                salt = bcrypt.gensalt()
-                hashed_pass = bcrypt.hashpw(password.encode("utf8"), salt)
-                print(salt)
-                print(hashed_pass)
+            else:                                                                     # Username is available
+                salt = bcrypt.gensalt()                                               # Generate a random salt
+                hashed_pass = bcrypt.hashpw(password.encode("utf8"), salt)            # Hash the password with salt
                 new_user = await db.users.insert_one({"username": username,
                                                       "password": hashed_pass,
                                                       "salt": salt,
