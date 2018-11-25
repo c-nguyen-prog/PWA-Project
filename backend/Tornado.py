@@ -8,7 +8,8 @@ import tornado.httpserver
 import tornado.escape
 import tornado.websocket
 import json
-import pymongo
+import os
+import bcrypt
 import motor.motor_tornado
 from concurrent.futures import ThreadPoolExecutor
 from tornado import options
@@ -69,39 +70,57 @@ class LogInHandler(tornado.web.RequestHandler):
     def get(self):
         print("get")
 
+    """ 
+    Function to handle HTTP POST Request for Log in from Client side
+    json format:
+    {
+        "email": email,
+        "password": password
+    }
+    """
     async def post(self):
-        """ HTTP POST Request for log in:
-        {
-            "email": email,
-            "password": password
-        }
-        """
+
         data = json.loads(self.request.body)
         username = data["email"]
         password = data["password"]
         print("Request from client: " + str(data))
         executor.submit(await self.check(username, password))
 
-
+    # TODO: Implement salt and password hashing using bcrypt
     async def check(self, username, password):
         try:
             client = motor.motor_tornado.MotorClient('mongodb://localhost:27017') # Connect to MongoDB Server
-            db = client.progappjs   # Get database progappjs
-            document = await db.users.find_one({"username": username,   # Find username and password in DB
-                                                "password": password})
-            if document is not None:
+            db = client.progappjs                                                 # Get database progappjs
+            document = await db.users.find_one({"username": username})            # Search username DB
+            if document is not None:                                              # Found matching user in DB
                 print(document)
-                json_response = {
-                    "status": 'success',
-                    "user": {
-                        "name": document["username"]
+                salt = document["salt"]
+                print(salt)
+                hashed_pass = bcrypt.hashpw(password.encode("utf8"), salt)
+                print(hashed_pass)
+                if hashed_pass == document["password"]:
+                    json_response = {
+                        "status": 'success',
+                        "user": {
+                            "name": document["username"]
+                        }
                     }
-                }
-                self.write(json.dumps(json_response))
-                self.set_header('Content-Type', 'application/json')
-                print(json_response)
-                self.finish()
-            else:
+                    self.write(json.dumps(json_response))
+                    self.set_header('Content-Type', 'application/json')
+                    print(json_response)
+                    self.finish()
+                else:
+                    json_response = {
+                        "status": 'fail',
+                        "user": {
+                            "name": document["username"]
+                        }
+                    }
+                    self.write(json.dumps(json_response))
+                    self.set_header('Content-Type', 'application/json')
+                    print(json_response)
+                    self.finish()
+            else:                                                                 # User doesn't exist
                 json_response = {"status": "fail"}
                 self.write(json.dumps(json_response))
                 self.set_header('Content-Type', 'application/json')
@@ -110,7 +129,9 @@ class LogInHandler(tornado.web.RequestHandler):
         except:
             print("error")
 
-
+"""
+Function to handle sign up process
+"""
 class SignUpHandler(tornado.web.RequestHandler):
     def set_default_headers(self):
         self.set_header("Access-Control-Allow-Origin", "*")
@@ -132,14 +153,11 @@ class SignUpHandler(tornado.web.RequestHandler):
         executor.submit(await self.check(username, password))
 
     async def check(self, username, password):
-        try:
             client = motor.motor_tornado.MotorClient('mongodb://localhost:27017')
             db = client.progappjs
             document = await db.users.find_one({"username": username})
-            # Found username already existed
-            if document is not None:
+            if document is not None:                                                 # Found username already existed
                 print(document)
-
                 json_response = {
                     "status": "fail"
                 }
@@ -147,11 +165,16 @@ class SignUpHandler(tornado.web.RequestHandler):
                 self.set_header('Content-Type', 'application/json')
                 print(json_response)
                 self.finish()
-            # Username is available
-            # TODO: Function to create username in database
-            else:
+
+            # TODO: Function to create username in database w/ hashed pass
+            else:                                                                       # Username is available
+                salt = bcrypt.gensalt()
+                hashed_pass = bcrypt.hashpw(password.encode("utf8"), salt)
+                print(salt)
+                print(hashed_pass)
                 new_user = await db.users.insert_one({"username": username,
-                                                      "password": password,
+                                                      "password": hashed_pass,
+                                                      "salt": salt,
                                                       "status": "pending"})
                 json_response = {
                     "status": "success"
@@ -160,8 +183,7 @@ class SignUpHandler(tornado.web.RequestHandler):
                 self.set_header('Content-Type', 'application/json')
                 print(json_response)
                 self.finish()
-        except:
-            print("error")
+
 
 
 class Application(tornado.web.Application):
