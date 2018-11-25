@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { IonicPage, NavController, ToastController } from 'ionic-angular';
-import  Hashes  from 'jshashes';
 import { User } from '../../providers';
 import { MainPage } from '../';
 
@@ -22,7 +21,6 @@ export class LoginPage {
     {
     email: "admin",
     password: "admin"
-      //new Hashes.SHA256().hex('test')
   };
 
   // Our translated text strings

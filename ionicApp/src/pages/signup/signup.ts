@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { IonicPage, NavController, ToastController } from 'ionic-angular';
-
 import { User } from '../../providers';
 import { MainPage } from '../';
+
+import CryptoJS from "crypto-js";
 
 @IonicPage()
 @Component({
@@ -39,6 +40,7 @@ export class SignupPage {
 
   doSignup() {
     // Attempt to login in through our User service
+    this.account.password = CryptoJS.SHA256(this.account.password);
     this.user.signup(JSON.stringify(this.account)).subscribe((resp : any) => {
       console.log(resp);
       if (resp.status === "success") {
