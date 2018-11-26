@@ -53,6 +53,7 @@ class MainHandler(tornado.web.RequestHandler):
 class UserHandler(tornado.web.RequestHandler):
     def get(self):
         pass
+
     def post(self):
         pass
 
@@ -60,8 +61,6 @@ class UserHandler(tornado.web.RequestHandler):
 """
 Function to handle login process
 """
-
-
 class LogInHandler(tornado.web.RequestHandler):
     def set_default_headers(self):
         self.set_header("Access-Control-Allow-Origin", "*")
@@ -139,8 +138,6 @@ class LogInHandler(tornado.web.RequestHandler):
 """
 Function to handle sign up process
 """
-
-
 class SignUpHandler(tornado.web.RequestHandler):
     def set_default_headers(self):
         self.set_header("Access-Control-Allow-Origin", "*")
@@ -182,7 +179,6 @@ class SignUpHandler(tornado.web.RequestHandler):
                 print(json_response)
                 self.finish()
 
-            # TODO: Function to create username in database w/ hashed pass
             else:                                                                     # Username is available
                 salt = bcrypt.gensalt()                                               # Generate a random salt
                 hashed_pass = bcrypt.hashpw(password.encode("utf8"), salt)            # Hash the password with salt
@@ -197,7 +193,6 @@ class SignUpHandler(tornado.web.RequestHandler):
                 self.set_header('Content-Type', 'application/json')
                 print(json_response)
                 self.finish()
-
 
 
 class Application(tornado.web.Application):
