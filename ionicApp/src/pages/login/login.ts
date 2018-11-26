@@ -44,8 +44,9 @@ export class LoginPage {
 
   // Attempt to login in through our User service
   doLogin() {
-    this.account.password = new Hashes.SHA512().hex(this.account.password);
-    this.user.login(JSON.stringify(this.account)).subscribe((resp : any) => {
+    let tempAccount = JSON.parse(JSON.stringify(this.account));
+    tempAccount.password = new Hashes.SHA512().hex(tempAccount.password);
+    this.user.login(JSON.stringify(tempAccount)).subscribe((resp : any) => {
       console.log(resp);
       if (resp.status === "success") {
         this.navCtrl.push(MainPage);

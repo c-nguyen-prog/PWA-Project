@@ -1,5 +1,3 @@
-import pprint
-
 import tornado.ioloop
 import tornado
 import tornado.web
@@ -43,7 +41,7 @@ class WebSocket(tornado.websocket.WebSocketHandler):
 class MainHandler(tornado.web.RequestHandler):
     @tornado.gen.coroutine
     def get(self):
-        self.write("visit /api/users for api")
+        self.write("visit /api for api")
 
     def post(self):
         date = str(self.get_body_arguments("date", True))[2:-2]
@@ -182,10 +180,33 @@ class SignUpHandler(tornado.web.RequestHandler):
             else:                                                                     # Username is available
                 salt = bcrypt.gensalt()                                               # Generate a random salt
                 hashed_pass = bcrypt.hashpw(password.encode("utf8"), salt)            # Hash the password with salt
-                new_user = await db.users.insert_one({"username": username,
+                new_user = await db.users.insert_one({"_id": username,
+                                                      "username": username,
                                                       "password": hashed_pass,
                                                       "salt": salt,
-                                                      "status": "pending"})
+                                                      "name": {
+                                                          "title": "title",
+                                                          "last_name": "lastname",
+                                                          "first_name": "firstname"
+                                                      },
+                                                      "birthday": "birthday",
+                                                      "phone": "phone",
+                                                      "address": {
+                                                          "co": "co",
+                                                          "street": "street",
+                                                          "number": "number",
+                                                          "zip": "zip",
+                                                          "city": "city"
+                                                      },
+                                                      "tax_id": "taxid",
+                                                      "nationality": "nationality",
+                                                      "bank": {
+                                                          "iban": "iban",
+                                                          "balance": "balance"
+                                                      },
+                                                      "type": "user",
+                                                      "status": "pending"
+                                                      })
                 json_response = {
                     "status": "success"
                 }
@@ -195,15 +216,29 @@ class SignUpHandler(tornado.web.RequestHandler):
                 self.finish()
 
 
+class TransactionHandler(tornado.web.RequestHandler):
+    def set_default_headers(self):
+        self.set_header("Access-Control-Allow-Origin", "*")
+        self.set_header("Access-Control-Allow-Headers", "x-requested-with")
+        self.set_header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS')
+        self.set_header("Access-Control-Allow-Headers", "access-control-allow-origin,authorization,content-type")
+
+    def get(self):
+        pass
+
+    def post(self):
+        pass
+
 class Application(tornado.web.Application):
     def __init__(self):
 
         handlers = [
             (r"/", MainHandler),
             (r"/websocket", WebSocket),
-            (r"/api/users", UserHandler),
+            (r"/api", UserHandler),
             (r"/login", LogInHandler),
             (r"/signup", SignUpHandler),
+            (r"/transaction", TransactionHandler),
             # Add more paths here
         ]
 
