@@ -3,16 +3,19 @@
 
   "NAME": "Name",
   "PASSWORD": "Passwort",
-  "EMAIL": "Email",
+  "EMAIL": "E-Mail",
+  "USERNAME": "Benutzername",
   "LOGIN": "Anmelden",
   "SIGNUP": "Registrieren",
-  "CANCEL_BUTTON": "Schließen",
 
   "TAB1_TITLE": "Items",
   "TAB2_TITLE": "Suche",
   "TAB3_TITLE": "Einstellung",
 
   "MAP_TITLE": "Karte",
+
+  "TUTORIAL_SKIP_BUTTON": "Überspringen",
+  "TUTORIAL_CONTINUE_BUTTON": "Fortfahren",
 
   "TUTORIAL_SLIDE1_TITLE": "Hallo Ionic Super Starter App",
   "TUTORIAL_SLIDE1_DESCRIPTION": "Die <b>Ionic Super Starter App</b> ist eine umfangreiche Starter App mit vielen vorgefertigten Seiten und Best Practices.",
@@ -23,7 +26,6 @@
   "TUTORIAL_SLIDE3_TITLE": "Los gehts",
   "TUTORIAL_SLIDE3_DESCRIPTION": "Du brauchst Hilfe? Sieh dir das README File an um mehr zu erfahren.",
 
-  "TUTORIAL_CONTINUE_BUTTON": "Fortfahren",
 
   "WELCOME_INTRO": "Digibank",
   "ABOUT_US": "Ein Online-Banking Projekt von FRA UAS",
@@ -35,7 +37,9 @@
   "SETTINGS_OPTION3": "Option 3",
   "SETTINGS_OPTION4": "Option 4",
 
-  "SETTINGS_PAGE_PROFILE": "Profil ändern",
+  "SETTINGS_PROFILE_BUTTON": "Daten ändern",
+
+  "SETTINGS_PAGE_PROFILE": "Daten ändern",
 
   "WELCOME_TITLE": "Willkommen",
 
@@ -52,7 +56,14 @@
   "ITEM_CREATE_TITLE": "Neuer Artikel",
   "ITEM_CREATE_CHOOSE_IMAGE": "Artikel hinzufügen",
 
-  "CARDS_TITLE": "Social",
+  "ITEM_NAME_PLACEHOLDER": "Name",
+  "ITEM_ABOUT_PLACEHOLDER": "Mehr",
+
+  "DONE_BUTTON": "Fertig",
+  "CANCEL_BUTTON": "Schließen",
+  "DELETE_BUTTON": "Löschen",
+
+  "CARDS_TITLE": "Sozial",
 
   "SEARCH_TITLE": "Suche",
   "SEARCH_PLACEHOLDER": "Suche in der Artikel-Liste, z.B. \"Donald Duck\""

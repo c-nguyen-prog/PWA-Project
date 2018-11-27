@@ -2,9 +2,9 @@
   "BACK_BUTTON_TEXT": "Back",
 
   "NAME": "Name",
+  "PASSWORD": "Password",
   "EMAIL": "Email",
   "USERNAME": "Username",
-  "PASSWORD": "Password",
   "LOGIN": "Sign in",
   "SIGNUP": "Sign up",
 
@@ -26,10 +26,10 @@
   "TUTORIAL_SLIDE3_TITLE": "Getting Started",
   "TUTORIAL_SLIDE3_DESCRIPTION": "Need help? Check out the Super Starter README for a full tutorial",
 
-  "TUTORIAL_SLIDE4_TITLE": "Ready to Play?",
 
   "WELCOME_INTRO": "Digibank",
   "ABOUT_US": "An online banking project - FRA UAS ",
+
 
   "SETTINGS_TITLE": "Settings",
   "SETTINGS_OPTION1": "Option 1",
