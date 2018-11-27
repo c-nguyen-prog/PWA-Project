@@ -82,3 +82,103 @@ $colors: (
 
 @import url(http://fonts.googleapis.com/css?family=Oxygen);
 $font-family-base: "Oxygen", sans-serif !default;
+
+
+@media (max-width: 768px) {
+
+  .navbar-default {
+
+    background-color: #009474;
+
+    background-image: none;
+
+    border: white;
+
+    border-bottom-color: white;
+
+  }
+
+
+
+  .navbar-brand {
+
+    background-color: #009474;
+
+    background-image: none;
+
+  }
+
+
+
+  .navbar-header { background-color: #009474; }
+
+
+
+
+
+  .navbar-default .navbar-brand:hover, .navbar-default .navbar-nav:focus { background-color: #00614c; }
+
+
+
+  #navcollapse { border-bottom-color: white; }
+
+
+
+  .li.active { border-bottom-color: white; }
+
+
+
+  .navbar-left > .active > a { border-bottom-color: white; }
+
+
+
+  .nav.navbar.navbar-default { border: white; }
+
+}
+
+
+
+@media (max-width: 480px) {
+
+  .lower-nav {
+
+    font-size: 18px;
+
+    padding: 20px 10px;
+
+  }
+
+}
+
+
+
+
+
+@media (max-width: 991px) {
+
+  #fraunhofer-logo { display: none; }
+
+}
+
+
+
+
+
+@media (min-width: 360px) {
+
+}
+
+
+
+
+@media (min-width: 768px) {
+
+  li#log.active {
+
+    position: absolute;
+
+    right: 0px;
+
+  }
+
+}
