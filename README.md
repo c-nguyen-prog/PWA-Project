@@ -5,7 +5,7 @@ Progressive banking application.
 
 Frontend: 
 
-    Ionic 3
+    Ionic 4
     Nodejs 8.12 LTS
 
 Backend:
