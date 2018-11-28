@@ -17,10 +17,12 @@ export class SignupPage {
   // sure to add it to the type
   account: {
     name: string,
+   surName: string,
     email: string,
     password: string
   } = {
-    name: 'Test Human',
+   name: 'Jeb ',
+   surName: 'Bush',
     email: 'test@example.com',
     password: 'test'
   };
