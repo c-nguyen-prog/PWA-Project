@@ -1,7 +1,7 @@
 page-login {
 
 
-  @media (min-width: 769px) {
+  @media (min-width: 994px) {
     .login-form {
       padding-top: 25px;
       bottom: 20px;
@@ -24,9 +24,13 @@ page-login {
 
     color: #fff;
     background-color: #3a558c;
-
+    width: 95%;
   }
 
+  .button-block-md {
+    margin-left: 2.4%;
+    margin-right: 2.4%;
+  }
 
   .item-md.item-input.ng-valid.item-input-has-value:not(.input-has-focus):not(.item-input-has-focus) .item-inner, .item-md.item-input.ng-valid.input-has-value:not(.input-has-focus):not(.item-input-has-focus) .item-inner {
 
@@ -35,4 +39,37 @@ page-login {
     box-shadow: inset 0 -1px 0 0 #4482c1;
 
   }
+
+
+  page-login .item-md.item-input.ng-valid.item-input-has-value:not(.input-has-focus):not(.item-input-has-focus) .item-inner, page-login .item-md.item-input.ng-valid.input-has-value:not(.input-has-focus):not(.item-input-has-focus) .item-inner {
+    width: 95%;
+    margin-left: 2.4%;
+    margin-right: 2.4%;
+  }
+
+
+
+  .item-md {
+    padding-left: 4.5%;
+    padding-right: 4.5%;
+    position: relative;
+    font-size: 1.6rem;
+    font-weight: normal;
+    text-transform: none;
+
+  }
+
+
+
+  ion-content {
+    left: 0;
+    top: 0;
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 100%;
+    contain: layout size style;
+    margin-top: 35%;
+  }
+
 }

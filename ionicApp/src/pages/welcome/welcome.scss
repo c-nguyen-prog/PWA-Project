@@ -39,7 +39,7 @@ page-welcome {
     margin-top: -20px;
   }
 
-  @media (min-width: 769px) {
+  @media (min-width: 994px) {
 
     .buttons {
       padding-top: 25px;
@@ -58,13 +58,14 @@ page-welcome {
 
   .signup {
     background-color: #4494c5;
-
+    width: 95%;
   }
   signup:hover {
 
   }
 
  .login {
+   width: 95%;
     margin-top: 25px;
    background-color: #3a558c;
   //  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.2);
