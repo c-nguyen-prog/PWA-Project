@@ -38,16 +38,21 @@ page-welcome {
     margin: auto;
     margin-top: -20px;
   }
-  .buttons {
-    padding-top: 25px;
-    bottom:20px;
 
-    height: 200px;
-    width: 30%;
-    margin:0 auto;
+  @media (min-width: 769px) {
+
+    .buttons {
+      padding-top: 25px;
+      bottom:20px;
+
+      height: 200px;
+      width: 30%;
+      margin:0 auto;
 
 
+    }
   }
+
 
 
 
