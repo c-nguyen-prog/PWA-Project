@@ -1,0 +1,66 @@
+page-signup {
+
+  @media (min-width: 994px) {
+    .signup-form {
+      padding-top: 25px;
+      bottom: 20px;
+
+      height: 200px;
+      width: 30%;
+      margin: 0 auto;
+    }
+    .signup-button {
+      background-color: #4494c5;
+      padding-top: 25px;
+      bottom: 20px;
+      width: 80%;
+      height: 200px;
+
+      margin: 0 auto;
+    }
+  }
+  .button-md-primary {
+
+    color: #fff;
+    background-color: #4494c5;
+    width: 95%;
+  }
+
+  .button-block-md {
+    margin-left: 2.4%;
+    margin-right: 2.4%;
+  }
+
+  .item-md.item-input.ng-valid.item-input-has-value:not(.input-has-focus):not(.item-input-has-focus) .item-inner, .item-md.item-input.ng-valid.input-has-value:not(.input-has-focus):not(.item-input-has-focus) .item-inner {
+
+    border-bottom-color: #4aaadc;
+    -webkit-box-shadow: inset 0 -1px 0 0 #4aaadc;
+    box-shadow: inset 0 -1px 0 0 #4aaadc;
+
+  }
+
+
+
+  .item-md {
+    padding-left: 4.5%;
+    padding-right: 4.5%;
+    position: relative;
+    font-size: 1.6rem;
+    font-weight: normal;
+    text-transform: none;
+
+  }
+
+
+
+  ion-content {
+    left: 0;
+    top: 0;
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 100%;
+    contain: layout size style;
+    margin-top: 5%;
+  }
+}
