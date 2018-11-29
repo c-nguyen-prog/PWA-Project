@@ -42,6 +42,8 @@
   "SETTINGS_PAGE_PROFILE": "Daten ändern",
 
   "WELCOME_TITLE": "Willkommen",
+  "WELCOME-CARD-TITLE": "Willkommen bei DigiBank!",
+  "WELCOME-CARD-TEXT": "Hier könnte Ihre Werbung stehen",
 
   "LOGIN_TITLE": "Anmelden",
   "LOGIN_ERROR": "Fehler beim Anmelden, bitte überprüfe deine Informationen und versuche es erneut.",

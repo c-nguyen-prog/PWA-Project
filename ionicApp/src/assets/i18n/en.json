@@ -42,6 +42,8 @@
   "SETTINGS_PAGE_PROFILE": "Edit Profile",
 
   "WELCOME_TITLE": "Welcome",
+  "WELCOME-CARD-TITLE": "Welcome to Digibank!",
+  "WELCOME-CARD-TEXT": "This is a spot for YOUR advertisement!",
 
   "LOGIN_TITLE": "Sign in",
   "LOGIN_ERROR": "Unable to sign in. Please check your account information and try again.",

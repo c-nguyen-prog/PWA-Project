@@ -8,7 +8,19 @@
       </div>
     </div>
     <div class="buttons" align ="center">
-      <button ion-button block (click)="signup()" class="signup">{{ 'SIGNUP' | translate }}</button>
       <button ion-button block (click)="login()" class="login">{{ 'LOGIN' | translate }}</button>
+      <button ion-button block (click)="signup()" class="signup">{{ 'SIGNUP' | translate }}</button>
+
     </div>
+  <ion-card>
+    <img src = "assets/img/advance.card-tmntr.jpg"/>
+    <ion-card-content>
+      <ion-card-title>
+        {{'WELCOME-CARD-TITLE' | translate}}
+      </ion-card-title>
+      <p>
+        {{'WELCOME-CARD-TEXT' | translate}}
+      </p>
+    </ion-card-content>
+  </ion-card>
 </ion-content>
