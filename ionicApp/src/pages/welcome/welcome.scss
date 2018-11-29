@@ -38,28 +38,34 @@ page-welcome {
     margin: auto;
     margin-top: -20px;
   }
-  .buttons {
-    padding-top: 25px;
-    bottom:20px;
 
-    height: 200px;
-    width: 30%;
-    margin:0 auto;
+  @media (min-width: 994px) {
+
+    .buttons {
+      padding-top: 25px;
+      bottom:20px;
+
+      height: 200px;
+      width: 30%;
+      margin:0 auto;
 
 
+    }
   }
+
 
 
 
   .signup {
     background-color: #4494c5;
-
+    width: 95%;
   }
   signup:hover {
 
   }
 
  .login {
+   width: 95%;
     margin-top: 25px;
    background-color: #3a558c;
   //  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.2);
