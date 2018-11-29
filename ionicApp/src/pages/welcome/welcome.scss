@@ -54,13 +54,11 @@ page-welcome {
   }
 
 
-
-
   .signup {
-    background-color: darkred;
+    background-color: color($colors, komplementär);
     width: 95%;
   }
-  signup:hover {
+  .signup:hover {
     background: color($colors, buttonActivated, base);
   }
 
