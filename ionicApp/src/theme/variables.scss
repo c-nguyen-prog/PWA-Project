@@ -29,10 +29,14 @@ $colors: (
   danger:     #f53d3d,
   light:      #f4f4f4,
   dark:       #222,
-  bank:(
-        base: #011d37,
-        contrast: white
+  button:(
+        base: #3a558c,
+        contrast: white,
   ),
+  buttonActivated:(
+    base: #4494c5,
+    contrast: black,
+  )
 );
 
 
