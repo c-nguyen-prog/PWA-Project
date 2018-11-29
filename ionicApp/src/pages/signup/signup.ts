@@ -3,6 +3,8 @@ import { TranslateService } from '@ngx-translate/core';
 import { IonicPage, NavController, ToastController } from 'ionic-angular';
 import { User } from '../../providers';
 import { MainPage } from '../';
+import {FirstRunPage} from "../";
+
 
 import Hashes from "jshashes";
 
@@ -53,7 +55,7 @@ export class SignupPage {
       }
     }, (err) => {
 
-      this.navCtrl.push(MainPage);
+      //this.navCtrl.push(MainPage);
 
       // Unable to sign up
       let toast = this.toastCtrl.create({
@@ -63,5 +65,10 @@ export class SignupPage {
       });
       toast.present();
     });
+  }
+
+
+  forward() {
+    this.navCtrl.push(FirstRunPage);
   }
 }
