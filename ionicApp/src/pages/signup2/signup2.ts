@@ -11,7 +11,7 @@ import Hashes from "jshashes";
 @IonicPage()
 @Component({
   selector: 'page-signup',
-  templateUrl: 'signup.html'
+  templateUrl: 'signup2.html'
 })
 export class SignupPage2 {
   // The account fields for the login form.

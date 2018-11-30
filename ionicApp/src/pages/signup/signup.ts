@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { IonicPage, NavController, ToastController } from 'ionic-angular';
 import { User } from '../../providers';
-import { MainPage } from '../';
-import {FirstRunPage} from "../";
+
+import {signup2} from "../";
 
 
 import Hashes from "jshashes";
@@ -69,6 +69,6 @@ export class SignupPage {
 
 
   forward() {
-    this.navCtrl.push(FirstRunPage);
+    let promise = this.navCtrl.push(signup2);
   }
 }
