@@ -33,7 +33,7 @@ export class SignupPage {
   private signupErrorString: string;
 
   constructor(public navCtrl: NavController,
-              public user: User,
+
               public toastCtrl: ToastController,
               public translateService: TranslateService) {
 
@@ -41,7 +41,7 @@ export class SignupPage {
       this.signupErrorString = value;
     })
   }
-
+/*
   doSignup() {
     // Attempt to login in through our User service
     let tempAccount = JSON.parse(JSON.stringify(this.account));
@@ -65,10 +65,18 @@ export class SignupPage {
       });
       toast.present();
     });
-  }
+  }*/
 
 
   forward() {
-    let promise = this.navCtrl.push(signup2);
+    let promise = this.navCtrl.push(signup2,
+      {firstName: this.account.name,
+              surName: this.account.surName,
+              email: this.account.email,
+              password: this.account.password
+      }
+
+
+      );
   }
 }
