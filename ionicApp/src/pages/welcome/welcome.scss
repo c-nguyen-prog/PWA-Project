@@ -14,7 +14,18 @@ page-welcome {
     from { background-position: 0 0; }
     to { background-position: 100% 0; }
   }
+  ion-header {
+    .toolbar {
+      position: absolute;
 
+      .toolbar-background {
+        background: transparent;
+      }
+      .toolbar-title {
+        color: white;
+      }
+    }
+  }
   .splash-info {
     position: relative;
     z-index: 2;
@@ -55,22 +66,23 @@ page-welcome {
 
 
   .signup {
-    background-color: color($colors, komplementär);
+    background-color: color($colors, button, base);
     width: 95%;
+    color: white;
   }
   .signup:hover {
     background: color($colors, buttonActivated, base);
+    color: white;
   }
 
  .login {
    width: 95%;
-    margin-top: 25px;
-   background: color($colors, button, base);
-  //  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.2);
-    //color: #333;
+   background: transparent;
+   color: white;
 
 
-    &.activated {
+    &.activated{
+     color: white;
      background: color($colors, button, base);
     }
   }

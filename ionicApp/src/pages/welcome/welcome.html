@@ -1,5 +1,5 @@
 <ion-content scroll="false">
-  <ion-header class="navi">
+  <ion-header transparent>
 
     <ion-navbar>
       <button ion-button icon-only menuToggle>
@@ -9,6 +9,20 @@
       <ion-title>
         DigiBank
       </ion-title>
+      <ion-buttons end>
+        <ion-grid>
+          <ion-row>
+            <ion-col col-6>
+              <button ion-button (click)="login()" class="login">{{ 'LOGIN' | translate }}</button>
+            </ion-col>
+            <ion-col col-6>
+              <button ion-button (click)="signup()" class="signup">{{ 'SIGNUP' | translate }}</button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+
+
+      </ion-buttons>
     </ion-navbar>
 
   </ion-header>
@@ -25,8 +39,6 @@
    -->
 
     <div class="buttons" align ="center">
-      <button ion-button block (click)="login()" class="login">{{ 'LOGIN' | translate }}</button>
-      <button ion-button block (click)="signup()" class="signup">{{ 'SIGNUP' | translate }}</button>
 
     </div>
   <ion-card>
