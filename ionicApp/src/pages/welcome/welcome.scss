@@ -7,6 +7,7 @@ page-welcome {
     height: 100%;
     z-index: 1;
     background-repeat: repeat-x;
+    overflow:hidden;
     //animation: animatedBackground 20s linear infinite;
   }
 
@@ -26,6 +27,18 @@ page-welcome {
       }
     }
   }
+  .custom-icon{
+    color:white;
+  }
+
+  .welcome-text{
+    padding-left: 50px;
+    font-size: 100px;
+    margin-top: 500px;
+    color: white;
+    border: color($colors, button, base);
+  }
+
   .splash-info {
     position: relative;
     z-index: 2;
@@ -64,7 +77,6 @@ page-welcome {
     }
   }
 
-
   .signup {
     background-color: color($colors, button, base);
     width: 95%;
@@ -79,12 +91,60 @@ page-welcome {
    width: 95%;
    background: transparent;
    color: white;
-
-
-    &.activated{
-     color: white;
-     background: color($colors, button, base);
-    }
   }
 
+  .welcome-card-1{
+    padding-top: 50px;
+    content: url('../assets/img/advance-card-bttf.png');
+  }
+
+  .welcome-card-1-text{
+
+  }
+
+  .welcome-card-2{
+    padding-top: 50px;
+    content: url('../assets/img/advance-card-jp.jpg');
+  }
+
+  .welcome-card-2-text{
+
+  }
+
+  .welcome-card-3{
+    padding-top: 50px;
+    content: url('../assets/img/ica-slidebox-img-1.png');
+  }
+
+  .welcome-card-3-text{
+
+  }
+
+  .footer{
+    height: 120px;
+    width: 100%;
+    background: color($colors, button, base);
+  }
+
+  .login-footer{
+    width: content-box;
+    background: transparent;
+    color: white;
+    font-size: 16px;
+  }
+
+  .signup-footer{
+    width: content-box;
+    background: transparent;
+    color: white;
+    font-size: 16px;
+  }
+
+  .copyright{
+    text-align: end;
+    vertical-align: bottom;
+    margin-right: 20px;
+    font-size: 16px;
+    color: white;
+  }
 }
