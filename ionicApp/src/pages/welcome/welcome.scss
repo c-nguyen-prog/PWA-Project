@@ -63,17 +63,15 @@ page-welcome {
     margin-top: -20px;
   }
 
-@media (min-width: 994px) {
+@media (min-width: 500px) {
 
-    .buttons {
-      padding-top: 25px;
-      bottom:20px;
-
-      height: 200px;
-      width: 30%;
-      margin:0 auto;
-
-
+  .show-small{
+    display: none;
+  }
+  }
+  @media (max-width: 500px){
+    .hide-small {
+      display: none;
     }
   }
 
@@ -94,8 +92,12 @@ page-welcome {
   }
 
   .welcome-card-1{
-    padding-top: 50px;
-    content: url('../assets/img/advance-card-bttf.png');
+    height: content-box;
+  }
+
+  .welcome-card-1-col{
+    content: url('../assets/img/mastercard-debit-header.png');
+    background-position: center;
   }
 
   .welcome-card-1-text{
@@ -133,11 +135,19 @@ page-welcome {
     font-size: 16px;
   }
 
+  .login-footer:hover{
+    background-color: transparent !important;
+  }
+
   .signup-footer{
     width: content-box;
     background: transparent;
     color: white;
     font-size: 16px;
+  }
+
+  .signup-footer:hover{
+    background-color: transparent !important;
   }
 
   .copyright{
