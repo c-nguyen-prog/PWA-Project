@@ -7,7 +7,7 @@
 </ion-header>
 
 
-<ion-content>
+<ion-content class="signup-content">
   <div class="signup-form">
   <form (submit)="doSignup()">
     <ion-list>
@@ -29,9 +29,6 @@
         <ion-label fixed>{{ 'Date of birth' | translate }}</ion-label>
         <ion-input type="text" [(ngModel)]="account.birthdate" name="birthdate"></ion-input>
       </ion-item>
-
-
-
 
       <ion-item>
         <ion-label fixed>{{ 'EMAIL' | translate }}</ion-label>

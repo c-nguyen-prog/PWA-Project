@@ -1,17 +1,19 @@
 page-signup {
 
   @media (min-width: 994px) {
+    .signup-content {
+      margin: 0 auto;
+    }
+
     element {
       margin-top: 19px;
       margin-bottom: 29px;
     }
     .signup-form {
-      padding-top: 25px;
+      margin-top: 0px;
       bottom: 20px;
-
       height: 200px;
-      width: 30%;
-      margin: 0 auto;
+      width: 40%;
     }
     .signup-button {
       background-color: #4494c5;
@@ -45,8 +47,6 @@ page-signup {
 
   }
 
-
-
   .item-md {
     padding-left: 4.5%;
     padding-right: 4.5%;
@@ -56,7 +56,7 @@ page-signup {
     text-transform: none;
 
   }
-  
+
 element {
   margin-top: 19px;
   margin-bottom: 29px;
