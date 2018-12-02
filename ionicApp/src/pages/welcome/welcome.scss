@@ -69,6 +69,7 @@ page-welcome {
     display: none;
   }
   }
+
   @media (max-width: 500px){
     .hide-small {
       display: none;
@@ -92,16 +93,19 @@ page-welcome {
   }
 
   .welcome-card-1{
+    padding-top: 20px;
     height: content-box;
-  }
-
-  .welcome-card-1-col{
-    content: url('../assets/img/mastercard-debit-header.png');
-    background-position: center;
+    max-width: 900px;
+    -webkit-box-shadow: none;
+    box-shadow: none;
   }
 
   .welcome-card-1-text{
 
+  }
+
+  .welcome-card-1-pic{
+    content: url('../assets/img/mastercard-debit-header.png');
   }
 
   .welcome-card-2{
