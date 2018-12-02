@@ -28,6 +28,7 @@ export class LoginPage {
   // Our translated text strings
   private loginErrorString: string;
   private serverErrorString: string;
+  private accountErrorString: string;
 
   constructor(public navCtrl: NavController,
     public user: User,
@@ -39,6 +40,9 @@ export class LoginPage {
     });
     this.translateService.get('SERVER_ERROR').subscribe((value) => {
       this.serverErrorString = value;
+    });
+    this.translateService.get('ACCOUNT_ERROR').subscribe((value) => {
+      this.accountErrorString = value;
     });
   }
 
@@ -59,13 +63,24 @@ export class LoginPage {
       toast.present();
       } else {
       // Unable to log in
-        console.log("ERROR: Wrong login info login.ts");
-        let toast = this.toastCtrl.create({
-        message: this.loginErrorString,
-        duration: 3000,
-        position: 'top'
-      });
-      toast.present();
+        if (resp.reason === "no-match") {
+          console.log("ERROR: Username and password aren't matched");
+          let toast = this.toastCtrl.create({
+            message: this.loginErrorString,
+            duration: 3000,
+            position: 'top'
+          });
+          toast.present();
+
+        } else if (resp.reason === "inactive") {
+          console.log("ERROR: Account isn't active");
+          let toast = this.toastCtrl.create({
+            message: this.accountErrorString,
+            duration: 3000,
+            position: 'top'
+          });
+          toast.present();
+        }
       }
     }, (err) => {
       // Unable to log in

@@ -92,32 +92,41 @@ class LogInHandler(tornado.web.RequestHandler):
             document = await db.users.find_one({"username": username})             # Search username DB
             if document is not None:                                               # Found matching user in DB
                 print(document)
-                salt = document["salt"]                                            # Get user's salt from DB
-                hashed_pass = bcrypt.hashpw(password.encode("utf8"), salt)         # Hash input password with salt
+                if document["status"] == "active":                                 # User account is active
+                    salt = document["salt"]                                        # Get user's salt from DB
+                    hashed_pass = bcrypt.hashpw(password.encode("utf8"), salt)     # Hash input password with salt
 
-                if hashed_pass == document["password"]:                            # Input password matches
-                    json_response = {
-                        "status": 'success',
-                        "user": {
-                            "name": document["username"]
+                    if hashed_pass == document["password"]:                        # Input password matches
+                        json_response = {
+                            "status": 'success',
+                            "user": {
+                                "name": document["username"]
+                            }
                         }
-                    }
-                    self.write(json.dumps(json_response))
-                    self.set_header('Content-Type', 'application/json')
-                    print(json_response)
-                    self.finish()
+                        self.write(json.dumps(json_response))
+                        self.set_header('Content-Type', 'application/json')
+                        print(json_response)
+                        self.finish()
 
-                else:                                                              # Input password wrong
+                    else:                                                          # Input password wrong
+                        json_response = {
+                            "status": 'fail',
+                            "reason": "no-match"
+                        }
+                        self.write(json.dumps(json_response))
+                        self.set_header('Content-Type', 'application/json')
+                        print(json_response)
+                        self.finish()
+                else:                                                              # User account pending/inactive
                     json_response = {
                         "status": 'fail',
-                        "user": {
-                            "name": document["username"]
-                        }
+                        "reason": "inactive"
                     }
                     self.write(json.dumps(json_response))
                     self.set_header('Content-Type', 'application/json')
                     print(json_response)
                     self.finish()
+
             else:                                                                  # User doesn't exist
                 json_response = {
                     "status": "fail",
