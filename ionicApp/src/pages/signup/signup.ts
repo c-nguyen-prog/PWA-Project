@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { IonicPage, NavController, ToastController } from 'ionic-angular';
 import { User } from '../../providers';
-import { MainPage } from '../';
-import {FirstRunPage} from "../";
+
+import {signup2} from "../";
 
 
 import Hashes from "jshashes";
@@ -51,7 +51,7 @@ export class SignupPage {
   private signupErrorString: string;
 
   constructor(public navCtrl: NavController,
-              public user: User,
+
               public toastCtrl: ToastController,
               public translateService: TranslateService) {
 
@@ -59,7 +59,7 @@ export class SignupPage {
       this.signupErrorString = value;
     })
   }
-
+/*
   doSignup() {
     // Attempt to login in through our User service
     let tempAccount = JSON.parse(JSON.stringify(this.account));
@@ -83,10 +83,18 @@ export class SignupPage {
       });
       toast.present();
     });
-  }
+  }*/
 
 
   forward() {
-    this.navCtrl.push(FirstRunPage);
+    let promise = this.navCtrl.push(signup2,
+      {firstName: this.account.name,
+              surName: this.account.surName,
+              email: this.account.email,
+              password: this.account.password
+      }
+
+
+      );
   }
 }

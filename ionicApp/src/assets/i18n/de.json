@@ -1,6 +1,8 @@
 {
   "BACK_BUTTON_TEXT": "Zurück",
 
+  "MENU":"DigiBank",
+
   "NAME": "Name",
   "PASSWORD": "Passwort",
   "EMAIL": "E-Mail",
@@ -42,8 +44,11 @@
   "SETTINGS_PAGE_PROFILE": "Daten ändern",
 
   "WELCOME_TITLE": "Willkommen",
-  "WELCOME-CARD-TITLE": "Willkommen bei DigiBank!",
-  "WELCOME-CARD-TEXT": "Hier könnte Ihre Werbung stehen",
+  "WELCOME-BIG-TITLE": "Willkommen bei DigiBank!",
+
+  "WELCOME-CARD-1-TEXT" : "WELCOME-CARD-1-TEXT",
+  "WELCOME-CARD-2-TEXT" : "WELCOME-CARD-2-TEXT",
+  "WELCOME-CARD-3-TEXT" : "WELCOME-CARD-3-TEXT",
 
   "LOGIN_TITLE": "Anmelden",
   "LOGIN_ERROR": "Fehler beim Anmelden, bitte überprüfe deine Informationen und versuche es erneut.",

@@ -4,15 +4,39 @@ page-welcome {
     background: url('../assets/img/splashbg.jpeg') no-repeat transparent;
     background-position: top center;
     background-size: cover;
-    height: 50%;
+    height: 100%;
     z-index: 1;
     background-repeat: repeat-x;
+    overflow:hidden;
     //animation: animatedBackground 20s linear infinite;
   }
 
   @keyframes animatedBackground {
     from { background-position: 0 0; }
     to { background-position: 100% 0; }
+  }
+  ion-header {
+    .toolbar {
+      position: absolute;
+
+      .toolbar-background {
+        background: transparent;
+      }
+      .toolbar-title {
+        color: white;
+      }
+    }
+  }
+  .custom-icon{
+    color:white;
+  }
+
+  .welcome-text{
+    padding-left: 50px;
+    font-size: 100px;
+    margin-top: 500px;
+    color: white;
+    border: color($colors, button, base);
   }
 
   .splash-info {
@@ -39,42 +63,102 @@ page-welcome {
     margin-top: -20px;
   }
 
-@media (min-width: 994px) {
+@media (min-width: 500px) {
 
-    .buttons {
-      padding-top: 25px;
-      bottom:20px;
+  .show-small{
+    display: none;
+  }
+  }
 
-      height: 200px;
-      width: 30%;
-      margin:0 auto;
-
-
+  @media (max-width: 500px){
+    .hide-small {
+      display: none;
     }
   }
 
-
-
-
   .signup {
-    background-color: darkred;
+    background-color: color($colors, button, base);
     width: 95%;
+    color: white;
   }
-  signup:hover {
+  .signup:hover {
     background: color($colors, buttonActivated, base);
+    color: white;
   }
 
  .login {
    width: 95%;
-    margin-top: 25px;
-   background: color($colors, button, base);
-  //  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.2);
-    //color: #333;
-
-
-    &.activated {
-     background: color($colors, button, base);
-    }
+   background: transparent;
+   color: white;
   }
 
+  .welcome-card-1{
+    padding-top: 20px;
+    height: content-box;
+    max-width: 900px;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+  }
+
+  .welcome-card-1-text{
+
+  }
+
+  .welcome-card-1-pic{
+    content: url('../assets/img/mastercard-debit-header.png');
+  }
+
+  .welcome-card-2{
+    padding-top: 50px;
+    content: url('../assets/img/advance-card-jp.jpg');
+  }
+
+  .welcome-card-2-text{
+
+  }
+
+  .welcome-card-3{
+    padding-top: 50px;
+    content: url('../assets/img/ica-slidebox-img-1.png');
+  }
+
+  .welcome-card-3-text{
+
+  }
+
+  .footer{
+    height: 120px;
+    width: 100%;
+    background: color($colors, button, base);
+  }
+
+  .login-footer{
+    width: content-box;
+    background: transparent;
+    color: white;
+    font-size: 16px;
+  }
+
+  .login-footer:hover{
+    background-color: transparent !important;
+  }
+
+  .signup-footer{
+    width: content-box;
+    background: transparent;
+    color: white;
+    font-size: 16px;
+  }
+
+  .signup-footer:hover{
+    background-color: transparent !important;
+  }
+
+  .copyright{
+    text-align: end;
+    vertical-align: bottom;
+    margin-right: 20px;
+    font-size: 16px;
+    color: white;
+  }
 }

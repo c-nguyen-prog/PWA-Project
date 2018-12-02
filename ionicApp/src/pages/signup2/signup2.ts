@@ -11,29 +11,31 @@ import Hashes from "jshashes";
 @IonicPage()
 @Component({
   selector: 'page-signup',
-  templateUrl: 'signup.html'
+  templateUrl: 'signup2.html'
 })
 export class SignupPage2 {
   // The account fields for the login form.
   // If you're using the username field with or without email, make
   // sure to add it to the type
   account: {
-    name: string,
-    surName: string,
-    email: string,
-    password: string
+    title: string,
+    address: string,
+    streetNum: string,
+    zipCode: string,
+    city: string
   } = {
-    name: 'Jeb ',
-    surName: 'Bush',
-    email: 'test@example.com',
-    password: 'test'
+    title: 'Mr.',
+    address: 'Vermont avenue',
+    streetNum: '225',
+    zipCode: '60385',
+    city: "Sebring"
   };
 
   // Our translated text strings
   private signupErrorString: string;
 
   constructor(public navCtrl: NavController,
-              public user: User,
+
               public toastCtrl: ToastController,
               public translateService: TranslateService) {
 
@@ -41,7 +43,7 @@ export class SignupPage2 {
       this.signupErrorString = value;
     })
   }
-
+/*
   doSignup() {
     // Attempt to login in through our User service
     let tempAccount = JSON.parse(JSON.stringify(this.account));
@@ -66,9 +68,17 @@ export class SignupPage2 {
       toast.present();
     });
   }
-
-
+*/
   forward() {
-    this.navCtrl.push(signup2);
+    let promise = this.navCtrl.push(signup2,
+      {title: this.account.title,
+        address: this.account.address,
+        streetNum: this.account.streetNum,
+        zipCode: this.account.zipCode,
+        city: this.account.city
+      }
+
+
+    );
   }
 }

@@ -79,7 +79,7 @@ class LogInHandler(tornado.web.RequestHandler):
     """
     async def post(self):
 
-        data = json.loads(self.request.body)                                      # Get body of POST request
+        data = json.loads(self.request.body)                                       # Get body of POST request
         username = data["email"]
         password = data["password"]
         print("Request from client: " + str(data))
@@ -87,15 +87,15 @@ class LogInHandler(tornado.web.RequestHandler):
 
     async def check(self, username, password):
         try:
-            client = motor.motor_tornado.MotorClient('mongodb://localhost:27017') # Connect to MongoDB Server
-            db = client.progappjs                                                 # Get database progappjs
-            document = await db.users.find_one({"username": username})            # Search username DB
-            if document is not None:                                              # Found matching user in DB
+            client = motor.motor_tornado.MotorClient('mongodb://localhost:27017')  # Connect to MongoDB Server
+            db = client.progappjs                                                  # Get database progappjs
+            document = await db.users.find_one({"username": username})             # Search username DB
+            if document is not None:                                               # Found matching user in DB
                 print(document)
-                salt = document["salt"]                                           # Get user's salt from DB
-                hashed_pass = bcrypt.hashpw(password.encode("utf8"), salt)        # Hash input password with salt
+                salt = document["salt"]                                            # Get user's salt from DB
+                hashed_pass = bcrypt.hashpw(password.encode("utf8"), salt)         # Hash input password with salt
 
-                if hashed_pass == document["password"]:                           # Input password matches
+                if hashed_pass == document["password"]:                            # Input password matches
                     json_response = {
                         "status": 'success',
                         "user": {
@@ -107,7 +107,7 @@ class LogInHandler(tornado.web.RequestHandler):
                     print(json_response)
                     self.finish()
 
-                else:                                                             # Input password wrong
+                else:                                                              # Input password wrong
                     json_response = {
                         "status": 'fail',
                         "user": {
@@ -118,7 +118,7 @@ class LogInHandler(tornado.web.RequestHandler):
                     self.set_header('Content-Type', 'application/json')
                     print(json_response)
                     self.finish()
-            else:                                                                 # User doesn't exist
+            else:                                                                  # User doesn't exist
                 json_response = {
                     "status": "fail",
                     "user": {
@@ -156,7 +156,7 @@ class SignUpHandler(tornado.web.RequestHandler):
     }
     """
     async def post(self):
-        data = json.loads(self.request.body)                                          # Get body of POST request
+        data = json.loads(self.request.body)                                           # Get body of POST request
         name = data["name"]
         username = data["email"]
         password = data["password"]
@@ -164,22 +164,22 @@ class SignUpHandler(tornado.web.RequestHandler):
         executor.submit(await self.check(username, password))
 
     async def check(self, username, password):
-            client = motor.motor_tornado.MotorClient('mongodb://localhost:27017')     # Connect to MongoDB server
-            db = client.progappjs                                                     # Get database progappjs
-            document = await db.users.find_one({"username": username})                # Checks DB for username
-            if document is not None:                                                  # Username already existed
+            client = motor.motor_tornado.MotorClient('mongodb://localhost:27017')      # Connect to MongoDB server
+            db = client.progappjs                                                      # Get database progappjs
+            document = await db.users.find_one({"username": username})                 # Checks DB for username
+            if document is not None:                                                   # Username already existed
                 print(document)
                 json_response = {
                     "status": "fail"
                 }
-                self.write(json.dumps(json_response))
+                self.write(json.dumps(json_response))                                  # Return fail response
                 self.set_header('Content-Type', 'application/json')
                 print(json_response)
                 self.finish()
 
-            else:                                                                     # Username is available
-                salt = bcrypt.gensalt()                                               # Generate a random salt
-                hashed_pass = bcrypt.hashpw(password.encode("utf8"), salt)            # Hash the password with salt
+            else:                                                                      # Username is available
+                salt = bcrypt.gensalt()                                                # Generate a random salt
+                hashed_pass = bcrypt.hashpw(password.encode("utf8"), salt)             # Hash the password with salt
                 new_user = await db.users.insert_one({"_id": username,
                                                       "username": username,
                                                       "password": hashed_pass,
@@ -205,7 +205,8 @@ class SignUpHandler(tornado.web.RequestHandler):
                                                           "balance": "balance"
                                                       },
                                                       "type": "user",
-                                                      "status": "pending"
+                                                      "status": "pending",
+                                                      "pending_transaction": []
                                                       })
                 json_response = {
                     "status": "success"
@@ -226,8 +227,66 @@ class TransactionHandler(tornado.web.RequestHandler):
     def get(self):
         pass
 
-    def post(self):
-        pass
+    """
+    Function to handle HTTP POST Request for a transaction
+    json format: (temp)
+    {
+        "source": source_username,
+        "destination": destination_username,
+        "amount": amount
+    }
+    """
+    async def post(self):
+        data = json.loads(self.request.body)
+        source = data["source"]
+        destination = data["destination"]
+        amount = data["amount"]
+        client = motor.motor_tornado.MotorClient('mongodb://localhost:27017')  # Connect to MongoDB server
+        db = client.progappjs                                                  # Get database progappjs
+        transaction = {"source": source,                                       # Create new transaction, status initial
+                       "destination": destination,
+                       "amount": amount,
+                       "status": "initial"
+                       }
+        db.transactions.insert_one(transaction)                                # Add new transaction to db
+        executor.submit(await self.pending_transaction(transaction))
+        executor.submit(await self.commit_transaction(transaction))
+
+
+    async def pending_transaction(self, transaction):
+        client = motor.motor_tornado.MotorClient('mongodb://localhost:27017')  # Connect to MongoDB server
+        db = client.progappjs                                                  # Get transactions collection
+        update_transaction = await db.transactions.update_one({"_id": transaction["_id"]},
+                                                              {"$set": {"status": "pending"}})
+
+        update_source = await db.users.update_one({"username": transaction["source"],
+                                      "pending_transaction": {"$ne": transaction["_id"]},
+                                      "balance": {"$gte" : transaction["amount"]}
+                                      }, {
+                                    "$inc": {"balance": -transaction["amount"]},
+                                    "$push": {"pending_transaction": transaction["_id"]}})
+
+        update_dest = await db.users.update_one({"username": transaction["destination"],
+                                                 "pending_transaction": {"$ne": transaction["_id"]}
+                                                 }, {
+                                    "$inc": {"balance": +transaction["amount"]},
+                                    "$push": {"pending_transaction": transaction["_id"]}})
+
+    async def commit_transaction(self, transaction):
+        client = motor.motor_tornado.MotorClient('mongodb://localhost:27017')  # Connect to MongoDB server
+        db = client.progappjs                                                  # Get database progappjs
+        update_transaction = await db.transactions.update_one({"_id": transaction["_id"]},
+                                                              {"$set": {"status": "committed"}})
+
+        update_source = await db.users.update_one({"username": transaction["source"]},
+                                                  {"$pull": {"pending_transaction": transaction["_id"]}})
+
+        update_dest = await db.users.update_one({"username": transaction["destination"]},
+                                                {"$pull": {"pending_transaction": transaction["_id"]}})
+
+        update_transaction = await db.transactions.update_one({"_id": transaction["_id"]},
+                                                              {"$set": {"status": "done"}})
+
 
 class Application(tornado.web.Application):
     def __init__(self):
