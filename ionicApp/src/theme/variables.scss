@@ -85,8 +85,8 @@ $colors: (
 // Fonts
 // --------------------------------------------------
 
-@import url(http://fonts.googleapis.com/css?family=Oxygen);
-$font-family-base: "Oxygen", sans-serif !default;
+@import url(http://fonts.googleapis.com/css?family=Open+Sans);
+$font-family-base: "Open Sans", sans-serif !important;
 
 
 @media (max-width: 768px) {
@@ -161,7 +161,6 @@ $font-family-base: "Oxygen", sans-serif !default;
 
 @media (max-width: 991px) {
 
-  #fraunhofer-logo { display: none; }
 
 }
 

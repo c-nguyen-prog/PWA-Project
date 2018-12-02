@@ -1,4 +1,6 @@
 page-welcome {
+  font-family: 'Open Sans', sans-serif;
+
   .splash-bg {
     position: relative;
     background: url('../assets/img/splashbg.jpeg') no-repeat transparent;
@@ -8,13 +10,14 @@ page-welcome {
     z-index: 1;
     background-repeat: repeat-x;
     overflow:hidden;
-    //animation: animatedBackground 20s linear infinite;
+    animation: animatedBackground 20s linear infinite;
   }
 
   @keyframes animatedBackground {
     from { background-position: 0 0; }
     to { background-position: 100% 0; }
   }
+
   ion-header {
     .toolbar {
       position: absolute;
@@ -24,19 +27,25 @@ page-welcome {
       }
       .toolbar-title {
         color: white;
+        font-size: 20px;
       }
     }
   }
+
   .custom-icon{
     color:white;
   }
 
   .welcome-text{
-    padding-left: 50px;
-    font-size: 100px;
-    margin-top: 500px;
+    font-family: 'Open Sans', sans-serif;
+    padding-top: 40vh;
+    font-size: 46px;
+    text-align: center;
     color: white;
     border: color($colors, button, base);
+    .typed {
+      transition: all 1s ease;
+    }
   }
 
   .splash-info {
@@ -63,18 +72,6 @@ page-welcome {
     margin-top: -20px;
   }
 
-@media (min-width: 500px) {
-
-  .show-small{
-    display: none;
-  }
-  }
-
-  @media (max-width: 500px){
-    .hide-small {
-      display: none;
-    }
-  }
 
   .signup {
     background-color: color($colors, button, base);
@@ -86,79 +83,47 @@ page-welcome {
     color: white;
   }
 
- .login {
+  .login {
    width: 95%;
    background: transparent;
    color: white;
   }
 
-  .welcome-card-1{
-    padding-top: 20px;
-    height: content-box;
-    max-width: 900px;
-    -webkit-box-shadow: none;
-    box-shadow: none;
-  }
-
-  .welcome-card-1-text{
-
-  }
-
-  .welcome-card-1-pic{
-    content: url('../assets/img/mastercard-debit-header.png');
-  }
-
-  .welcome-card-2{
-    padding-top: 50px;
-    content: url('../assets/img/advance-card-jp.jpg');
-  }
-
-  .welcome-card-2-text{
-
-  }
-
-  .welcome-card-3{
-    padding-top: 50px;
-    content: url('../assets/img/ica-slidebox-img-1.png');
-  }
-
-  .welcome-card-3-text{
-
-  }
 
   .footer{
-    height: 120px;
-    width: 100%;
+    position:fixed;
+    bottom: 0;
+    text-align: center;
+    height: 30px;
     background: color($colors, button, base);
   }
 
-  .login-footer{
-    width: content-box;
-    background: transparent;
-    color: white;
-    font-size: 16px;
-  }
-
-  .login-footer:hover{
-    background-color: transparent !important;
-  }
-
-  .signup-footer{
-    width: content-box;
-    background: transparent;
-    color: white;
-    font-size: 16px;
-  }
-
-  .signup-footer:hover{
-    background-color: transparent !important;
-  }
 
   .copyright{
     text-align: end;
-    vertical-align: bottom;
-    margin-right: 20px;
+    margin: 5px 10px 0px 10px;
     font-size: 16px;
     color: white;
   }
+
+
+  // mobile devices
+  @media (min-width: 500px) {
+    .show-small{
+      display: none;
+    }
+  }
+
+  // desktop/tablet
+  @media (max-width: 500px){
+    .hide-small {
+      display: none;
+    }
+    .welcome-text {
+      .typed {
+        font-size: 30px;
+      }
+    }
+  }
+
 }
