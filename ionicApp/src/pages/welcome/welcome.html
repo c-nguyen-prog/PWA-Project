@@ -15,7 +15,7 @@
         <ion-row>
           <ion-col col-6>
             <button ion-button (click)="login()" class="login" round>{{ 'LOGIN' | translate }}
-              <ion-icon name="log-in"></ion-icon>
+              <ion-icon class="login-icon" name="log-in"></ion-icon>
             </button>
           </ion-col>
 
@@ -31,8 +31,10 @@
 <ion-content scroll="false">
 
   <div class="splash-bg">
-    <div class="welcome-text">
-      <span class="typed" id="element" style="white-space: pre"></span>
+    <div class="welcome">
+      <div class="welcome-text">
+        <span class="typed" id="element" style="white-space: pre"></span>
+      </div>
     </div>
 
     <div class="footer">

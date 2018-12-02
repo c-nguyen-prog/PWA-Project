@@ -37,10 +37,11 @@ page-welcome {
   }
 
   .welcome-text{
-    font-family: 'Open Sans', sans-serif;
+    display: inline-block;
     padding-top: 40vh;
+    margin-left: 25%;
     font-size: 46px;
-    text-align: center;
+    text-align: left;
     color: white;
     border: color($colors, button, base);
     .typed {
@@ -88,6 +89,9 @@ page-welcome {
    background: transparent;
    color: white;
   }
+  .login-icon {
+    padding-left: 5px
+  }
 
 
   .footer{
@@ -108,19 +112,27 @@ page-welcome {
 
 
   // mobile devices
-  @media (min-width: 500px) {
+  @media (min-width: 768px) {
     .show-small{
       display: none;
     }
+
   }
 
   // desktop/tablet
-  @media (max-width: 500px){
+  @media (max-width: 768px){
     .hide-small {
       display: none;
     }
     .welcome-text {
+      display: block;
+      margin-left: 0%;
+      text-align: center;
+
       .typed {
+        font-size: 30px;
+      }
+      .typed-cursor {
         font-size: 30px;
       }
     }

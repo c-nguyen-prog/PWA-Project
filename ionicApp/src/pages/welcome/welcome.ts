@@ -23,8 +23,11 @@ export class WelcomePage {
 
   ionViewDidLoad() {
      var typed3 = new Typed('#element', {
-      strings: ['Willkommen zu <b>Digibank</b>'],
+      strings: ['Wir sind <b>digital</b>', 'Wir sind <b>die Bank</b>', "Willkommen zu <b>Digibank</b>"],
       typeSpeed: 40,
+      backSpeed: 20,
+      backDelay: 300,
+      startDelay: 500,
       loop: false
     });
   }
