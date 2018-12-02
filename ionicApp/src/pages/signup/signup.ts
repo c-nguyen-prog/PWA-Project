@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { IonicPage, NavController, ToastController } from 'ionic-angular';
 import { User } from '../../providers';
+import { MainPage } from '../';
 
 import {signup2} from "../";
 
@@ -18,12 +19,12 @@ export class SignupPage {
   // If you're using the username field with or without email, make
   // sure to add it to the type
   account: {
+    title: string,
     name: string,
-   surName: string,
+    surName: string,
+    birthdate: string,
     email: string,
     password: string,
-    title: string,
-    birthdate: string,
     phone: string,
     address: string,
     zipcode: string,
@@ -32,26 +33,25 @@ export class SignupPage {
     nationality: string
 
   } = {
-   name: 'Jeb ',
-   surName: 'Bush',
+    title: 'Mr.',
+    name: 'Jeb ',
+    surName: 'Bush',
+    birthdate: '1953-11-02',
     email: 'test@example.com',
     password: 'test',
-    title: 'Mr.',
-    birthdate: '1953-11-02',
     phone: '323990001337',
     address: 'Monroe street 400',
     zipcode: '32399',
     city: 'Tallahassee',
     tin:  '2258383',
     nationality: 'American'
-
   };
 
   // Our translated text strings
   private signupErrorString: string;
 
   constructor(public navCtrl: NavController,
-
+              public user: User,
               public toastCtrl: ToastController,
               public translateService: TranslateService) {
 
@@ -59,7 +59,7 @@ export class SignupPage {
       this.signupErrorString = value;
     })
   }
-/*
+
   doSignup() {
     // Attempt to login in through our User service
     let tempAccount = JSON.parse(JSON.stringify(this.account));
@@ -73,8 +73,6 @@ export class SignupPage {
       }
     }, (err) => {
 
-      this.navCtrl.push(MainPage);
-
       // Unable to sign up
       let toast = this.toastCtrl.create({
         message: this.signupErrorString,
@@ -83,18 +81,5 @@ export class SignupPage {
       });
       toast.present();
     });
-  }*/
-
-
-  forward() {
-    let promise = this.navCtrl.push(signup2,
-      {firstName: this.account.name,
-              surName: this.account.surName,
-              email: this.account.email,
-              password: this.account.password
-      }
-
-
-      );
   }
 }

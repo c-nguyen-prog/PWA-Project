@@ -157,64 +157,72 @@ class SignUpHandler(tornado.web.RequestHandler):
     """
     async def post(self):
         data = json.loads(self.request.body)                                           # Get body of POST request
-        name = data["name"]
+        print("Request from client: " + str(data))
+        executor.submit(await self.check(data))
+
+    async def check(self, data):
+        title = data["title"]
+        first_name = data["name"]
+        last_name = data["surName"]
+        birthday = data["birthdate"]
         username = data["email"]
         password = data["password"]
-        print("Request from client: " + str(data))
-        executor.submit(await self.check(username, password))
+        phone = data["phone"]
+        address = data["address"]
+        zip = data["zipcode"]
+        city = data["city"]
+        tin = data["tin"]
+        nationality = data["nationality"]
+        client = motor.motor_tornado.MotorClient('mongodb://localhost:27017')      # Connect to MongoDB server
+        db = client.progappjs                                                      # Get database progappjs
+        document = await db.users.find_one({"username": username})                 # Checks DB for username
+        if document is not None:                                                   # Username already existed
+            print(document)
+            json_response = {
+                "status": "fail"
+            }
+            self.write(json.dumps(json_response))                                  # Return fail response
+            self.set_header('Content-Type', 'application/json')
+            print(json_response)
+            self.finish()
 
-    async def check(self, username, password):
-            client = motor.motor_tornado.MotorClient('mongodb://localhost:27017')      # Connect to MongoDB server
-            db = client.progappjs                                                      # Get database progappjs
-            document = await db.users.find_one({"username": username})                 # Checks DB for username
-            if document is not None:                                                   # Username already existed
-                print(document)
-                json_response = {
-                    "status": "fail"
-                }
-                self.write(json.dumps(json_response))                                  # Return fail response
-                self.set_header('Content-Type', 'application/json')
-                print(json_response)
-                self.finish()
-
-            else:                                                                      # Username is available
-                salt = bcrypt.gensalt()                                                # Generate a random salt
-                hashed_pass = bcrypt.hashpw(password.encode("utf8"), salt)             # Hash the password with salt
-                new_user = await db.users.insert_one({"_id": username,
-                                                      "username": username,
-                                                      "password": hashed_pass,
-                                                      "salt": salt,
-                                                      "name": {
-                                                          "title": "title",
-                                                          "last_name": "lastname",
-                                                          "first_name": "firstname"
-                                                      },
-                                                      "birthday": "birthday",
-                                                      "phone": "phone",
-                                                      "address": {
-                                                          "co": "co",
-                                                          "street": "street",
-                                                          "number": "number",
-                                                          "zip": "zip",
-                                                          "city": "city"
-                                                      },
-                                                      "tax_id": "taxid",
-                                                      "nationality": "nationality",
-                                                      "bank": {
-                                                          "iban": "iban",
-                                                          "balance": "balance"
-                                                      },
-                                                      "type": "user",
-                                                      "status": "pending",
-                                                      "pending_transaction": []
-                                                      })
-                json_response = {
-                    "status": "success"
-                }
-                self.write(json.dumps(json_response))
-                self.set_header('Content-Type', 'application/json')
-                print(json_response)
-                self.finish()
+        else:                                                                      # Username is available
+            salt = bcrypt.gensalt()                                                # Generate a random salt
+            hashed_pass = bcrypt.hashpw(password.encode("utf8"), salt)             # Hash the password with salt
+            new_user = await db.users.insert_one({"_id": username,
+                                                  "username": username,
+                                                  "password": hashed_pass,
+                                                  "salt": salt,
+                                                  "name": {
+                                                      "title": title,
+                                                      "last_name": last_name,
+                                                      "first_name": first_name
+                                                  },
+                                                  "birthday": birthday,
+                                                  "phone": phone,
+                                                  "address": {
+                                                      "co": "co",
+                                                      "address": address,
+                                                      "zip": zip,
+                                                      "city": city
+                                                  },
+                                                  "tax_id": tin,
+                                                  "nationality": nationality,
+                                                  "bank": {
+                                                      "iban": "iban",              # TODO: Generate IBAN
+                                                      "balance": 0
+                                                  },
+                                                  "type": "user",
+                                                  "status": "pending",
+                                                  "pending_transaction": []
+                                                  })
+            json_response = {
+                "status": "success"
+            }
+            self.write(json.dumps(json_response))
+            self.set_header('Content-Type', 'application/json')
+            print(json_response)
+            self.finish()
 
 
 class TransactionHandler(tornado.web.RequestHandler):
