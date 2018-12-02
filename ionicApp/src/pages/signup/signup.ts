@@ -21,12 +21,30 @@ export class SignupPage {
     name: string,
    surName: string,
     email: string,
-    password: string
+    password: string,
+    title: string,
+    birthdate: string,
+    phone: string,
+    address: string,
+    zipcode: string,
+    city: string,
+    tin: string,
+    nationality: string
+
   } = {
    name: 'Jeb ',
    surName: 'Bush',
     email: 'test@example.com',
-    password: 'test'
+    password: 'test',
+    title: 'Mr.',
+    birthdate: '1953-11-02',
+    phone: '323990001337',
+    address: 'Monroe street 400',
+    zipcode: '32399',
+    city: 'Tallahassee',
+    tin:  '2258383',
+    nationality: 'American'
+
   };
 
   // Our translated text strings
@@ -55,7 +73,7 @@ export class SignupPage {
       }
     }, (err) => {
 
-      //this.navCtrl.push(MainPage);
+      this.navCtrl.push(MainPage);
 
       // Unable to sign up
       let toast = this.toastCtrl.create({

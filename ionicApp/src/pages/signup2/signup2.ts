@@ -68,7 +68,7 @@ export class SignupPage2 {
   }
 
 
-  push() {
+  forward() {
     this.navCtrl.push(signup2);
   }
 }
