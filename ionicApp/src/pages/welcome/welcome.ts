@@ -23,9 +23,9 @@ export class WelcomePage {
 
   ionViewDidLoad() {
      var typed3 = new Typed('#element', {
-      strings: ['Wir sind <b>digital</b>', 'Wir sind <b>die Bank</b>', "Willkommen zu <b>Digibank</b>"],
+      strings: ['Wir sind  <b>digital</b>', 'Wir sind <b>die Bank</b>', "Willkommen bei <b>Digibank</b>"],
       typeSpeed: 40,
-      backSpeed: 20,
+      backSpeed: 40,
       backDelay: 300,
       startDelay: 500,
       loop: false

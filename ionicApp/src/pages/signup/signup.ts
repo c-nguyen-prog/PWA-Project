@@ -4,8 +4,6 @@ import { IonicPage, NavController, ToastController } from 'ionic-angular';
 import { User } from '../../providers';
 import { MainPage } from '../';
 
-import {signup2} from "../";
-
 
 import Hashes from "jshashes";
 
