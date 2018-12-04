@@ -20,6 +20,40 @@ page-login {
     }
   }
 
+  ion-header {
+    .toolbar {
+      position: absolute;
+
+      .toolbar-background {
+        background: transparent;
+      }
+      .toolbar-title {
+        color: white;
+        font-size: 20px;
+      }
+    }
+  }
+
+  .signup {
+    background-color: color($colors, button, base);
+    width: 95%;
+    color: white;
+  }
+  .signup:hover {
+    background: color($colors, buttonActivated, base);
+    color: white;
+  }
+
+  .splash-bg {
+    position: relative;
+    background: url('../assets/img/splashbg.jpeg') no-repeat transparent;
+    background-position: top center;
+    background-size: cover;
+    height: 100%;
+    z-index: 1;
+    background-repeat: repeat-x;
+    overflow:hidden;
+  }
   .button-md-primary {
 
     color: #fff;
@@ -58,5 +92,9 @@ page-login {
     text-transform: none;
 
   }
-
+  @media (max-width: 768px){
+    .hide-small {
+      display: none;
+    }
+  }
 }

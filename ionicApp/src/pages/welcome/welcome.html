@@ -4,12 +4,6 @@
     <button ion-button icon-only menuToggle color="white" class="show-small">
       <ion-icon name="menu" class="custom-icon"></ion-icon>
     </button>
-
-    <!--
-    <ion-title>
-      Digibank - An online banking project
-    </ion-title>
-    -->
     <ion-buttons end class="hide-small">
       <ion-grid>
         <ion-row>
@@ -18,7 +12,6 @@
               <ion-icon class="login-icon" name="log-in"></ion-icon>
             </button>
           </ion-col>
-
           <ion-col col-6>
             <button ion-button (click)="signup()" class="signup" round>{{ 'SIGNUP' | translate }}</button>
           </ion-col>
@@ -28,7 +21,7 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content scroll="false">
+<ion-content>
 
   <div class="splash-bg">
     <div class="welcome">
