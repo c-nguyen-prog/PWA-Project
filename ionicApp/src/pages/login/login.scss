@@ -36,7 +36,7 @@ page-login {
 
   .signup {
     background-color: color($colors, button, base);
-    width: 95%;
+    margin-right: 150px;
     color: white;
   }
   .signup:hover {
@@ -54,8 +54,10 @@ page-login {
     background-repeat: repeat-x;
     overflow:hidden;
   }
+  .login-form {
+    margin-top: 200px;
+  }
   .button-md-primary {
-
     color: #fff;
     background-color: #3a558c;
     width: 95%;
