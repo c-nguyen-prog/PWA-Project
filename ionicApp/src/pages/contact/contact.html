@@ -1,18 +1,39 @@
-<!--
-  Generated template for the ContactPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
 
   <ion-navbar>
-    <ion-title>contact</ion-title>
+    <button ion-button icon-only menuToggle color="white" class="show-small">
+      <ion-icon name="menu" class="custom-icon"></ion-icon>
+    </button>
+    <ion-buttons end class="hide-small">
+      <ion-grid>
+        <ion-row>
+          <ion-col col-6>
+            <button ion-button (click)="login()" class="login" round>{{ 'LOGIN' | translate }}
+              <ion-icon class="login-icon" name="log-in"></ion-icon>
+            </button>
+          </ion-col>
+          <ion-col col-6>
+            <button ion-button (click)="signup()" class="signup" round>{{ 'SIGNUP' | translate }}</button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-buttons>
   </ion-navbar>
-
 </ion-header>
 
+<ion-content>
 
-<ion-content padding>
+  <div class="splash-bg">
+    <div class="container">
+        <form class="form">
+          Contact form goes here
+        </form>
+    </div>
+
+    <div class="footer">
+        <h1 ion-text class="copyright">\&copy; 2018, Digibank Inc</h1>
+    </div>
+  </div>
 
 </ion-content>
+

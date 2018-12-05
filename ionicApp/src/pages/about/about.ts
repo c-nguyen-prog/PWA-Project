@@ -22,4 +22,12 @@ export class AboutPage {
     console.log('ionViewDidLoad AboutPage');
   }
 
+
+  login() {
+    this.navCtrl.push('LoginPage');
+  }
+
+  signup() {
+    this.navCtrl.push('SignupPage');
+  }
 }

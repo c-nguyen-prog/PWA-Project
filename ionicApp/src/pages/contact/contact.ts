@@ -22,4 +22,12 @@ export class ContactPage {
     console.log('ionViewDidLoad ContactPage');
   }
 
+
+  login() {
+    this.navCtrl.push('LoginPage');
+  }
+
+  signup() {
+    this.navCtrl.push('SignupPage');
+  }
 }

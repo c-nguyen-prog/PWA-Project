@@ -1,3 +1,137 @@
 page-about {
+  font-family: 'Open Sans', sans-serif;
 
+  .splash-bg {
+    position: relative;
+    background: url('../assets/img/splashbg.jpeg') no-repeat transparent;
+    background-position: top center;
+    background-size: cover;
+    height: 100%;
+    z-index: 1;
+    background-repeat: repeat-x;
+    overflow:hidden;
+  }
+
+  @keyframes animatedBackground {
+    from { background-position: 0 0; }
+    to { background-position: 100% 0; }
+  }
+
+  ion-header {
+    .toolbar {
+      position: absolute;
+
+      .toolbar-background {
+        background: transparent;
+      }
+      .toolbar-title {
+        color: white;
+        font-size: 20px;
+      }
+    }
+  }
+
+  .custom-icon{
+    color:white;
+  }
+
+
+  .splash-info {
+    position: relative;
+    z-index: 2;
+    margin-top: -64px;
+    text-align: center;
+  }
+
+  .splash-logo {
+    margin: auto;
+    background: url('../assets/img/appicon.png') repeat transparent;
+    background-size: 100%;
+    z-index: 3;
+    width: 128px;
+    height: 128px;
+  }
+
+  .splash-intro {
+    font-size: 18px;
+    font-weight: bold;
+    max-width: 80%;
+    margin: auto;
+    margin-top: -20px;
+  }
+
+
+  .signup {
+    background-color: color($colors, button, base);
+    width: 95%;
+    color: white;
+  }
+  .signup:hover {
+    background: color($colors, buttonActivated, base);
+    color: white;
+  }
+
+  .login {
+   width: 95%;
+   background: transparent;
+   color: white;
+  }
+  .login-icon {
+    padding-left: 5px
+  }
+
+  .container {
+      margin: 300px 100px 0 100px;
+  }
+  .about {
+    text-align: center;
+    font-size: 18px;
+    //color: white;
+    padding: 10px 10px 10px 10px;
+    background: lightgrey;
+  }
+
+  .footer{
+    position:fixed;
+    bottom: 0;
+    text-align: center;
+    height: 30px;
+    background: color($colors, button, base);
+  }
+
+
+  .copyright{
+    text-align: end;
+    margin: 5px 10px 0px 10px;
+    font-size: 16px;
+    color: white;
+  }
+
+
+  // mobile devices
+  @media (min-width: 768px) {
+    .show-small{
+      display: none;
+    }
+
+  }
+
+  // desktop/tablet
+  @media (max-width: 768px){
+    .hide-small {
+      display: none;
+    }
+    .welcome-text {
+      display: block;
+      margin-left: 0;
+      text-align: center;
+
+      .typed {
+        font-size: 30px;
+      }
+      .typed-cursor {
+        font-size: 30px;
+      }
+    }
+  }
 }
