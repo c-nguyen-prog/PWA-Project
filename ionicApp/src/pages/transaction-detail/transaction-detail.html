@@ -1,0 +1,28 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>{{'New Transaction'}}</ion-title>
+    <ion-buttons end>
+      <button (click)="close()" ion-button outline>
+        Close
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+  <br>
+  <ion-list>
+    <ion-item>
+      <h2>{{transaction.iban}}</h2>
+      <h3>{{transaction.relatedParty.name}}</h3>
+      <h3>{{transaction.amount.value}} </h3>
+      <h3>{{transaction.bookingDate}}</h3>
+      <h3>{{transaction.description}}</h3>
+
+
+    </ion-item>
+
+  </ion-list>
+</ion-content>

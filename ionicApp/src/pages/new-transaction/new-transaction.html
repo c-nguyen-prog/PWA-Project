@@ -1,0 +1,44 @@
+
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>New transaction</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <div class="new-transaction">
+    <form (submit)="addTransaction()">
+
+      <ion-list>
+        <ion-item>
+          <ion-label fixed>{{ 'Recipient' | translate }}</ion-label>
+          <ion-input type="text" name="recipient"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label fixed>{{ 'IBAN' | translate }}</ion-label>
+          <ion-input type="text"  name="iban"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label fixed>{{ 'Amount' | translate }}</ion-label>
+          <ion-input type="number"  name="amount"></ion-input>
+        </ion-item>      <ion-item>
+        <ion-label fixed>{{ 'Execution date' | translate }}</ion-label>
+        <ion-input type="Date"  name="bookingDate"></ion-input>
+      </ion-item>      <ion-item>
+        <ion-label fixed>{{ 'Description' | translate }}</ion-label>
+        <ion-input type="text"  name="description"></ion-input>
+      </ion-item>
+
+        <div class="accept-button" padding>
+          <button ion-button color="primary" block>{{ 'Accept' | translate }}</button>
+        </div>
+      </ion-list>
+
+    </form>
+  </div>
+</ion-content>
