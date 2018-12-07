@@ -1,10 +1,12 @@
-import { Component } from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { IonicPage, NavController, ToastController } from 'ionic-angular';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { User } from '../../providers';
 import { signup1 } from '../';
 import {signup2} from "../";
-
+import { AgeValidator } from  '../../validators/age';
+import { EmailValidator } from  '../../validators/email';
 
 import Hashes from "jshashes";
 
@@ -17,6 +19,70 @@ export class SignupPage2 {
   // The account fields for the login form.
   // If you're using the username field with or without email, make
   // sure to add it to the type
+  @ViewChild('signupSlider') signupSlider: any;
+  slideOneForm: FormGroup;
+  slideTwoForm: FormGroup;
+
+  submitAttempt: boolean = false;
+  constructor(public navCtrl: NavController, public formBuilder: FormBuilder) {
+
+    this.slideOneForm = formBuilder.group({
+      firstName: ['', Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z ]*'), Validators.required])],
+      lastName: ['', Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z ]*'), Validators.required])],
+      age: ['', AgeValidator.isValid]
+    });
+
+    this.slideTwoForm = formBuilder.group({
+      email: ['', Validators.compose([Validators.required, Validators.pattern('[a-zA-Z]*')]), EmailValidator.checkEmail],
+      privacy: ['', Validators.required],
+      bio: ['']
+    });
+
+  }
+
+
+
+
+
+
+  next(){
+    this.signupSlider.slideNext();
+  }
+
+  prev(){
+    this.signupSlider.slidePrev();
+  }
+
+  save(){
+
+    this.submitAttempt = true;
+
+    if(!this.slideOneForm.valid){
+      this.signupSlider.slideTo(0);
+    }
+    else if(!this.slideTwoForm.valid){
+      this.signupSlider.slideTo(1);
+    }
+    else {
+      console.log("success!")
+      console.log(this.slideOneForm.value);
+      console.log(this.slideTwoForm.value);
+    }
+
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
   account: {
     title: string,
     address: string,
@@ -33,7 +99,7 @@ export class SignupPage2 {
 
   // Our translated text strings
   private signupErrorString: string;
-
+/*
   constructor(public navCtrl: NavController,
 
               public toastCtrl: ToastController,
