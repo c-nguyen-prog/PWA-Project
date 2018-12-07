@@ -5,10 +5,6 @@ page-signup {
       margin: 0 auto;
     }
 
-    element {
-      margin-top: 19px;
-      margin-bottom: 29px;
-    }
     .signup-form {
       margin-top: 0px;
       bottom: 20px;
@@ -26,6 +22,41 @@ page-signup {
     }
 
   }
+
+  ion-header {
+    .toolbar {
+      position: absolute;
+
+      .toolbar-background {
+        background: transparent;
+      }
+      .toolbar-title {
+        color: white;
+        font-size: 20px;
+      }
+      ion-icon.back-button-icon.icon {
+        color: white;
+      }
+    }
+  }
+
+  .splash-bg {
+    position: relative;
+    background: url('../assets/img/splashbg.jpeg') no-repeat transparent;
+    background-position: top center;
+    background-size: cover;
+    height: 100%;
+    z-index: 1;
+    background-repeat: repeat-x;
+    overflow:hidden;
+  }
+
+  @media (max-width: 768px){
+    .hide-small {
+      display: none;
+    }
+  }
+
   }
   .button-md-primary {
 
@@ -56,8 +87,3 @@ page-signup {
     text-transform: none;
 
   }
-
-element {
-  margin-top: 19px;
-  margin-bottom: 29px;
-}
