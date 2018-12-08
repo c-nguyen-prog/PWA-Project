@@ -40,6 +40,10 @@ page-signup {
     }
   }
 
+  .custom-icon{
+    color:white;
+  }
+
   .splash-bg {
     position: relative;
     background: url('../assets/img/splashbg.jpeg') no-repeat transparent;
@@ -55,6 +59,13 @@ page-signup {
     .hide-small {
       display: none;
     }
+  }
+  // mobile devices
+  @media (min-width: 768px) {
+    .show-small{
+      display: none;
+    }
+
   }
   .login {
     background: transparent;
