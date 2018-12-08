@@ -7,8 +7,11 @@
   "PASSWORD": "Passwort",
   "EMAIL": "E-Mail",
   "USERNAME": "Benutzername",
+
   "LOGIN": "Anmelden",
   "SIGNUP": "Registrieren",
+  "CONTACTUS": "Kontakt",
+  "ABOUTUS": "Über uns",
 
   "TAB1_TITLE": "Items",
   "TAB2_TITLE": "Suche",

@@ -56,7 +56,22 @@ page-signup {
       display: none;
     }
   }
-
+  .login {
+    background: transparent;
+    color: white;
+    box-shadow: none !important;
+  }
+  .login-icon {
+    padding-left: 5px
+  }
+  .signup {
+    background-color: color($colors, button, base);
+    color: white;
+  }
+  .signup:hover {
+    background: color($colors, buttonActivated, base);
+    color: white;
+  }
   }
   .button-md-primary {
 

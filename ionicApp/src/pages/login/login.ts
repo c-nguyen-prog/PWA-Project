@@ -15,7 +15,6 @@ export class LoginPage {
   // The account fields for the login form.
   // If you're using the username field with or without email, make
   // sure to add it to the type
-
   account: {
     email: string,
     password: string
@@ -94,8 +93,19 @@ export class LoginPage {
     });
   }
 
+  login() {
+    this.navCtrl.push('LoginPage');
+  }
 
   signup() {
     this.navCtrl.push('SignupPage');
+  }
+
+  contact(){
+    this.navCtrl.push('ContactPage')
+  }
+
+  about(){
+    this.navCtrl.push('AboutPage')
   }
 }

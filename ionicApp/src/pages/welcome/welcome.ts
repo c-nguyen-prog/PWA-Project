@@ -40,4 +40,12 @@ export class WelcomePage {
     this.navCtrl.push('SignupPage');
   }
 
+  contact(){
+    this.navCtrl.push('ContactPage')
+  }
+
+  about(){
+    this.navCtrl.push('AboutPage')
+  }
+
 }

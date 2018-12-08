@@ -6,8 +6,11 @@
   "PASSWORD": "Password",
   "EMAIL": "Email",
   "USERNAME": "Username",
+
   "LOGIN": "Sign in",
   "SIGNUP": "Sign up",
+  "CONTACTUS": "Contact us",
+  "ABOUTUS": "About us",
 
   "TAB1_TITLE": "Items",
   "TAB2_TITLE": "Search",
