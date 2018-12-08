@@ -32,75 +32,73 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content class="signup-content">
+<ion-content scroll="false">
   <div class="splash-bg">
     <div class="signup-form">
     <form (submit)="doSignup()">
       <ion-list>
-        <ion-item>
-          <ion-label fixed>{{ 'Title' | translate }}</ion-label>
-          <ion-input type="text" [(ngModel)]="account.title" name="title"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label fixed>{{ 'NAME' | translate }}</ion-label>
-          <ion-input type="text" [(ngModel)]="account.name" name="firstName"></ion-input>
-        </ion-item>
+        <ion-list>
+          <ion-item>
+            <ion-label fixed>{{ 'Title' | translate }}</ion-label>
+            <ion-input type="text" [(ngModel)]="account.title" name="title"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label fixed>{{ 'NAME' | translate }}</ion-label>
+            <ion-input type="text" [(ngModel)]="account.name" name="firstName"></ion-input>
+          </ion-item>
 
-        <ion-item>
-          <ion-label fixed>{{ 'Surname' | translate }}</ion-label>
-          <ion-input type="text" [(ngModel)]="account.surName" name="lastName"></ion-input>
-        </ion-item>
+          <ion-item>
+            <ion-label fixed>{{ 'SURNAME' | translate }}</ion-label>
+            <ion-input type="text" [(ngModel)]="account.surName" name="lastName"></ion-input>
+          </ion-item>
 
-        <ion-item>
-          <ion-label fixed>{{ 'Date of birth' | translate }}</ion-label>
-          <ion-input type="text" [(ngModel)]="account.birthdate" name="birthdate"></ion-input>
-        </ion-item>
-
-        <ion-item>
-          <ion-label fixed>{{ 'EMAIL' | translate }}</ion-label>
-          <ion-input type="email" [(ngModel)]="account.email" name="email"></ion-input>
-        </ion-item>
-
-        <!--
-        Want to add a Username? Here you go:
-
-        <ion-item>
-          <ion-label floating>Username</ion-label>
-          <ion-input type="text" [(ngModel)]="account.username" name="username"></ion-input>
-        </ion-item>
-        -->
-
-        <ion-item>
-          <ion-label fixed>{{ 'PASSWORD' | translate }}</ion-label>
-          <ion-input type="password" [(ngModel)]="account.password" name="password"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label fixed>{{ 'Telephone' | translate }}</ion-label>
-          <ion-input type="tel" [(ngModel)]="account.phone" name="phone"></ion-input>
-        </ion-item>
-
-        <ion-item>
-          <ion-label fixed>{{ 'Address' | translate }}</ion-label>
-          <ion-input type="text" [(ngModel)]="account.address" name="address"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label fixed>{{ 'Zipcode' | translate }}</ion-label>
-          <ion-input type="text" [(ngModel)]="account.zipcode" name="zipcode"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label fixed>{{ 'City' | translate }}</ion-label>
-          <ion-input type="text" [(ngModel)]="account.city" name="city"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label fixed>{{ 'TIN' | translate }}</ion-label>
-          <ion-input type="text" [(ngModel)]="account.tin" name="tin"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label fixed>{{ 'Nationality' | translate }}</ion-label>
-          <ion-input type="text" [(ngModel)]="account.nationality" name="nationality"></ion-input>
-        </ion-item>
-          <button ion-button color="primary" block>{{ 'SIGNUP_BUTTON' | translate }}</button>
+          <ion-item>
+            <ion-label fixed>{{ 'DOB' | translate }}</ion-label>
+            <ion-input type="text" [(ngModel)]="account.birthdate" name="birthdate"></ion-input>
+          </ion-item>
+        </ion-list>
+        <ion-list>
+          <ion-item>
+            <ion-label fixed>{{ 'EMAIL' | translate }}</ion-label>
+            <ion-input type="email" [(ngModel)]="account.email" name="email"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label fixed>{{ 'PASSWORD' | translate }}</ion-label>
+            <ion-input type="password" [(ngModel)]="account.password" name="password"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label fixed>{{ 'PHONE' | translate }}</ion-label>
+            <ion-input type="tel" [(ngModel)]="account.phone" name="phone"></ion-input>
+          </ion-item>
+        </ion-list>
+        <ion-list>
+          <ion-item>
+            <ion-label fixed>{{ 'ADDRESS' | translate }}</ion-label>
+            <ion-input type="text" [(ngModel)]="account.address" name="address"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label fixed>{{ 'ZIP' | translate }}</ion-label>
+            <ion-input type="text" [(ngModel)]="account.zipcode" name="zipcode"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label fixed>{{ 'CITY' | translate }}</ion-label>
+            <ion-input type="text" [(ngModel)]="account.city" name="city"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label fixed>{{ 'TIN' | translate }}</ion-label>
+            <ion-input type="text" [(ngModel)]="account.tin" name="tin"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label fixed>{{ 'NATIONALITY' | translate }}</ion-label>
+            <ion-input type="text" [(ngModel)]="account.nationality" name="nationality"></ion-input>
+          </ion-item>
+        </ion-list>
+      <div class="login-button" padding>
+        <button ion-button color="primary" class="signup" round>{{ 'SIGNUP_BUTTON' | translate }}</button>
+      </div>
       </ion-list>
+
+
     </form>
     </div>
   </div>

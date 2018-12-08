@@ -1,21 +1,37 @@
 page-signup {
 
   @media (min-width: 994px) {
-    .signup-content {
-      margin: 0 auto;
-    }
-
     .signup-form {
-      margin-top: 0px;
-      bottom: 20px;
-      height: 200px;
-      width: 40%;
-    }
-    .signup-button {
-      background-color: #4494c5;
       padding-top: 25px;
       bottom: 20px;
-      width: 80%;
+
+      height: 200px;
+      width: 30%;
+      margin: 0 auto;
+    }
+    .signup-button {
+      padding-top: 25px;
+      bottom: 20px;
+      width: 60%;
+      height: 200px;
+
+      margin: 0 auto;
+    }
+  }
+
+  @media (max-width: 994px) {
+    .signup-form{
+      max-width: 290px;
+      padding-top: 25px;
+      bottom: 20px;
+
+      height: 200px;
+      margin: 0 auto;
+    }
+    .signup-button {
+      padding-top: 25px;
+      bottom: 20px;
+      width: 60%;
       height: 200px;
 
       margin: 0 auto;
@@ -44,6 +60,24 @@ page-signup {
     color:white;
   }
 
+
+  ion-item:first-child {
+    border-top-left-radius: 7px;
+    border-top-right-radius: 7px;
+  }
+  ion-item:last-child {
+    border-bottom-left-radius: 7px;
+    border-bottom-right-radius: 7px;
+  }
+  ion-item.item {
+    background-color: rgba(255, 255, 255, 0.7);
+    .label {
+      width: 10%;
+      color: black;
+      font-size: 1.2em;
+    }
+  }
+
   .splash-bg {
     position: relative;
     background: url('../assets/img/splashbg.jpeg') no-repeat transparent;
@@ -67,6 +101,11 @@ page-signup {
     }
 
   }
+
+  .signup-form {
+    padding-top: 200px !important;
+  }
+
   .login {
     background: transparent;
     color: white;
@@ -83,11 +122,13 @@ page-signup {
     background: color($colors, buttonActivated, base);
     color: white;
   }
+
+  .signup-button{
+
   }
   .button-md-primary {
-
     color: #fff;
-    background-color: #4494c5;
+    background-color: #3a558c;
     width: 95%;
   }
 
@@ -98,10 +139,17 @@ page-signup {
 
   .item-md.item-input.ng-valid.item-input-has-value:not(.input-has-focus):not(.item-input-has-focus) .item-inner, .item-md.item-input.ng-valid.input-has-value:not(.input-has-focus):not(.item-input-has-focus) .item-inner {
 
-    border-bottom-color: #4aaadc;
-    -webkit-box-shadow: inset 0 -1px 0 0 #4aaadc;
-    box-shadow: inset 0 -1px 0 0 #4aaadc;
+    border-bottom-color: #4482c1;
+    -webkit-box-shadow: inset 0 -1px 0 0 #4482c1;
+    box-shadow: inset 0 -1px 0 0 #4482c1;
 
+  }
+
+
+  page-login .item-md.item-input.ng-valid.item-input-has-value:not(.input-has-focus):not(.item-input-has-focus) .item-inner, page-login .item-md.item-input.ng-valid.input-has-value:not(.input-has-focus):not(.item-input-has-focus) .item-inner {
+    width: 95%;
+    margin-left: 2.4%;
+    margin-right: 2.4%;
   }
 
   .item-md {
@@ -111,5 +159,5 @@ page-signup {
     font-size: 1.6rem;
     font-weight: normal;
     text-transform: none;
-
   }
+}
