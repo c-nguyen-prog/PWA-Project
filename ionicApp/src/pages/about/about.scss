@@ -89,12 +89,12 @@ page-about {
       margin: 100px 0px 0px 0px;
   }
   .about {
-    text-align: center;
+    text-align: justify;
     font-size: 18px;
-    //color: white;
     padding: 10px 10px 10px 10px;
-    background: lightgrey;
-  }
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 0 40px -10px #000000;  }
 
   .footer{
     position:fixed;
