@@ -6,7 +6,6 @@ import tornado.httpserver
 import tornado.escape
 import tornado.websocket
 import json
-import os
 import bcrypt
 import motor.motor_tornado
 from concurrent.futures import ThreadPoolExecutor
@@ -165,7 +164,7 @@ class SignUpHandler(tornado.web.RequestHandler):
     }
     """
     async def post(self):
-        data = json.loads(self.request.body)                                           # Get body of POST request
+        data = json.loads(self.request.body)                                       # Get body of POST request
         print("Request from client: " + str(data))
         executor.submit(await self.check(data))
 
@@ -217,10 +216,8 @@ class SignUpHandler(tornado.web.RequestHandler):
                                                   },
                                                   "tax_id": tin,
                                                   "nationality": nationality,
-                                                  "bank": {
-                                                      "iban": "iban",              # TODO: Generate IBAN
-                                                      "balance": 0
-                                                  },
+                                                  "iban": "iban",                       # TODO: Generate IBAN
+                                                  "balance": 0,
                                                   "type": "user",
                                                   "status": "pending",
                                                   "pending_transaction": []
@@ -233,8 +230,8 @@ class SignUpHandler(tornado.web.RequestHandler):
             print(json_response)
             self.finish()
 
-
 class TransactionHandler(tornado.web.RequestHandler):
+
     def set_default_headers(self):
         self.set_header("Access-Control-Allow-Origin", "*")
         self.set_header("Access-Control-Allow-Headers", "x-requested-with")
@@ -250,41 +247,55 @@ class TransactionHandler(tornado.web.RequestHandler):
     {
         "source": source_username,
         "destination": destination_username,
-        "amount": amount
-        "date": date
+        "amount": amount,
+        "date": date,
         "reference": reference
     }
     """
     async def post(self):
-        data = json.loads(self.request.body)
+        data = json.loads(self.request.body)                                   # Get json request for transaction
+        print(data)
         source = data["source"]
         destination = data["destination"]
         amount = data["amount"]
         date = data["date"]
         reference = data["reference"]
-        client = motor.motor_tornado.MotorClient('mongodb://localhost:27017')  # Connect to MongoDB server
-        db = client.progappjs                                                  # Get database progappjs
         transaction = {"source": source,                                       # Create new transaction, status initial
                        "destination": destination,
                        "amount": amount,
                        "date": date,
                        "reference": reference,
                        "status": "initial"}
-        db.transactions.insert_one(transaction)                                # Add new transaction to db
-        executor.submit(await self.pending_transaction(transaction))
-        executor.submit(await self.commit_transaction(transaction))
 
+        client = motor.motor_tornado.MotorClient('mongodb://localhost:27017')  # Connect to MongoDB server
+        db = client.progappjs                                                  # Get database progappjs
+        db.transactions.insert_one(transaction)                                # Add new transaction to db
+
+        executor.submit(await self.pending_transaction(transaction))
+
+        source = await db.users.find_one({"username": transaction["source"]})
+        if source["balance"] >= transaction["amount"]:
+            executor.submit(await self.do_transaction(transaction))
 
     async def pending_transaction(self, transaction):
         client = motor.motor_tornado.MotorClient('mongodb://localhost:27017')  # Connect to MongoDB server
         db = client.progappjs                                                  # Get transactions collection
-        update_transaction = await db.transactions.update_one(
-            {"_id": transaction["_id"]}, {"$set": {"status": "pending"}})
+        source = await db.users.find_one({"username": transaction["source"]})
+        if source["balance"] >= transaction["amount"]:
+            update_transaction = await db.transactions.update_one(
+                {"_id": transaction["_id"]}, {"$set": {"status": "pending"}})
+        else:
+            print("Source is BROKE, transaction canceled")
+            update_transaction = await db.transactions.update_one(
+                {"_id": transaction["_id"]}, {"$set": {"status": "cancelled"}})
+
+    async def do_transaction(self, transaction):
+        client = motor.motor_tornado.MotorClient('mongodb://localhost:27017')  # Connect to MongoDB server
+        db = client.progappjs                                                  # Get transactions collection
 
         update_source = await db.users.update_one(
             {"username": transaction["source"],
-             "pending_transaction": {"$ne": transaction["_id"]},
-             "balance": {"$gte" : transaction["amount"]}},
+             "pending_transaction": {"$ne": transaction["_id"]}},
             {"$inc": {"balance": -transaction["amount"]},
              "$push": {"pending_transaction": transaction["_id"]}})
 
@@ -294,9 +305,6 @@ class TransactionHandler(tornado.web.RequestHandler):
             {"$inc": {"balance": +transaction["amount"]},
              "$push": {"pending_transaction": transaction["_id"]}})
 
-    async def commit_transaction(self, transaction):
-        client = motor.motor_tornado.MotorClient('mongodb://localhost:27017')  # Connect to MongoDB server
-        db = client.progappjs                                                  # Get database progappjs
         update_transaction = await db.transactions.update_one(
             {"_id": transaction["_id"]}, {"$set": {"status": "committed"}})
 

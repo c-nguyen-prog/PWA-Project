@@ -1,6 +1,5 @@
 page-login {
 
-
   @media (min-width: 994px) {
     .login-form {
       padding-top: 25px;
@@ -13,11 +12,33 @@ page-login {
     .login-button {
       padding-top: 25px;
       bottom: 20px;
-      width: 80%;
+      width: 60%;
+      min-width: 200px;
       height: 200px;
 
       margin: 0 auto;
     }
+  }
+
+  @media (max-width: 994px) {
+    .login-form{
+      max-width: 290px;
+      padding-top: 25px;
+      bottom: 20px;
+
+      height: 200px;
+      margin: 0 auto;
+    }
+    .login-button {
+      padding-top: 25px;
+      bottom: 20px;
+      width: 60%;
+      min-width: 200px;
+      height: 200px;
+
+      margin: 0 auto;
+    }
+
   }
 
   ion-header {
@@ -31,12 +52,43 @@ page-login {
         color: white;
         font-size: 20px;
       }
+      ion-icon.back-button-icon.icon {
+        color: white;
+      }
     }
+  }
+
+  .custom-icon{
+    color:white;
+  }
+
+  ion-item:first-child {
+    border-top-left-radius: 7px;
+    border-top-right-radius: 7px;
+  }
+  ion-item:last-child {
+    border-bottom-left-radius: 7px;
+    border-bottom-right-radius: 7px;
+  }
+  ion-item.item {
+    background-color: white;
+    .label {
+      width: 10%;
+      color: black;
+      font-size: 1.2em;
+    }
+  }
+
+  .login{
+    width: 30%;
+  }
+
+  .label-password{
+    box-shadow: none !important;
   }
 
   .signup {
     background-color: color($colors, button, base);
-    margin-right: 150px;
     color: white;
   }
   .signup:hover {
@@ -92,6 +144,13 @@ page-login {
     font-size: 1.6rem;
     font-weight: normal;
     text-transform: none;
+
+  }
+  // mobile devices
+  @media (min-width: 768px) {
+    .show-small{
+      display: none;
+    }
 
   }
   @media (max-width: 768px){

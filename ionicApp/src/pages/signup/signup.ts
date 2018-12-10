@@ -4,7 +4,6 @@ import { IonicPage, NavController, ToastController } from 'ionic-angular';
 import { User } from '../../providers';
 import { MainPage } from '../';
 
-
 import Hashes from "jshashes";
 
 @IonicPage()
@@ -79,5 +78,21 @@ export class SignupPage {
       });
       toast.present();
     });
+  }
+
+  login() {
+    this.navCtrl.push('LoginPage');
+  }
+
+  signup() {
+    this.navCtrl.push('SignupPage');
+  }
+
+  contact(){
+    this.navCtrl.push('ContactPage')
+  }
+
+  about(){
+    this.navCtrl.push('AboutPage')
   }
 }

@@ -6,8 +6,19 @@
   "PASSWORD": "Password",
   "EMAIL": "Email",
   "USERNAME": "Username",
+
   "LOGIN": "Sign in",
   "SIGNUP": "Sign up",
+  "CONTACTUS": "Contact us",
+  "ABOUTUS": "About us",
+  "SURNAME": "Surname",
+  "DOB": "Date of birth",
+  "PHONE": "Phone",
+  "ADDRESS": "Address",
+  "ZIP": "Post code",
+  "CITY": "Domicile",
+  "TIN": "Tax ID",
+  "NATIONALITY": "Nationality",
 
   "TAB1_TITLE": "Items",
   "TAB2_TITLE": "Search",
@@ -29,7 +40,6 @@
 
 
   "WELCOME_INTRO": "Digibank",
-  "ABOUT_US": "An online banking project - FRA UAS ",
 
 
   "SETTINGS_TITLE": "Settings",
@@ -74,5 +84,8 @@
   "CARDS_TITLE": "Social",
 
   "SEARCH_TITLE": "Search",
-  "SEARCH_PLACEHOLDER": "Search the items list, e.g. \"Donald Duck\""
+  "SEARCH_PLACEHOLDER": "Search the items list, e.g. \"Donald Duck\"",
+
+  "ABOUT_US": "Welcome to DIGIBANK, your number one source for all online Banking things. We are dedicated to giving you the very best of Bank account, with a focus on security on your money and great customer service. Founded in 2018 by Chi, Raakulan, Santiago and Simon, DIGIBANK has come a long way from its beginnings in from Frankfurt University of Applied Sciences. When we started our project, we thought about all the other provider and decided to implement a new unique online Banking, where the Customer is our first priority. We now serve customers all over Germany, and are thrilled to be a part of the new outstanding wing of the finance industry. We hope you enjoy our product as much as we enjoy offering them to you. If you have any questions or comments, please do not hesitate to contact us. Sincerely, DIGIBANK Team"
+
 }

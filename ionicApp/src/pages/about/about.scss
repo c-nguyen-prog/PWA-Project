@@ -28,6 +28,9 @@ page-about {
         color: white;
         font-size: 20px;
       }
+      ion-icon.back-button-icon.icon {
+        color: white;
+      }
     }
   }
 
@@ -63,7 +66,6 @@ page-about {
 
   .signup {
     background-color: color($colors, button, base);
-    width: 95%;
     color: white;
   }
   .signup:hover {
@@ -72,24 +74,27 @@ page-about {
   }
 
   .login {
-   width: 95%;
-   background: transparent;
-   color: white;
+    background: transparent;
+    color: white;
+    box-shadow: none !important;
   }
   .login-icon {
     padding-left: 5px
   }
 
+
   .container {
-      margin: 300px 100px 0 100px;
+      width: 100%;
+      height: 50px;
+      margin: 100px 0px 0px 0px;
   }
   .about {
-    text-align: center;
+    text-align: justify;
     font-size: 18px;
-    //color: white;
     padding: 10px 10px 10px 10px;
-    background: lightgrey;
-  }
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 0 40px -10px #000000;  }
 
   .footer{
     position:fixed;
