@@ -7,13 +7,15 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { IonicStorageModule, Storage } from '@ionic/storage';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
-
+import { IonicApp, IonicErrorHandler, IonicModule,  } from 'ionic-angular';
+//import { RouterModule, RouteReuseStrategy, Routes } from '@angular/router';
 import { Items } from '../mocks/providers/items';
 import { Settings, User, Api } from '../providers';
-import { MyApp } from './app.component';
+import { AppComponent } from './app.component';
 import {SignupPage} from "../pages/signup/signup";
 import {SignupPage2} from "../pages/signup2/signup2";
+//import {IonicRouteStrategy} from "@ionic/angular";
+//import { AppRoutingModule } from './app-routing.module';
 
 // The translate loader needs to know where to load i18n files
 // in Ionic's static asset pipeline.
@@ -38,10 +40,12 @@ export function provideSettings(storage: Storage) {
 
 @NgModule({
   declarations: [
-    MyApp
-  ],
+    AppComponent
+  , AppComponent],
   imports: [
     BrowserModule,
+   // AppRoutingModule,
+    IonicStorageModule.forRoot(),
     HttpClientModule,
     TranslateModule.forRoot({
       loader: {
@@ -50,12 +54,12 @@ export function provideSettings(storage: Storage) {
         deps: [HttpClient]
       }
     }),
-    IonicModule.forRoot(MyApp),
+    IonicModule.forRoot(AppComponent),
     IonicStorageModule.forRoot()
   ],
   bootstrap: [IonicApp],
   entryComponents: [
-    MyApp
+    AppComponent
   ],
   providers: [
     Api,
@@ -63,6 +67,7 @@ export function provideSettings(storage: Storage) {
     User,
     Camera,
     SplashScreen,
+  //  { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     StatusBar,
     { provide: Settings, useFactory: provideSettings, deps: [Storage] },
     // Keep this to enable Ionic's runtime error handling during development

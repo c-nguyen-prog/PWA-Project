@@ -26,17 +26,20 @@ import { Settings } from '../providers';
   </ion-menu>
   <ion-nav #content [root]="rootPage"></ion-nav>`
 })
-export class MyApp {
+export class AppComponent {
   rootPage = FirstRunPage;
 
   @ViewChild(Nav) nav: Nav;
 
+
   pages: any[] = [
+    { title: 'Home', component: 'WelcomePage'},
     { title: 'Login', component: 'LoginPage' },
     { title: 'Signup', component: 'SignupPage' },
     { title: 'About Us', component: 'AboutPage'},
     { title: 'Contact', component: 'ContactPage'},
   ]
+
 
   constructor(private translate: TranslateService, platform: Platform, settings: Settings, private config: Config, private statusBar: StatusBar, private splashScreen: SplashScreen) {
     platform.ready().then(() => {
