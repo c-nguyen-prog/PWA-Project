@@ -16,7 +16,7 @@
   "PHONE": "Phone",
   "ADDRESS": "Address",
   "ZIP": "Post code",
-  "CITY": "Domicile",
+  "CITY": "City",
   "TIN": "Tax ID",
   "NATIONALITY": "Nationality",
 
@@ -40,7 +40,6 @@
 
 
   "WELCOME_INTRO": "Digibank",
-  "ABOUT_US": "An online banking project - FRA UAS ",
 
 
   "SETTINGS_TITLE": "Settings",
