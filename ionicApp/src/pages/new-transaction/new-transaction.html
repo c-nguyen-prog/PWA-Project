@@ -33,10 +33,19 @@
         <ion-label fixed>{{ 'Description' | translate }}</ion-label>
         <ion-input type="text"  name="description"></ion-input>
       </ion-item>
+        <ion-item>
+          <ion-label>Execution mode</ion-label>
+          <ion-select >
+            <ion-option>As soon as possible</ion-option>
+            <ion-option>Future date</ion-option>
+            <ion-option>Standing order</ion-option>
+
+          </ion-select>
+        </ion-item>
 
         <div class="buttons" padding align="center">
-          <button class="buttonerino" ion-button color="secondary" block>{{ 'Accept' | translate }}</button>
-          <button class="buttonerino"  ion-button color="secondary" block>{{ 'Cancel' | translate }}</button>
+          <button class="buttonerino" ion-button  block>{{ 'Accept' | translate }}</button>
+          <button class="buttonerino"  ion-button  block>{{ 'Cancel' | translate }}</button>
         </div>
       </ion-list>
 
