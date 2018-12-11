@@ -26,21 +26,25 @@
         <ion-item>
           <ion-label fixed>{{ 'Amount' | translate }}</ion-label>
           <ion-input type="number"  name="amount"></ion-input>
-        </ion-item>      <ion-item>
-        <ion-label fixed>{{ 'Execution date' | translate }}</ion-label>
-        <ion-input type="Date"  name="bookingDate"></ion-input>
-      </ion-item>      <ion-item>
+        </ion-item>
+        <ion-item>
         <ion-label fixed>{{ 'Description' | translate }}</ion-label>
         <ion-input type="text"  name="description"></ion-input>
       </ion-item>
         <ion-item>
-          <ion-label>Execution mode</ion-label>
-          <ion-select >
-            <ion-option>As soon as possible</ion-option>
-            <ion-option>Future date</ion-option>
-            <ion-option>Standing order</ion-option>
+          <ion-label >Execution mode</ion-label>
+          <ion-select [(ngModel)]="execMode" name="now" >
+            <ion-option value="now" onclick="setExecNow(true)">As soon as possible</ion-option>
+            <ion-option value="future" onclick="setExecNow(false)">Future date</ion-option>
+            <ion-option value="standing" onclick="setExecNow(false)">Standing order</ion-option>
 
           </ion-select>
+        </ion-item>
+        <ion-item>
+          <ion-label  fixed>{{ 'Execution date' | translate }}</ion-label>
+          <ion-input [disabled]="!execNow" type="Date">
+
+          </ion-input>
         </ion-item>
 
         <div class="buttons" padding align="center">
