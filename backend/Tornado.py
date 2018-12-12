@@ -39,13 +39,8 @@ class WebSocket(tornado.websocket.WebSocketHandler):
 
 
 class MainHandler(tornado.web.RequestHandler):
-    @tornado.gen.coroutine
     def get(self):
         self.write("visit /api for api")
-
-    def post(self):
-        date = str(self.get_body_arguments("date", True))[2:-2]
-        result = "Nothing started"
 
 
 class UserHandler(tornado.web.RequestHandler):
@@ -57,7 +52,11 @@ class UserHandler(tornado.web.RequestHandler):
 
 
 """
-Function to handle login process
+Function to handle login process, json format:
+    {
+        "email": email,
+        "password": password
+    }
 """
 class LogInHandler(tornado.web.RequestHandler):
     def set_default_headers(self):
@@ -69,14 +68,7 @@ class LogInHandler(tornado.web.RequestHandler):
     def get(self):
         print("get")
 
-    """ 
-    Function to handle HTTP POST Request for Log in from Client side
-    json format:
-    {
-        "email": email,
-        "password": password
-    }
-    """
+    # Function to handle HTTP POST Request for Log in from Client side
     async def post(self):
 
         data = json.loads(self.request.body)                                       # Get body of POST request
@@ -143,7 +135,21 @@ class LogInHandler(tornado.web.RequestHandler):
 
 
 """
-Function to handle sign up process
+Function to handle sign up request, TEMP json format: 
+{
+    title = data["title"]
+    first_name = data["name"]
+    last_name = data["surName"]
+    birthday = data["birthdate"]
+    email = data["email"]
+    password = data["password"]
+    phone = data["phone"]
+    address = data["address"]
+    zip = data["zipcode"]
+    city = data["city"]
+    tin = data["tin"]
+    nationality = data["nationality"]
+}
 """
 class SignUpHandler(tornado.web.RequestHandler):
     def set_default_headers(self):
@@ -155,15 +161,7 @@ class SignUpHandler(tornado.web.RequestHandler):
     def get(self):
         print("get")
 
-    """
-    Function to handle HTTP POST Request for Sign up from client
-    json format: (temp)
-    {
-        "name": name,
-        "email": email,
-        "password": password
-    }
-    """
+    # Function to handle HTTP POST Request for Sign up from client
     async def post(self):
         data = json.loads(self.request.body)                                       # Get body of POST request
         print("Request from client: " + str(data))
@@ -231,6 +229,17 @@ class SignUpHandler(tornado.web.RequestHandler):
             print(json_response)
             self.finish()
 
+"""
+Function to handle request for a transaction, json format: 
+{
+    "source": source_username,
+    "destination": destination_username,
+    "amount": amount,
+    "type": type (now/date/standing)
+    "date": date,
+    "reference": reference
+}
+"""
 class TransactionHandler(tornado.web.RequestHandler):
 
     def set_default_headers(self):
@@ -242,18 +251,6 @@ class TransactionHandler(tornado.web.RequestHandler):
     def get(self):
         pass
 
-    """
-    Function to handle HTTP POST Request for a transaction
-    json format: (temp)
-    {
-        "source": source_username,
-        "destination": destination_username,
-        "amount": amount,
-        "type": type,
-        "date": date,
-        "reference": reference
-    }
-    """
     async def post(self):
         data = json.loads(self.request.body)                                   # Get json request for transaction
         print(data)
@@ -285,6 +282,53 @@ class TransactionHandler(tornado.web.RequestHandler):
                 {"_id": transaction["_id"]}, {"$set": {"status": "pending"}})
 
 
+"""
+Function to handle request for user info, json format:
+{
+    "username": username,
+}
+"""
+class UserInfoHandler(tornado.web.RequestHandler):
+
+    def set_default_headers(self):
+        self.set_header("Access-Control-Allow-Origin", "*")
+        self.set_header("Access-Control-Allow-Headers", "x-requested-with")
+        self.set_header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS')
+        self.set_header("Access-Control-Allow-Headers", "access-control-allow-origin,authorization,content-type")
+
+    def get(self):
+        pass
+
+    # Function to handle HTTP POST Request for user info
+    async def post(self):
+        data = json.loads(self.request.body)                                   # Get json request for transaction
+        print(data)
+        username = data["username"]
+        client = motor.motor_tornado.MotorClient('mongodb://localhost:27017')  # Connect to MongoDB server
+        db = client.progappjs                                                  # Get database progappjs
+        document = await db.users.find_one({"username": username})             # Search username in DB
+        if document is not None:
+            name = document["name"]
+            address = document["address"]
+            json_response = {
+                "title": name["title"],
+                "last_name": name["last_name"],
+                "first_name": name["first_name"],
+                "birthday": document["birthday"],
+                "phone": document["phone"],
+                "tax_id": document["tax_id"],
+                "nationality": document["nationality"],
+                "address": address["address"],
+                "co": address["co"],
+                "zip": address["zip"],
+                "city": address["city"]
+            }
+            self.write(json.dumps(json_response))
+            self.set_header('Content-Type', 'application/json')
+            print(json_response)
+            self.finish()
+
+
 class Application(tornado.web.Application):
     def __init__(self):
 
@@ -295,6 +339,7 @@ class Application(tornado.web.Application):
             (r"/login", LogInHandler),
             (r"/signup", SignUpHandler),
             (r"/transaction", TransactionHandler),
+            (r"/userinfo", UserInfoHandler),
             # Add more paths here
         ]
 

@@ -1,10 +1,7 @@
 import sys
 import datetime
 import time
-import dateutil
 import pymongo
-import subprocess
-from subprocess import PIPE
 
 
 def increment_date(date):
@@ -49,10 +46,11 @@ def get_transactions():
     return pending_transactions
 
 
+# TODO: Error handling for wrong sender info
 def do_transaction(transaction):
     client = pymongo.MongoClient("mongodb://localhost:27017")
     db = client.progappjs
-    source =  source = db.users.find_one({"username": transaction["source"]})
+    source = db.users.find_one({"username": transaction["source"]})
 
     if source["balance"] >= transaction["amount"]:
         update_source = db.users.update_one(
@@ -86,27 +84,26 @@ def do_transaction(transaction):
         update_transaction = db.transactions.update_one(
             {"_id": transaction["_id"]}, {"$set": {"status": "cancelled"}})
 
+
 def do_standing_order(old_transaction):
-    print(old_transaction["date"])
-    new_date = increment_date(old_transaction["date"])
-    print(new_date)
-    new_transaction = {"source": old_transaction["source"],
-                   "destination": old_transaction["destination"],
-                   "amount": old_transaction["amount"],
-                   "type": old_transaction["type"],
-                   "date": new_date,
-                   "reference": old_transaction["reference"],
-                   "created_date": old_transaction["created_date"],
-                   "status": "pending"}
     client = pymongo.MongoClient("mongodb://localhost:27017")
     db = client.progappjs
+
+    new_date = increment_date(old_transaction["date"])
+    new_transaction = {"source": old_transaction["source"],
+                       "destination": old_transaction["destination"],
+                       "amount": old_transaction["amount"],
+                       "type": old_transaction["type"],
+                       "date": new_date,
+                       "reference": old_transaction["reference"],
+                       "created_date": old_transaction["created_date"],
+                       "status": "pending"}
     db.transactions.insert_one(new_transaction)
-    
     do_transaction(old_transaction)
 
 
 if __name__ == '__main__':
-
+    # TODO: ONLY RUNS ON WORK DAY!
     while True:
         now = datetime.datetime.now()
         pending_transactions = get_transactions()
