@@ -8,6 +8,7 @@ import tornado.websocket
 import json
 import bcrypt
 import motor.motor_tornado
+import datetime
 from concurrent.futures import ThreadPoolExecutor
 from tornado import options
 
@@ -248,6 +249,7 @@ class TransactionHandler(tornado.web.RequestHandler):
         "source": source_username,
         "destination": destination_username,
         "amount": amount,
+        "type": type,
         "date": date,
         "reference": reference
     }
@@ -258,67 +260,29 @@ class TransactionHandler(tornado.web.RequestHandler):
         source = data["source"]
         destination = data["destination"]
         amount = data["amount"]
+        type = data["type"]
         date = data["date"]
         reference = data["reference"]
         transaction = {"source": source,                                       # Create new transaction, status initial
                        "destination": destination,
                        "amount": amount,
+                       "type": type,
                        "date": date,
                        "reference": reference,
+                       "created_date": datetime.datetime.now(),
                        "status": "initial"}
 
         client = motor.motor_tornado.MotorClient('mongodb://localhost:27017')  # Connect to MongoDB server
         db = client.progappjs                                                  # Get database progappjs
         db.transactions.insert_one(transaction)                                # Add new transaction to db
-
-        executor.submit(await self.pending_transaction(transaction))
-
-        source = await db.users.find_one({"username": transaction["source"]})
-        if source["balance"] >= transaction["amount"]:
-            executor.submit(await self.do_transaction(transaction))
+        executor.submit(await self.pending_transaction(transaction))           # Set transaction as pending
 
     async def pending_transaction(self, transaction):
         client = motor.motor_tornado.MotorClient('mongodb://localhost:27017')  # Connect to MongoDB server
         db = client.progappjs                                                  # Get transactions collection
         source = await db.users.find_one({"username": transaction["source"]})
-        if source["balance"] >= transaction["amount"]:
-            update_transaction = await db.transactions.update_one(
+        update_transaction = await db.transactions.update_one(
                 {"_id": transaction["_id"]}, {"$set": {"status": "pending"}})
-        else:
-            print("Source is BROKE, transaction canceled")
-            update_transaction = await db.transactions.update_one(
-                {"_id": transaction["_id"]}, {"$set": {"status": "cancelled"}})
-
-    async def do_transaction(self, transaction):
-        client = motor.motor_tornado.MotorClient('mongodb://localhost:27017')  # Connect to MongoDB server
-        db = client.progappjs                                                  # Get transactions collection
-
-        update_source = await db.users.update_one(
-            {"username": transaction["source"],
-             "pending_transaction": {"$ne": transaction["_id"]}},
-            {"$inc": {"balance": -transaction["amount"]},
-             "$push": {"pending_transaction": transaction["_id"]}})
-
-        update_dest = await db.users.update_one(
-            {"username": transaction["destination"],
-             "pending_transaction": {"$ne": transaction["_id"]}},
-            {"$inc": {"balance": +transaction["amount"]},
-             "$push": {"pending_transaction": transaction["_id"]}})
-
-        update_transaction = await db.transactions.update_one(
-            {"_id": transaction["_id"]}, {"$set": {"status": "committed"}})
-
-        update_source = await db.users.update_one(
-            {"username": transaction["source"]},
-            {"$pull": {"pending_transaction": transaction["_id"]}})
-
-        update_dest = await db.users.update_one(
-            {"username": transaction["destination"]},
-            {"$pull": {"pending_transaction": transaction["_id"]}})
-
-        update_transaction = await db.transactions.update_one(
-            {"_id": transaction["_id"]},
-            {"$set": {"status": "done"}})
 
 
 class Application(tornado.web.Application):
