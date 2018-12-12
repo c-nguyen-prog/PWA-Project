@@ -16,20 +16,21 @@ import {setExistingDeepLinkConfig} from "@ionic/app-scripts/dist/deep-linking";
 })
 export class NewTransactionPage {
   execMode: string;
-  private execNow: boolean = true;
+  private execLater: boolean = false;
 
-  public setExecNow(value: boolean) {
-    this.execNow = value;
+  public setExecLater(value: boolean) {
+    this.execLater = value;
   }
 
-  public getExecNow(): boolean{
-    return this.getExecNow();
+  public getExecLater(): boolean{
+    return this.getExecLater();
   }
 
     public transaction: Transaction;
   constructor(public navCtrl: NavController, public navParams: NavParams) {
-    this.setExecNow(true);
+    this.setExecLater(false);
     this.execMode = "now";
+
   }
 
   ionViewDidLoad() {
