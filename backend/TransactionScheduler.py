@@ -21,13 +21,13 @@ def increment_date(date):
 
     elif date.month == 1:
         if date.year % 4:
-            if date.day > 27:
-                new_day = 28
+            if date.day > 28:
+                new_day = 29
             else:
                 new_day = date.day
         else:
-            if date.day > 26:
-                new_day = 27
+            if date.day > 27:
+                new_day = 28
             else:
                 new_day = date.day
 

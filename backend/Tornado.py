@@ -9,6 +9,8 @@ import json
 import bcrypt
 import motor.motor_tornado
 import datetime
+import random
+import pymongo
 from concurrent.futures import ThreadPoolExecutor
 from tornado import options
 
@@ -196,6 +198,8 @@ class SignUpHandler(tornado.web.RequestHandler):
         else:                                                                      # Username is available
             salt = bcrypt.gensalt()                                                # Generate a random salt
             hashed_pass = bcrypt.hashpw(password.encode("utf8"), salt)             # Hash the password with salt
+            generated_iban = self.generate_iban()
+            print(generated_iban)
             new_user = await db.users.insert_one({"_id": username,
                                                   "username": username,
                                                   "password": hashed_pass,
@@ -215,7 +219,7 @@ class SignUpHandler(tornado.web.RequestHandler):
                                                   },
                                                   "tax_id": tin,
                                                   "nationality": nationality,
-                                                  "iban": "iban",                       # TODO: Generate IBAN
+                                                  "iban": generated_iban,
                                                   "balance": 0,
                                                   "type": "user",
                                                   "status": "pending",
@@ -228,6 +232,31 @@ class SignUpHandler(tornado.web.RequestHandler):
             self.set_header('Content-Type', 'application/json')
             print(json_response)
             self.finish()
+
+    def generate_iban(self):
+        client = pymongo.MongoClient('mongodb://localhost:27017')           # Connect to MongoDB server
+        db = client.progappjs                                               # Get database progappjs
+        land_code = "131400"                                                # Land code: DE00
+        bank_code = "50030100"                                              # BLZ: 500 = Hessen, 3 = Privatbank, 0100
+        created = False
+        while not created:
+            random_number = random.sample(range(0, 10), 10)                 # 10-digit bank account number
+            account_number = ""
+            for number in random_number:
+                account_number += str(number)
+            temp_iban = bank_code + account_number + land_code              # 24-digit code
+            check_digit = 98 - int(temp_iban) % 97
+            if check_digit < 10:
+                check_digit = str(check_digit) + "0"
+            iban = "DE" + str(check_digit) + str(bank_code) + str(account_number)
+            document = db.users.find_one({"iban": iban})
+            if document is not None:                                        # if iban already existed in DB
+                created = False
+            else:
+                created = True
+
+        return iban
+
 
 """
 Function to handle request for a transaction, json format: 
@@ -329,6 +358,26 @@ class UserInfoHandler(tornado.web.RequestHandler):
             self.finish()
 
 
+class UserTransactionsHandler(tornado.web.RequestHandler):
+    def set_default_headers(self):
+        self.set_header("Access-Control-Allow-Origin", "*")
+        self.set_header("Access-Control-Allow-Headers", "x-requested-with")
+        self.set_header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS')
+        self.set_header("Access-Control-Allow-Headers", "access-control-allow-origin,authorization,content-type")
+
+    def get(self):
+        pass
+
+    # Function to handle HTTP POST Request for user info
+    async def post(self):
+        data = json.loads(self.request.body)                                   # Get json request for transaction
+        print(data)
+        username = data["username"]
+        client = motor.motor_tornado.MotorClient('mongodb://localhost:27017')  # Connect to MongoDB server
+        db = client.progappjs                                                  # Get database progappjs
+        document = await db.transactions.find_many({"username": username})     # Search username in DB
+
+
 class Application(tornado.web.Application):
     def __init__(self):
 
@@ -339,7 +388,8 @@ class Application(tornado.web.Application):
             (r"/login", LogInHandler),
             (r"/signup", SignUpHandler),
             (r"/transaction", TransactionHandler),
-            (r"/userinfo", UserInfoHandler),
+            (r"/user/info", UserInfoHandler),
+            (r"/user/transactions", UserTransactionsHandler)
             # Add more paths here
         ]
 
