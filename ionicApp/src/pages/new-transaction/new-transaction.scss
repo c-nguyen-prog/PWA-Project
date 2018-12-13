@@ -1,4 +1,14 @@
 page-new-transaction {
+
+  .quantity::-webkit-inner-spin-button,
+  .quantity::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  input[type="number"] {
+    -moz-appearance: textfield;
+  }
+
   .button-md-primary {
     color: #fff;
     background-color: #3a558c;
