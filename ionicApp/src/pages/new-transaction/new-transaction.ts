@@ -23,18 +23,18 @@ export class NewTransactionPage {
   }
 
   public getExecLater(): boolean{
-    return this.getExecLater();
+    return this.execLater;
   }
 
     public transaction: Transaction;
   constructor(public navCtrl: NavController, public navParams: NavParams) {
     this.setExecLater(false);
     this.execMode = "now";
-
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad NewTransactionPage');
+
   }
 
 }

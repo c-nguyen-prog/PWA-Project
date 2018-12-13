@@ -33,16 +33,16 @@
       </ion-item>
         <ion-item>
           <ion-label >Execution mode</ion-label>
-          <ion-select [(ngModel)]="execMode" name="now" >
-            <ion-option value="now"  onclick="setExecLater(false)" onselect="setExecLater(false)">As soon as possible</ion-option>
-            <ion-option value="future" onclick="setExecLater(true)" onselect="setExecLater(true)">Future date</ion-option>
-            <ion-option value="standing" onclick="setExecLater(true)" onselect="setExecLater(true)">Standing order</ion-option>
+          <ion-select [(ngModel)]="execMode" name="now">
+            <ion-option value="now" (ionSelect)="setExecLater(false)">As soon as possible</ion-option>
+            <ion-option value="future"  (ionSelect)="setExecLater(true)">Future date</ion-option>
+            <ion-option value="standing"  (ionSelect)="setExecLater(true)">Standing order</ion-option>
 
           </ion-select>
         </ion-item>
         <ion-item>
-          <ion-label id="daterino"  fixed>{{ 'Execution date' | translate }}</ion-label>
-          <ion-input [disabled]="!execLater" type="Date">
+          <ion-label>{{ 'Execution date' | translate }}</ion-label>
+          <ion-input [disabled]="!getExecLater()" type="Date">
 
           </ion-input>
         </ion-item>
