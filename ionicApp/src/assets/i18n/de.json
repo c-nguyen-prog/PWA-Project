@@ -86,4 +86,10 @@
   "SEARCH_PLACEHOLDER": "Suche in der Artikel-Liste, z.B. \"Donald Duck\"",
 
   "ABOUT_US": "Willkommen bei DIGIBANK, Ihrer Nummer eins für alle Online-Banking-Angelegenheiten. Unser Ziel ist, Ihnen das Beste Bankkonto zu bieten, wobei der Schwerpunkt auf der Sicherheit Ihres Geldes und einem hervorragenden Kundenservice liegt. Die DIGIBANK wurde 2018 von Chi, Raakulan, Santiago und Simon gegründet und hat sich seit ihren Anfängen an der Frankfurter Fachhochschule weit entfernt. Als wir unser Projekt begannen, haben wir über alle anderen Anbieter nachgedacht und beschlossen, ein neues einzigartiges Online-Banking zu implementieren, bei dem der Kunde unsere oberste Priorität hat. Wir bedienen jetzt Kunden in ganz Deutschland und freuen uns, Teil des neuen, herausragenden Flügels der Finanzbranche zu sein. Wir hoffen, dass Ihnen unser Produkt so gut gefällt, wie wir es Ihnen anbieten. Wenn Sie Fragen oder Anmerkungen haben, zögern Sie bitte nicht, uns zu kontaktieren. Mit freundlichen Grüßen,  DIGIBANK-Team",
+
+  "AU_THEHISTORY": "DIGIBANK Geschichte",
+  "AU_HISTORY_TXT1": "DIGIBANK wurde 2018 als Software-Projekt des Kurses Informatik mobile Anwendungen an der Hochschule Frankfurt University of Applied Sciences implementiert. DIGIBANK wurde von Chi, Raakulan, Santiago und Simon gegründet.",
+  "AU_HISTORY_TXT2": "Unser Ziel ist es, Ihnen das Beste Bankkonto anzubieten, mit dem Fokus auf hervorragenden Service für alle Kunden."
+
+
 }

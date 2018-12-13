@@ -9,12 +9,16 @@ page-about {
     height: 100%;
     z-index: 1;
     background-repeat: repeat-x;
-    overflow:hidden;
+    overflow: hidden;
   }
 
   @keyframes animatedBackground {
-    from { background-position: 0 0; }
-    to { background-position: 100% 0; }
+    from {
+      background-position: 0 0;
+    }
+    to {
+      background-position: 100% 0;
+    }
   }
 
   ion-header {
@@ -34,10 +38,9 @@ page-about {
     }
   }
 
-  .custom-icon{
-    color:white;
+  .custom-icon {
+    color: white;
   }
-
 
   .splash-info {
     position: relative;
@@ -63,7 +66,6 @@ page-about {
     margin-top: -20px;
   }
 
-
   .signup {
     background-color: color($colors, button, base);
     color: white;
@@ -82,59 +84,67 @@ page-about {
     padding-left: 5px
   }
 
-  .container{
+  .container {
     padding: 10px 10px 10px 10px;
     margin-top: 75px;
 
     background: white;
   }
 
-  .container_scroll{
+  .container_scroll {
     position: initial;
 
   }
 
   .about {
+    margin-bottom: 500px;
+  }
+
+  .auText {
     text-align: justify;
-    font-size: 18px;
-    padding: 10px 10px 10px 10px;
-    margin-bottom: 450px;
+    .theHistoryHead {
+      font-weight: bold;
+      font-size: 24px;
+      margin-bottom: 1rem;
+    }
+
+    .historyYear {
+      font-weight: 900;
+      margin-bottom: 1rem;
+    }
+
   }
 
-  .header-text {
-    font-weight: bold;
-    font-size: 45px;
-  }
-
-  .footer{
-    position:fixed;
+  .footer {
+    position: fixed;
     bottom: 0;
     text-align: center;
     height: 30px;
     background: color($colors, button, base);
   }
 
-
-  .copyright{
+  .copyright {
     text-align: end;
     margin: 5px 10px 0px 10px;
     font-size: 16px;
     color: white;
   }
 
-
-  // mobile devices
+  // Desktop/Tablet Devices
   @media (min-width: 768px) {
-    .show-small{
+    .show-small {
       display: none;
     }
 
-
+    .auText {
+      margin-left: 25%;
+      margin-right: 25%;
+    }
 
   }
 
-  // desktop/tablet
-  @media (max-width: 768px){
+  // Mobile Devices
+  @media (max-width: 768px) {
     .hide-small {
       display: none;
     }
@@ -151,5 +161,6 @@ page-about {
         font-size: 30px;
       }
     }
+
   }
 }
