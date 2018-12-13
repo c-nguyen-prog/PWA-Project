@@ -1,5 +1,4 @@
 <ion-header>
-
   <ion-navbar>
     <button ion-button icon-only menuToggle color="white" class="show-small">
       <ion-icon name="menu" class="custom-icon"></ion-icon>
@@ -34,22 +33,25 @@
 
 <ion-content>
 
-
   <div class="splash-bg">
+
     <div class="container">
+
       <ion-grid>
         <ion-row>
-          <ion-col col-4>
-          </ion-col>
 
-          <ion-col col-4>
+
+
+          <ion-col>
             <div class="about">
+              <ion-scroll  class="container_scroll" scrollY="true">
               <p>{{'ABOUT_US' | translate }}</p>
+              <h1 class="header-text">abc</h1>
+              </ion-scroll>
             </div>
           </ion-col>
 
-          <ion-col col-4>
-          </ion-col>
+
         </ion-row>
       </ion-grid>
 
@@ -58,6 +60,7 @@
     <div class="footer">
       <h1 ion-text class="copyright">\&copy; 2018, Digibank Inc</h1>
     </div>
+
   </div>
 
 </ion-content>
