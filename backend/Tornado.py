@@ -289,13 +289,15 @@ class TransactionHandler(tornado.web.RequestHandler):
         type = data["type"]
         date = data["date"]
         reference = data["reference"]
+        now = datetime.datetime.now()
+        created_date = str(now.year) + "-" + str(now.month) + "_" + str(now.day)
         transaction = {"source": source,                                       # Create new transaction, status initial
                        "destination": destination,
                        "amount": amount,
                        "type": type,
                        "date": date,
                        "reference": reference,
-                       "created_date": datetime.datetime.now(),
+                       "created_date": created_date,
                        "status": "initial"}
 
         client = motor.motor_tornado.MotorClient('mongodb://localhost:27017')  # Connect to MongoDB server
@@ -369,14 +371,21 @@ class UserTransactionsHandler(tornado.web.RequestHandler):
         pass
 
     # Function to handle HTTP POST Request for user info
-    async def post(self):
+    @tornado.gen.coroutine
+    def post(self):
         data = json.loads(self.request.body)                                   # Get json request for transaction
         print(data)
         username = data["username"]
+        print(username)
         client = motor.motor_tornado.MotorClient('mongodb://localhost:27017')  # Connect to MongoDB server
         db = client.progappjs                                                  # Get database progappjs
-        document = await db.transactions.find_many({"username": username})     # Search username in DB
+        cursor = db.transactions.find({"source": username}, {"_id": 0})                    # Search username in DB
+        docs = yield cursor.to_list(10)
+        print(docs)
 
+        self.write(json.dumps(docs))
+        self.set_header('Content-Type', 'application/json')
+        self.finish()
 
 class Application(tornado.web.Application):
     def __init__(self):
