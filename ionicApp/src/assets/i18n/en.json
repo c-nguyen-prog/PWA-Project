@@ -91,7 +91,10 @@
   "AU_THEHISTORY": "The History of DIGIBANK",
   "AU_HISTORY_TXT1": "DIGIBANK was founded in 2018 as Software Project Module from Computer Sciences Course at Frankfurt University of Applied Sciences. DIGIBANK was founded by Chi, Raakulan, Santiago and Simon.",
   "AU_HISTORY_TXT2": "We are dedicated to giving you the very best of a bank account, with a focus on grad service for our Customer.",
-  "AU_TEAM": "The DIGIBANK Team"
+  "AU_TEAM": "The DIGIBANK Team",
+  "AU_FRONTDEV": "Frontend Developer",
+  "AU_BACKDEV": "Backend Developer"
+
 
 
 }
