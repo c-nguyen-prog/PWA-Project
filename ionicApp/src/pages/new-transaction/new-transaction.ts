@@ -36,5 +36,7 @@ export class NewTransactionPage {
     console.log('ionViewDidLoad NewTransactionPage');
 
   }
-
+  cancel() {
+    this.navCtrl.push('NewTransactionPage')
+  }
 }
