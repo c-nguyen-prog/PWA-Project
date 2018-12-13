@@ -84,20 +84,21 @@ page-about {
 
   .container{
     padding: 10px 10px 10px 10px;
-    margin-top: 56px;
+    margin-top: 75px;
+
     background: white;
   }
 
   .container_scroll{
     position: initial;
-    padding: 150% 0px 25px 25px;
-  }
 
+  }
 
   .about {
     text-align: justify;
     font-size: 18px;
     padding: 10px 10px 10px 10px;
+    margin-bottom: 450px;
   }
 
   .header-text {
@@ -127,6 +128,8 @@ page-about {
     .show-small{
       display: none;
     }
+
+
 
   }
 
