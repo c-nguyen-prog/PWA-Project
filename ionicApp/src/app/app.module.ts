@@ -17,6 +17,7 @@ import {SignupPage2} from "../pages/signup2/signup2";
 //import {IonicRouteStrategy} from "@ionic/angular";
 //import { AppRoutingModule } from './app-routing.module';
 
+
 // The translate loader needs to know where to load i18n files
 // in Ionic's static asset pipeline.
 export function createTranslateLoader(http: HttpClient) {

@@ -34,10 +34,45 @@
 
 <ion-content>
 
+
   <div class="splash-bg">
+
+    <div class="getintouchHead">
+      <h1 class="getintouchH1">Get in Touch</h1>
+      <p class="infoGetintouch">Please fill out the quick form an we will be in touch in lightning speed</p>
+    </div>
+
     <div class="container">
-        <form class="form">
-          Contact form goes here
+        <form class="form" (submit)="submitMessage()">
+
+
+          <ion-list>
+
+            <ion-item>
+              <ion-label floating>{{ 'C_NAME' | translate }}</ion-label>
+              <ion-input type="text" [(ngModel)]="contact.name" name="c_name"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label floating>{{ 'C_MAIL' | translate }}</ion-label>
+              <ion-input type="email" [(ngModel)]="contact.email" name="c_mail"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label floating>{{ 'C_PHONENUMBER' | translate }}</ion-label>
+              <ion-input type="text" [(ngModel)]="contact.phoneNumber" name="c_phonenumber"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label floating>{{ 'C_MESSAGE' | translate }}</ion-label>
+              <ion-input type="text" [(ngModel)]="contact.message" name="c_message" >
+              </ion-input>
+            </ion-item>
+
+            <div class="submit-button" padding>
+              <button ion-button color="primary" class="submit-end" round>{{ 'C_SUBMIT' | translate }}</button>
+            </div>
+
+          </ion-list>
+
+
         </form>
     </div>
 

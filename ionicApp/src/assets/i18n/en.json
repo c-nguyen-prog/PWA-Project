@@ -96,7 +96,13 @@
   "AU_HISTORY_TXT2": "We are dedicated to giving you the very best of a bank account, with a focus on grad service for our Customer.",
   "AU_TEAM": "The DIGIBANK Team",
   "AU_FRONTDEV": "Frontend Developer",
-  "AU_BACKDEV": "Backend Developer"
+  "AU_BACKDEV": "Backend Developer",
+
+  "C_NAME": "Name",
+  "C_MAIL": "e-Mail",
+  "C_PHONENUMBER": "Phone Number",
+  "C_MESSAGE": "Message",
+  "C_SUBMIT": "Submit"
 
 
 
