@@ -40,8 +40,11 @@
           <ion-list>
             <ion-list>
               <ion-item>
-                <ion-label fixed>{{ 'Title' | translate }}</ion-label>
-                <ion-input type="text" [(ngModel)]="account.title" name="title"></ion-input>
+                <ion-label fixed>{{ 'TITLE' | translate }}</ion-label>
+                <ion-select>
+                <ion-option value="mister" [selected]="true">{{'MISTER' | translate}}</ion-option>
+                <ion-option value="madam">{{'MADAM' | translate}}</ion-option>
+              </ion-select>
               </ion-item>
               <ion-item>
                 <ion-label fixed>{{ 'NAME' | translate }}</ion-label>
@@ -55,7 +58,7 @@
 
               <ion-item>
                 <ion-label fixed>{{ 'DOB' | translate }}</ion-label>
-                <ion-input type="text" [(ngModel)]="account.birthdate" name="birthdate"></ion-input>
+                <ion-input type="date" [(ngModel)]="account.birthdate" name="birthdate"></ion-input>
               </ion-item>
             </ion-list>
             <ion-list>

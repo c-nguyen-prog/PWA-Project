@@ -2,7 +2,9 @@
   "BACK_BUTTON_TEXT": "Zurück",
 
   "MENU":"DigiBank",
-
+  "TITLE": "Anrede",
+  "MISTER": "Herr",
+  "MADAM": "Frau",
   "NAME": "Name",
   "PASSWORD": "Passwort",
   "EMAIL": "E-Mail",
