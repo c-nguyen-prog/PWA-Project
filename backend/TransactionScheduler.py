@@ -1,4 +1,3 @@
-import sys
 import datetime
 import time
 import pymongo
@@ -46,7 +45,6 @@ def get_transactions():
     return pending_transactions
 
 
-# TODO: Error handling for wrong sender info
 def do_transaction(transaction):
     client = pymongo.MongoClient("mongodb://localhost:27017")
     db = client.progappjs
@@ -103,7 +101,7 @@ def do_standing_order(old_transaction):
 
 
 if __name__ == '__main__':
-    # TODO: ONLY RUNS ON WORK DAY!
+    # TODO: ONLY RUNS ON WORK DAY?
     while True:
         now = datetime.datetime.now()
         pending_transactions = get_transactions()

@@ -262,7 +262,7 @@ class SignUpHandler(tornado.web.RequestHandler):
 Function to handle request for a transaction, json format: 
 {
     "source": source_username,
-    "destination": destination_username,
+    "destination": iban,
     "amount": amount,
     "type": type (now/date/standing)
     "date": date,
@@ -305,6 +305,7 @@ class TransactionHandler(tornado.web.RequestHandler):
         db.transactions.insert_one(transaction)                                # Add new transaction to db
         executor.submit(await self.pending_transaction(transaction))           # Set transaction as pending
 
+    # TODO: Error handling for wrong sender info
     async def pending_transaction(self, transaction):
         client = motor.motor_tornado.MotorClient('mongodb://localhost:27017')  # Connect to MongoDB server
         db = client.progappjs                                                  # Get transactions collection
@@ -317,6 +318,7 @@ class TransactionHandler(tornado.web.RequestHandler):
 Function to handle request for user info, json format:
 {
     "username": username,
+    //session_id
 }
 """
 class UserInfoHandler(tornado.web.RequestHandler):
@@ -360,6 +362,13 @@ class UserInfoHandler(tornado.web.RequestHandler):
             self.finish()
 
 
+"""
+Function to handle request for a user's transaction list, json format:
+{
+    "username": username,
+    //session_id
+}
+"""
 class UserTransactionsHandler(tornado.web.RequestHandler):
     def set_default_headers(self):
         self.set_header("Access-Control-Allow-Origin", "*")
@@ -386,6 +395,7 @@ class UserTransactionsHandler(tornado.web.RequestHandler):
         self.write(json.dumps(docs))
         self.set_header('Content-Type', 'application/json')
         self.finish()
+
 
 class Application(tornado.web.Application):
     def __init__(self):

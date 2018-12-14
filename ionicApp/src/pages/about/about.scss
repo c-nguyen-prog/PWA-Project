@@ -28,10 +28,12 @@ page-about {
       .toolbar-background {
         background: transparent;
       }
+
       .toolbar-title {
         color: white;
         font-size: 20px;
       }
+
       ion-icon.back-button-icon.icon {
         color: white;
       }
@@ -70,6 +72,7 @@ page-about {
     background-color: color($colors, button, base);
     color: white;
   }
+
   .signup:hover {
     background: color($colors, buttonActivated, base);
     color: white;
@@ -80,28 +83,35 @@ page-about {
     color: white;
     box-shadow: none !important;
   }
+
   .login-icon {
     padding-left: 5px
   }
 
   .container {
-    padding: 10px 10px 10px 10px;
-    margin-top: 75px;
-
-    background: white;
   }
 
-  .container_scroll {
-    position: initial;
-
+  .container-scroll {
+    height: 100vh;
   }
 
   .about {
-    margin-bottom: 500px;
+    margin-top: 50px;
   }
 
   .auText {
-    text-align: justify;
+    text-align: left;
+    margin-top: 25px;
+    padding: 20px 20px 10px 20px;
+    box-shadow: 0 0 50px -20px #000;
+    background: white;
+    box-sizing: border-box;
+    position: relative;
+    border-width: 8px;
+    border-color: #fff #fff transparent transparent;
+    -moz-border-radius: 0 0 0 5px;
+    border-radius: 8px;
+
     .theHistoryHead {
       font-weight: bold;
       font-size: 24px;
@@ -112,7 +122,11 @@ page-about {
       font-weight: 900;
       margin-bottom: 1rem;
     }
+  }
 
+  .team {
+    padding-bottom: 0;
+    padding-top: 0;
   }
 
   .footer {
@@ -145,6 +159,9 @@ page-about {
 
   // Mobile Devices
   @media (max-width: 768px) {
+    .auText {
+      margin-top: 50px;
+    }
     .hide-small {
       display: none;
     }
@@ -157,6 +174,7 @@ page-about {
       .typed {
         font-size: 30px;
       }
+
       .typed-cursor {
         font-size: 30px;
       }
