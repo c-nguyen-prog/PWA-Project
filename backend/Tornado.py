@@ -290,7 +290,7 @@ class TransactionHandler(tornado.web.RequestHandler):
         date = data["date"]
         reference = data["reference"]
         now = datetime.datetime.now()
-        created_date = str(now.year) + "-" + str(now.month) + "_" + str(now.day)
+        created_date = str(now.year) + "-" + str(now.month) + "-" + str(now.day)
         transaction = {"source": source,                                       # Create new transaction, status initial
                        "destination": destination,
                        "amount": amount,
@@ -397,6 +397,45 @@ class UserTransactionsHandler(tornado.web.RequestHandler):
         self.finish()
 
 
+class ContactHandler(tornado.web.RequestHandler):
+
+    def set_default_headers(self):
+        self.set_header("Access-Control-Allow-Origin", "*")
+        self.set_header("Access-Control-Allow-Headers", "x-requested-with")
+        self.set_header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS')
+        self.set_header("Access-Control-Allow-Headers", "access-control-allow-origin,authorization,content-type")
+
+    def get(self):
+        pass
+
+    # Function to handle HTTP POST Request for user info
+    async def post(self):
+        data = json.loads(self.request.body)                                   # Get json request for transaction
+        print(data)
+        name = data["name"]
+        email = data["email"]
+        phone = data["phoneNumber"]
+        message = data["message"]
+        client = motor.motor_tornado.MotorClient('mongodb://localhost:27017')  # Connect to MongoDB server
+        db = client.progappjs                                                  # Get database progappjs
+        user_message = {
+            "name": name,
+            "email": email,
+            "phone": phone,
+            "message": message
+        }
+        json_response = {
+            "status": "success"
+        }
+
+        db.messages.insert_one(user_message)                                    # Add new message to db
+
+        self.write(json.dumps(json_response))
+        self.set_header('Content-Type', 'application/json')
+        print(json_response)
+        self.finish()
+
+
 class Application(tornado.web.Application):
     def __init__(self):
 
@@ -408,7 +447,8 @@ class Application(tornado.web.Application):
             (r"/signup", SignUpHandler),
             (r"/transaction", TransactionHandler),
             (r"/user/info", UserInfoHandler),
-            (r"/user/transactions", UserTransactionsHandler)
+            (r"/user/transactions", UserTransactionsHandler),
+            (r"/contact", ContactHandler)
             # Add more paths here
         ]
 

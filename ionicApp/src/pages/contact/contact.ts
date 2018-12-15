@@ -19,14 +19,19 @@ import {TranslateService} from "@ngx-translate/core";
 })
 export class ContactPage {
 
-  contactPage:{
-    name:string,
-    email:string,
-    phoneNumber: number,
-    message:string
+  contact:{
+    name: string,
+    email: string,
+    phoneNumber: string,
+    message: string
+  } = {
+    name: "",
+    email: "",
+    phoneNumber: "",
+    message: ""
   };
 
-  private contactStringError
+  private contactStringError;
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
@@ -42,7 +47,7 @@ export class ContactPage {
 
   submitMessage() {
 
-    this.user.contact(JSON.stringify(this.contactPage)).subscribe((resp : any) => {
+    this.user.contact(JSON.stringify(this.contact)).subscribe((resp : any) => {
       console.log(resp);
       if (resp.status === "success") {
         console.log("Thank you! We will contact you immediately!")
@@ -70,10 +75,6 @@ export class ContactPage {
 
   signup() {
     this.navCtrl.push('SignupPage');
-  }
-
-  contact(){
-    this.navCtrl.push('ContactPage')
   }
 
   about(){
