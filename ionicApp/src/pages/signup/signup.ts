@@ -3,6 +3,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { IonicPage, NavController, ToastController } from 'ionic-angular';
 import { User } from '../../providers';
 import { MainPage } from '../';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import Hashes from "jshashes";
 
@@ -11,7 +12,7 @@ import Hashes from "jshashes";
   selector: 'page-signup',
   templateUrl: 'signup.html'
 })
-export class SignupPage {
+export class SignupPage{
   // The account fields for the login form.
   // If you're using the username field with or without email, make
   // sure to add it to the type
@@ -30,18 +31,18 @@ export class SignupPage {
     nationality: string
 
   } = {
-    title: 'Mr.',
-    name: 'Jeb ',
-    surName: 'Bush',
-    birthdate: '1953-11-02',
-    email: 'test@example.com',
-    password: 'test',
-    phone: '323990001337',
-    address: 'Monroe street 400',
-    zipcode: '32399',
-    city: 'Tallahassee',
-    tin:  '2258383',
-    nationality: 'American'
+    title: '',
+    name: '',
+    surName: '',
+    birthdate: '',
+    email: '',
+    password: '',
+    phone: '',
+    address: '',
+    zipcode: '',
+    city: '',
+    tin:  '',
+    nationality: ''
   };
 
   // Our translated text strings
@@ -56,6 +57,7 @@ export class SignupPage {
       this.signupErrorString = value;
     })
   }
+
 
   doSignup() {
     // Attempt to login in through our User service
