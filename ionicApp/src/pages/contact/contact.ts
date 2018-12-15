@@ -41,9 +41,8 @@ export class ContactPage {
   }
 
   submitMessage() {
-    let tempAccount = JSON.parse(JSON.stringify(this.contactPage));
 
-    this.user.signup(JSON.stringify(tempAccount)).subscribe((resp : any) => {
+    this.user.contact(JSON.stringify(this.contactPage)).subscribe((resp : any) => {
       console.log(resp);
       if (resp.status === "success") {
         console.log("Thank you! We will contact you immediately!")
