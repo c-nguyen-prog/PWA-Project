@@ -67,6 +67,19 @@ export class User {
     return seq;
   }
 
+  contact(accountInfo: any) {
+    let seq = this.api.post('contact', accountInfo).share();
+
+    seq.subscribe((res: any) => {
+      // If the API returned a successful response, mark the user as logged in
+
+    }, err => {
+      console.error('ERROR', err);
+    });
+
+    return seq;
+  }
+
   /**
    * Log the user out, which forgets the session
    */

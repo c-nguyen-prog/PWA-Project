@@ -94,9 +94,12 @@
   "AU_HISTORY_TXT2": "Unser Ziel ist es, Ihnen das Beste Bankkonto anzubieten, mit dem Fokus auf hervorragenden Service für alle Kunden.",
   "AU_TEAM": "Das Team der DIGIBANK",
   "AU_FRONTDEV": "Frontend Entwickler",
-  "AU_BACKDEV": "Backend Entwickler"
+  "AU_BACKDEV": "Backend Entwickler",
 
-
-
+  "C_NAME": "Name",
+  "C_MAIL": "e-Mail",
+  "C_PHONENUMBER": "Mobile Nummer",
+  "C_MESSAGE": "Nachricht",
+  "C_SUBMIT": "Senden"
 
 }
