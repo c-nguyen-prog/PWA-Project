@@ -1,3 +1,15 @@
 page-settings {
+  ion-header {
+    .toolbar {
+      position: absolute;
 
+      .toolbar-background {
+        background: color($colors, button, base);
+      }
+      .toolbar-title {
+        color: white;
+        font-size: 20px;
+      }
+    }
+  }
 }

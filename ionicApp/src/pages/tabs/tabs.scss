@@ -1,3 +1,29 @@
 page-tabs {
+  ion-header {
+    .toolbar {
+      position: absolute;
 
+      .toolbar-background {
+        background: color($colors, button, base);
+      }
+      .toolbar-title {
+        color: white;
+        font-size: 20px;
+      }
+    }
+  }
+  // mobile devices
+  @media (min-width: 768px) {
+    .show-small{
+      display: none;
+    }
+
+  }
+
+  // desktop/tablet
+  @media (max-width: 768px){
+    .hide-small {
+      display: none;
+    }
+  }
 }
