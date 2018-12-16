@@ -38,6 +38,15 @@ page-contact {
     }
   }
 
+  ion-item:first-child {
+    border-top-left-radius: 7px;
+    border-top-right-radius: 7px;
+  }
+  ion-item:last-child {
+    border-bottom-left-radius: 7px;
+    border-bottom-right-radius: 7px;
+  }
+
   .custom-icon {
     color: white;
   }
