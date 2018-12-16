@@ -11,6 +11,7 @@ export interface Transaction {
   bookingDate: string;
   amount: number;
   recipient: string;
+  execMode: string;
 }
 
 export interface TransactionsRoot {

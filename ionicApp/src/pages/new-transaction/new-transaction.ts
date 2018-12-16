@@ -4,6 +4,8 @@ import { TransferService } from '../../providers';
 import {IonicPage, NavController, NavParams, ToastController} from 'ionic-angular';
 import {Transaction} from "../../app/interfaces/iTransaction";
 import {setExistingDeepLinkConfig} from "@ionic/app-scripts/dist/deep-linking";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {AgeValidator} from "../../validators/age";
 
 /**
  * Generated class for the NewTransactionPage page.
@@ -18,6 +20,8 @@ import {setExistingDeepLinkConfig} from "@ionic/app-scripts/dist/deep-linking";
   templateUrl: 'new-transaction.html',
 })
 export class NewTransactionPage {
+  submitAttempt: boolean = false;
+  transactionForm: FormGroup;
  public transaction: Transaction =
    {
     source: this.userService._user,
@@ -26,6 +30,7 @@ export class NewTransactionPage {
     bookingDate: new Date().toISOString(),
     amount: 420,
     recipient: 'Jeb Bush',
+     execMode: "now"
 
 };
 
@@ -33,15 +38,36 @@ export class NewTransactionPage {
   private execLater: boolean = false;
 
   public setExecLater(value: boolean) {
+    if (value==true) {
+      var day = new Date();
+      console.log(day);
+
+      var nextDay = new Date(day);
+      nextDay.setDate(day.getDate()+1);
+      console.log(nextDay);
+      this.transaction.bookingDate = nextDay.toISOString();
+    }
     this.execLater = value;
   }
 
   public getExecLater(): boolean{
+
     return this.execLater;
   }
-  constructor(    public toastCtrl: ToastController, public navCtrl: NavController, public navParams: NavParams, public userService: User, public transferServicerino: TransferService) {
+  constructor( public formBuilder: FormBuilder,   public toastCtrl: ToastController, public navCtrl: NavController, public navParams: NavParams, public userService: User, public transferServicerino: TransferService) {
     this.setExecLater(false);
-    this.execMode = "now";
+    this.transaction.execMode = "now";
+
+    this.transactionForm = formBuilder.group({
+      recipient: ['', Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z ]*'), Validators.required])],
+      iban: ['', Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z0-9 ]*'), Validators.required])],
+      amount: ['', Validators.compose([Validators.maxLength(30), Validators.pattern('^(\\d*\\.)?\\d+$'), Validators.required])],
+      execMode: ['now'],
+      description:  ['', Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z0-9 ]*'), Validators.required])],
+      bookingDate: [new Date().toISOString()]
+
+    });
+
   }
 
   ionViewDidLoad() {
@@ -49,13 +75,13 @@ export class NewTransactionPage {
 
   }
   cancel() {
-   // this.navCtrl.push('NewTransactionPage')
+    this.navCtrl.push('NewTransactionPage');
   }
 
     doTransaction() {
-
-      let tempTransfer = JSON.parse(JSON.stringify(this.transaction));
-      this.transferServicerino.transfer(JSON.stringify(this.transaction)).subscribe((resp : any) => {
+      console.log(this.transactionForm.value);
+      //let tempTransfer = JSON.parse(JSON.stringify(this.transaction));
+      this.transferServicerino.transfer(JSON.stringify(this.transactionForm.value)).subscribe((resp : any) => {
       console.log(resp);
       if (resp.status === "success") {
         console.log("Successfully transfered");
