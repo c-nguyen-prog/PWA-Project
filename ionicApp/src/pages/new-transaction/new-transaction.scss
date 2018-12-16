@@ -16,6 +16,8 @@ page-new-transaction {
   }
 
   .buttonerino {
+    margin-left: 2%;
+    margin-right: 2%;
     width:30%;
       align-items: center;
       display: inline;
@@ -25,14 +27,7 @@ page-new-transaction {
 
   }
 
-  #daterino{
-    .picker-wrapper {
-      top:0px;
-      transform: translateY(-50%);
-     }
-    .picker-md {
 
-    }
 
   }
   .picker-wrapper{
@@ -40,15 +35,26 @@ page-new-transaction {
     transform: translate(-50%);
   }
   @media (min-width: 994px) {
-alignment: center
-  ;
+    .buttonerino {
+      margin-left: 7%;
+      margin-right: 7%;
+      width:30%;
+      align-items: center;
+      display: inline;
+      clear: both;
+
+      contain: strict;
+
+    }
+
     .transaction-form{
       width: 67%;
       padding-left:33%;
     }
     .picker-wrapper {
+      margin-top:0%;
       top:0px;
       transform: translateY(-50%);
     }
   }
-}
+
