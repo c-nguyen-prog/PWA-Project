@@ -25,4 +25,30 @@ page-new-transaction {
 
   }
 
+  #daterino{
+    .picker-wrapper {
+      top:0px;
+      transform: translateY(-50%);
+     }
+    .picker-md {
+
+    }
+
+  }
+  .picker-wrapper{
+    top:0px;
+    transform: translate(-50%);
+  }
+  @media (min-width: 994px) {
+alignment: center
+  ;
+    .transaction-form{
+      width: 67%;
+      padding-left:33%;
+    }
+    .picker-wrapper {
+      top:0px;
+      transform: translateY(-50%);
+    }
+  }
 }

@@ -10,7 +10,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { IonicApp, IonicErrorHandler, IonicModule,  } from 'ionic-angular';
 //import { RouterModule, RouteReuseStrategy, Routes } from '@angular/router';
 import { Items } from '../mocks/providers/items';
-import { Settings, User, Api } from '../providers';
+import {Settings, User, Api, TransferService} from '../providers';
 import { AppComponent } from './app.component';
 import {SignupPage} from "../pages/signup/signup";
 import {SignupPage2} from "../pages/signup2/signup2";
@@ -68,6 +68,7 @@ export function provideSettings(storage: Storage) {
     User,
     Camera,
     SplashScreen,
+    TransferService,
   //  { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     StatusBar,
     { provide: Settings, useFactory: provideSettings, deps: [Storage] },

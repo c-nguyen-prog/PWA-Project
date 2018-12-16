@@ -9,28 +9,24 @@
 
 
 <ion-content padding>
-  <div class="new-transaction">
-    <form (submit)="addTransaction()">
+  <div class="transaction-form">
+    <form (submit)="doTransaction()">
 
-      <ion-list>
+           <ion-list>
         <ion-item>
           <ion-label fixed>{{ 'Recipient' | translate }}</ion-label>
-          <ion-input type="text" name="recipient"></ion-input>
+          <ion-input type="text" [(ngModel)]="transaction.recipient" name="recipient"></ion-input>
         </ion-item>
 
         <ion-item>
           <ion-label fixed>{{ 'IBAN' | translate }}</ion-label>
-          <ion-input type="text"  name="iban"></ion-input>
+          <ion-input type="text" [(ngModel)]="transaction.iban" name="iban"></ion-input>
         </ion-item>
 
         <ion-item>
           <ion-label fixed>{{ 'Amount' | translate }}</ion-label>
-          <ion-input type="number" min="0.01" class="quantity" name="amount"></ion-input>
+          <ion-input type="number" [(ngModel)]="transaction.amount" name="amount" min="0.01" class="quantity" ></ion-input>
         </ion-item>
-        <ion-item>
-        <ion-label fixed>{{ 'Description' | translate }}</ion-label>
-        <ion-input type="text"  name="description"></ion-input>
-      </ion-item>
         <ion-item>
           <ion-label >Execution mode</ion-label>
           <ion-select [(ngModel)]="execMode" name="now">
@@ -42,9 +38,17 @@
         </ion-item>
         <ion-item>
           <ion-label>{{ 'Execution date' | translate }}</ion-label>
-          <ion-input [disabled]="!getExecLater()" type="Date">
+          <ion-datetime [disabled]="!getExecLater()" displayFormat="MM/DD/YYYY" [(ngModel)]="transaction.bookingDate" name="bookingDate">
 
-          </ion-input>
+          </ion-datetime>
+      <!--    <ion-input  [(ngModel)]="transaction.bookingDate" name="bookingDate" type="Date">
+
+          </ion-input>-->
+
+        </ion-item>
+        <ion-item>
+          <ion-label fixed>{{ 'Description' | translate }}</ion-label>
+          <ion-input type="text" [(ngModel)]="transaction.description" name="description"></ion-input>
         </ion-item>
 
         <div class="buttons" padding align="center">

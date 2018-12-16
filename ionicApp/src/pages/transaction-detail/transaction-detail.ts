@@ -25,10 +25,10 @@ export class TransactionPage {
     this.accountId = this.navParams.get('accountId');
 
     console.log(this.accountId);
-   //fetchtransaction doesn't exist yet this.fetchTransaction(this.accountId, this.bic, this.transactionId).subscribe(transaction => {
-//      this.transaction = transaction;
+   //fetchtransaction doesn't exist yet this.fetchTransaction(this.accountId, this.bic, this.transactionId).subscribe(transfer => {
+//      this.transfer = transfer;
 
-   //   console.log(JSON.stringify(transaction));
+   //   console.log(JSON.stringify(transfer));
    // });
  // }
   // private close() {

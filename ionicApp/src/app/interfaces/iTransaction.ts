@@ -1,18 +1,16 @@
-export interface Amount {
-  value: number;
-  currency: string;
-}
+import {User} from "../../providers";
 
-export interface RelatedParty {
-  name: string;
-}
+
+
+
 
 export interface Transaction {
+  source: User,
   iban: string;
   description: string;
-  bookingDate: Date;
-  amount: Amount;
-  relatedParty: RelatedParty;
+  bookingDate: string;
+  amount: number;
+  recipient: string;
 }
 
 export interface TransactionsRoot {
