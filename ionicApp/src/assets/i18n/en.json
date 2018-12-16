@@ -72,6 +72,17 @@
   "SIGNUP_ERROR": "Unable to create account. Please check your account information and try again.",
   "SIGNUP_BUTTON": "Sign up",
 
+  "ERROR-SIGNUP-FIRSTNAME":"Please enter a valid name.",
+  "ERROR-SIGNUP-LASTNAME":"Please enter a valid family name.",
+  "ERROR-SIGNUP-AGE": "You have to be at least of age 18 to register for DigiBank.",
+  "ERROR-SIGNUP-MAIL":"Please enter a valid mail address",
+  "ERROR-SIGNUP-PASSWORD":"Please enter a secure password: At least 8 characters, one upper case, one lower case. one number and one special character.",
+  "ERROR-SIGNUP-PHONE":"Please enter a valid phone numer without any breaks or special characters.",
+  "ERROR-SIGNUP-ZIP":"A german postal code has 5 numbers.",
+  "ERROR-SIGNUP-CITY":"please enter an existent city",
+  "ERROR-SIGNUP-TIN":"A Tax-ID consists of 11 numbers.",
+  "ERROR-SIGNUP-NATION":"Please enter an existent nation or country",
+
   "LIST_MASTER_TITLE": "Items",
 
   "ITEM_CREATE_TITLE": "New Item",

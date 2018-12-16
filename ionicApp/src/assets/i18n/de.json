@@ -70,6 +70,17 @@
   "SIGNUP_ERROR": "Fehler beim Registrieren, bitte überprüfe deine Informationen und versuche es erneut.",
   "SIGNUP_BUTTON": "Registrieren",
 
+  "ERROR-SIGNUP-FIRSTNAME":"Bitte geben Sie einen gültigen Namen ein.",
+  "ERROR-SIGNUP-LASTNAME":"Bitte geben Sie einen gültigen Nachnamen ein.",
+  "ERROR-SIGNUP-AGE": "Zur Registrierung bei DigiBank müssen Sie mindestens 18 Jahre alt sein",
+  "ERROR-SIGNUP-MAIL":"Bitte geben Sie eine gültige E-Mailadresse an.",
+  "ERROR-SIGNUP-PASSWORD":"Bitte geben Sie ein sicheres Passwort ein: Mindestens 8 Buchstaben, ein Großbuchstabe, ein Kleinbuchstabe, eine Zahl und ein Sonderzeichen",
+  "ERROR-SIGNUP-PHONE":"Bitte geben Sie eine gültige Telefonnummer an. Keine unterbrechung oder Zeichen zwischen Vorwahl und der Nummer.",
+  "ERROR-SIGNUP-ZIP":"Postleitzahlen haben 5 Ziffern.",
+  "ERROR-SIGNUP-CITY":"Bitte geben Sie eine existente Stadt an.",
+  "ERROR-SIGNUP-TIN":"Bitte geben sie eine gültige Steuer-ID (11 Ziffern) an.",
+  "ERROR-SIGNUP-NATION":"Bitte geben Sie ein existentes Land an.",
+
   "LIST_MASTER_TITLE": "Artikel",
 
   "ITEM_CREATE_TITLE": "Neuer Artikel",
