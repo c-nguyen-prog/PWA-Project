@@ -38,7 +38,6 @@ page-signup {
       background: transparent !important;
       margin: 0 auto;
     }
-
   }
 
   ion-header {
@@ -62,7 +61,6 @@ page-signup {
     color:white;
   }
 
-
   ion-item:first-child {
     border-top-left-radius: 7px;
     border-top-right-radius: 7px;
@@ -73,6 +71,7 @@ page-signup {
   }
   ion-item.item {
     background-color: white;
+
     .label {
       width: 10%;
       color: black;
