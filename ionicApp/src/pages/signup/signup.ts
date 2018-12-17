@@ -90,6 +90,7 @@ export class SignupPage{
 
   doSignup() {
 
+
     // Attempt to login in through our User service
     let tempAccount = JSON.parse(JSON.stringify(this.account));
     tempAccount.password = new Hashes.SHA512().hex(tempAccount.password);

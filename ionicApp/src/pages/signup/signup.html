@@ -64,7 +64,7 @@
 
               <ion-item>
                 <ion-label fixed>{{ 'DOB' | translate }}</ion-label>
-                <ion-input type="date" formControlName="birthdate"></ion-input>
+                <ion-datetime min="1920" max="2000" displayFormat="DD.MM.YYYY" pickerFormat="DD MM YY" formControlName="birthdate"></ion-datetime>
               </ion-item>
             </ion-list>
             <ion-list>
