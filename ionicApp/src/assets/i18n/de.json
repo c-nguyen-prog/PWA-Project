@@ -76,7 +76,7 @@
   "ERROR-SIGNUP-MAIL":"Bitte geben Sie eine gültige E-Mailadresse an",
   "ERROR-SIGNUP-PASSWORD":"Bitte geben Sie ein sicheres Passwort an: Mindestens 8 Zeichen, ein Großbuchstabe, ein Kleinbuchstabe, eine Zahl und ein Sonderzeichen",
   "ERROR-SIGNUP-PASSWORDVALIDATION": "Die Passwörter müssen übereinstimmen",
-  "ERROR-SIGNUP-PHONE":"Bitte geben Sie Ihre Telefonnummer ohne Unterbechungen oder Sonderzeichen an",
+  "ERROR-SIGNUP-PHONE":"Bitte geben Sie Ihre Telefonnummer ohne Unterbrechungen oder Sonderzeichen an",
   "ERROR-SIGNUP-ZIP":"Postleitzahlen haben 5 Ziffern",
   "ERROR-SIGNUP-CITY":"Bitte geben Sie eine existierende Stadt an",
   "ERROR-SIGNUP-TIN":"Bitte geben sie eine gültige Steuer-ID (11 Ziffern) an",
