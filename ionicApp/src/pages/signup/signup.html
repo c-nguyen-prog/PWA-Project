@@ -41,14 +41,14 @@
             <ion-list>
               <ion-item>
                 <ion-label fixed>{{ 'TITLE' | translate }}</ion-label>
-                <ion-select formControlName="title">
+                <ion-select formControlName="title" [(ngModel)]="account.title">
                 <ion-option value="mister" [selected]="true">{{'MISTER' | translate}}</ion-option>
                 <ion-option value="madam">{{'MADAM' | translate}}</ion-option>
               </ion-select>
               </ion-item>
               <ion-item>
                 <ion-label fixed>{{ 'NAME' | translate }}</ion-label>
-                <ion-input type="text" formControlName="firstName"></ion-input>
+                <ion-input type="text" formControlName="firstName" [(ngModel)]="account.name"></ion-input>
               </ion-item>
               <ion-item *ngIf="!submitForm.controls.firstName.valid && submitForm.controls.firstName.dirty" text-wrap>
                 <p>{{ 'ERROR-SIGNUP-FIRSTNAME' | translate }}.</p>
@@ -56,7 +56,7 @@
 
               <ion-item>
                 <ion-label fixed>{{ 'SURNAME' | translate }}</ion-label>
-                <ion-input type="text" formControlName="lastName"></ion-input>
+                <ion-input type="text" formControlName="lastName" [(ngModel)]="account.surName"></ion-input>
               </ion-item>
               <ion-item *ngIf="!submitForm.controls.lastName.valid && submitForm.controls.lastName.dirty" text-wrap>
                 <p>{{ 'ERROR-SIGNUP-LASTNAME' | translate }}.</p>
@@ -70,7 +70,7 @@
             <ion-list>
               <ion-item>
                 <ion-label fixed>{{ 'EMAIL' | translate }}</ion-label>
-                <ion-input type="email" formControlName="email"></ion-input>
+                <ion-input type="email" formControlName="email" [(ngModel)]="account.email"></ion-input>
               </ion-item>
               <ion-item *ngIf="!submitForm.controls.email.valid && submitForm.controls.email.dirty" text-wrap>
                 <p>{{ 'ERROR-SIGNUP-MAIL' | translate }}.</p>
@@ -78,7 +78,7 @@
 
               <ion-item>
                 <ion-label fixed>{{ 'PASSWORD' | translate }}</ion-label>
-                <ion-input type="password" formControlName="password"></ion-input>
+                <ion-input type="password" formControlName="password" [(ngModel)]="account.password"></ion-input>
               </ion-item>
               <ion-item *ngIf="!submitForm.controls.password.valid && submitForm.controls.password.dirty" text-wrap>
                 <p>{{ 'ERROR-SIGNUP-PASSWORD' | translate }}.</p>
@@ -91,7 +91,7 @@
 
               <ion-item>
                 <ion-label fixed>{{ 'PHONE' | translate }}</ion-label>
-                <ion-input type="tel" formControlName="phone"></ion-input>
+                <ion-input type="tel" formControlName="phone" [(ngModel)]="account.phone"></ion-input>
               </ion-item>
               <ion-item *ngIf="!submitForm.controls.phone.valid && submitForm.controls.phone.dirty" text-wrap>
                 <p>{{ 'ERROR-SIGNUP-PHONE' | translate }}.</p>
@@ -101,12 +101,12 @@
             <ion-list>
               <ion-item>
                 <ion-label fixed>{{ 'ADDRESS' | translate }}</ion-label>
-                <ion-input type="text" formControlName="address"></ion-input>
+                <ion-input type="text" formControlName="address" [(ngModel)]="account.address"></ion-input>
               </ion-item>
 
               <ion-item>
                 <ion-label fixed>{{ 'ZIP' | translate }}</ion-label>
-                <ion-input type="text" formControlName="zipcode"></ion-input>
+                <ion-input type="text" formControlName="zipcode" [(ngModel)]="account.zipcode"></ion-input>
               </ion-item>
               <ion-item *ngIf="!submitForm.controls.zipcode.valid && submitForm.controls.zipcode.dirty" text-wrap>
                 <p>{{ 'ERROR-SIGNUP-ZIP' | translate }}.</p>
@@ -114,7 +114,7 @@
 
               <ion-item>
                 <ion-label fixed>{{ 'CITY' | translate }}</ion-label>
-                <ion-input type="text" formControlName="city"></ion-input>
+                <ion-input type="text" formControlName="city" [(ngModel)]="account.city"></ion-input>
               </ion-item>
               <ion-item *ngIf="!submitForm.controls.city.valid && submitForm.controls.city.dirty" text-wrap>
                 <p>{{ 'ERROR-SIGNUP-CITY' | translate }}.</p>
@@ -122,7 +122,7 @@
 
               <ion-item>
                 <ion-label fixed>{{ 'TIN' | translate }}</ion-label>
-                <ion-input type="text" formControlName="tin"></ion-input>
+                <ion-input type="text" formControlName="tin" [(ngModel)]="account.tin"></ion-input>
               </ion-item>
               <ion-item *ngIf="!submitForm.controls.tin.valid && submitForm.controls.tin.dirty" text-wrap>
                 <p>{{ 'ERROR-SIGNUP-TIN' | translate }}.</p>
@@ -130,7 +130,7 @@
 
               <ion-item>
                 <ion-label fixed>{{ 'NATIONALITY' | translate }}</ion-label>
-                <ion-input type="text" formControlName="nationality"></ion-input>
+                <ion-input type="text" formControlName="nationality" [(ngModel)]="account.nationality"></ion-input>
               </ion-item>
               <ion-item *ngIf="!submitForm.controls.nationality.valid && submitForm.controls.nationality.dirty" text-wrap>
                 <p>{{ 'ERROR-SIGNUP-NATION' | translate }}.</p>
