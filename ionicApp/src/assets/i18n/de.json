@@ -62,12 +62,12 @@
   "WELCOME-CARD-3-TEXT" : "WELCOME-CARD-3-TEXT",
 
   "LOGIN_TITLE": "Anmelden",
-  "LOGIN_ERROR": "Fehler beim Anmelden, bitte überprüfe deine Informationen und versuche es erneut.",
+  "LOGIN_ERROR": "Fehler beim Anmelden, bitte überprüfen Sie Ihre Angaben und versuchen Sie es erneut.",
   "SERVER_ERROR": "Fehler bei der Serverrückmeldung!",
-  "ACCOUNT_ERROR": "Dein Konto ist nicht aktiviert, kontaktieren Sie unseren Kundenservice",
+  "ACCOUNT_ERROR": "Ihr Konto ist nicht aktiviert, bitte kontaktieren Sie unseren Kundenservice",
   "LOGIN_BUTTON": "Anmelden",
   "SIGNUP_TITLE": "Registrieren",
-  "SIGNUP_ERROR": "Fehler beim Registrieren, bitte überprüfe deine Informationen und versuche es erneut.",
+  "SIGNUP_ERROR": "Fehler beim Registrieren, bitte überprüfen Sie Ihre Angaben und versuchen Sie es erneut.",
   "SIGNUP_BUTTON": "Registrieren",
 
   "ERROR-SIGNUP-FIRSTNAME":"Bitte geben Sie einen gültigen Namen ein.",
