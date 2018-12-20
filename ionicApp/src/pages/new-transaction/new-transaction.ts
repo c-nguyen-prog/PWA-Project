@@ -25,12 +25,12 @@ export class NewTransactionPage {
  public transaction: Transaction =
    {
     source: this.userService._user,
-    iban: '00425680345 ',
-    description: 'salary',
-    bookingDate: new Date().toISOString(),
+    destination: '00425680345 ',
+    reference: 'salary',
+    date: new Date().toDateString(),
     amount: 420,
     recipient: 'Jeb Bush',
-     execMode: "now"
+     type: "now"
 
 };
 
@@ -45,7 +45,7 @@ export class NewTransactionPage {
       var nextDay = new Date(day);
       nextDay.setDate(day.getDate()+1);
       console.log(nextDay);
-      this.transaction.bookingDate = nextDay.toISOString();
+      this.transaction.date = nextDay.toDateString();
     }
     this.execLater = value;
   }
@@ -56,12 +56,12 @@ export class NewTransactionPage {
   }
   constructor( public formBuilder: FormBuilder,   public toastCtrl: ToastController, public navCtrl: NavController, public navParams: NavParams, public userService: User, public transferServicerino: TransferService) {
     this.setExecLater(false);
-    this.transaction.execMode = "now";
+    this.transaction.type = "now";
 
     this.transactionForm = formBuilder.group({
       recipient: ['', Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z ]*'), Validators.required])],
       iban: ['', Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z0-9 ]*'), Validators.required])],
-      amount: ['', Validators.compose([Validators.maxLength(30), Validators.pattern('^(\\d*\\.)?\\d+$'), Validators.required])],
+      amount: [0.01, Validators.compose([Validators.maxLength(30), Validators.pattern('^(\\d*\\.)?\\d+$'), Validators.required])],
       execMode: ['now'],
       description:  ['', Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z0-9 ]*'), Validators.required])],
       bookingDate: [new Date().toISOString()]
@@ -75,7 +75,15 @@ export class NewTransactionPage {
 
   }
   cancel() {
-    this.navCtrl.push('NewTransactionPage');
+    this.transactionForm = this.formBuilder.group({
+      recipient: ['', Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z ]*'), Validators.required])],
+      iban: ['', Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z0-9 ]*'), Validators.required])],
+      amount: ['0', Validators.compose([Validators.maxLength(30), Validators.pattern('^(\\d*\\.)?\\d+$'), Validators.required])],
+      execMode: ['now'],
+      description:  ['', Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z0-9 ]*'), Validators.required])],
+      bookingDate: [new Date().toUTCString()]
+
+    });
   }
 
     doTransaction() {

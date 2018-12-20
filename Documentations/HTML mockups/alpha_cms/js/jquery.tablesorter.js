@@ -13,7 +13,7 @@
  */
 /**
  * 
- * @description Create a sortable table with multi-column sorting capabilitys
+ * @reference Create a sortable table with multi-column sorting capabilitys
  * 
  * @example $('table').tablesorter();
  * @desc Create a simple tablesorter interface.
