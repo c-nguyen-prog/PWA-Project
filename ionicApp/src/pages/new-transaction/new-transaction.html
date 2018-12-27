@@ -29,12 +29,12 @@
 
         <ion-item>
           <ion-label fixed>{{ 'Amount' | translate }}</ion-label>
-          <ion-input [class.invalid]="!transactionForm.controls.amount.valid && (transactionForm.controls.amount.dirty || submitAttempt)" formControlName="iban"  type="number"  min="0.01" class="quantity" required ></ion-input>
+          <ion-input [class.invalid]="!transactionForm.controls.amount.valid && (transactionForm.controls.amount.dirty || submitAttempt)" formControlName="amount"  type="number"  min="0.01" class="quantity" required ></ion-input>
           <p>Please enter a valid amount.</p>
         </ion-item>
         <ion-item>
           <ion-label >Execution mode</ion-label>
-          <ion-select formControlName="execMode" >
+          <ion-select formControlName="type" >
             <ion-option value="now" (ionSelect)="setExecLater(false)">As soon as possible</ion-option>
             <ion-option value="future"  (ionSelect)="setExecLater(true)">Future date</ion-option>
             <ion-option value="recurrent"  (ionSelect)="setExecLater(true)">Standing order</ion-option>
@@ -43,7 +43,7 @@
         </ion-item>
         <ion-item>
           <ion-label>{{ 'Execution date' | translate }}</ion-label>
-          <ion-datetime formControlName="bookingDate" [disabled]="!getExecLater()" displayFormat="YYYY-MM-DD">
+          <ion-datetime formControlName="date" [disabled]="!getExecLater()" displayFormat="YYYY-MM-DD">
 
           </ion-datetime>
       <!--    <ion-input  [(ngModel)]="transaction.date" name="date" type="Date">
@@ -53,7 +53,7 @@
         </ion-item>
         <ion-item>
           <ion-label fixed>{{ 'Description' | translate }}</ion-label>
-          <ion-input formControlName="description" type="text" ></ion-input>
+          <ion-input formControlName="reference" type="text" ></ion-input>
         </ion-item>
 
              <ion-item>

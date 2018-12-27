@@ -34,7 +34,7 @@ export class NewTransactionPage {
 
 };
 
-  execMode: string;
+  type: string;
   private execLater: boolean = false;
 
   public setExecLater(value: boolean) {
@@ -59,12 +59,13 @@ export class NewTransactionPage {
     this.transaction.type = "now";
 
     this.transactionForm = formBuilder.group({
+      source: [this.userService._user],
       recipient: ['', Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z ]*'), Validators.required])],
       iban: ['', Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z0-9 ]*'), Validators.required])],
       amount: [0.01, Validators.compose([Validators.maxLength(30), Validators.pattern('^(\\d*\\.)?\\d+$'), Validators.required])],
-      execMode: ['now'],
-      description:  ['', Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z0-9 ]*'), Validators.required])],
-      bookingDate: [new Date().toISOString()]
+      type: ['now'],
+      reference:  ['', Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z0-9 ]*'), Validators.required])],
+      date: [new Date().toISOString().split('T')[0]]
 
     });
 
@@ -79,9 +80,9 @@ export class NewTransactionPage {
       recipient: ['', Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z ]*'), Validators.required])],
       iban: ['', Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z0-9 ]*'), Validators.required])],
       amount: ['0', Validators.compose([Validators.maxLength(30), Validators.pattern('^(\\d*\\.)?\\d+$'), Validators.required])],
-      execMode: ['now'],
-      description:  ['', Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z0-9 ]*'), Validators.required])],
-      bookingDate: [new Date().toUTCString()]
+      type: ['now'],
+      reference:  ['', Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z0-9 ]*'), Validators.required])],
+      date: [new Date().toUTCString()]
 
     });
   }
