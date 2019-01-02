@@ -36,6 +36,15 @@ export class NewTransactionPage {
 
   type: string;
   private execLater: boolean = false;
+  private saveAsTemplate: boolean = false;
+
+  public setSaveAsTemplate(value: boolean) {
+    this.saveAsTemplate = value;
+  }
+
+  public getSaveAsTemplate() {
+    return this.saveAsTemplate;
+  }
 
   public setExecLater(value: boolean) {
     if (value==true) {

@@ -33,17 +33,17 @@ export class TutorialPage {
         this.slides = [
           {
             title: values.TUTORIAL_SLIDE1_TITLE,
-            reference: values.TUTORIAL_SLIDE1_DESCRIPTION,
+            description: values.TUTORIAL_SLIDE1_DESCRIPTION,
             image: 'assets/img/ica-slidebox-img-1.png',
           },
           {
             title: values.TUTORIAL_SLIDE2_TITLE,
-            reference: values.TUTORIAL_SLIDE2_DESCRIPTION,
+            description: values.TUTORIAL_SLIDE2_DESCRIPTION,
             image: 'assets/img/ica-slidebox-img-2.png',
           },
           {
             title: values.TUTORIAL_SLIDE3_TITLE,
-            reference: values.TUTORIAL_SLIDE3_DESCRIPTION,
+            description: values.TUTORIAL_SLIDE3_DESCRIPTION,
             image: 'assets/img/ica-slidebox-img-3.png',
           }
         ];

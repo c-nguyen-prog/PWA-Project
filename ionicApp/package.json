@@ -43,5 +43,5 @@
     "@ionic/app-scripts": "^3.2.1",
     "typescript": "~2.9.2"
   },
-  "reference": "An Ionic project"
+  "description": "Online Banking PWA made for the 5th semester project under the supervision of Professor Dr. Ruth Schorr by Minh Chi N. (backend), Raakulan R. (front-end), Simon Z. (Front-end and transphobia) Santiago E. M. A. B. (front-end) "
 }

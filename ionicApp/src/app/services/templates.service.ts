@@ -48,15 +48,18 @@ export class TemplatesService {
   }
 
 
-  createTemplate(title): void {
+  createTemplate(destination, recipient, amount, reference): void {
 
     //create unique id that is one larger than current largest id
     let id = Math.max(...this.templates.map(template => parseInt(template.id)), 0) + 1;
 
     this.templates.push({
       id: id.toString(),
-      title: title,
-      content: ''
+      destination: destination, //iban
+      recipient: recipient,
+      amount: amount,
+      reference: reference
+
     });
     this.save();
   }
