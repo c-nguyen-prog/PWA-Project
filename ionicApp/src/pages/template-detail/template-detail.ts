@@ -18,9 +18,12 @@ export class templateDetailPage implements OnInit {
 
     // Initialise a placeholder note until the actual note can be loaded in
     this.template = {
-      id: '',
-      title: '',
-      content: ''
+
+    destination: '', //iban
+    recipient:'',
+    amount: 0,
+    reference: '',
+      id: ''
     };
 
   }
