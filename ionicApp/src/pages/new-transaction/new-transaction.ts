@@ -6,6 +6,7 @@ import {Transaction} from "../../app/interfaces/iTransaction";
 import {setExistingDeepLinkConfig} from "@ionic/app-scripts/dist/deep-linking";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AgeValidator} from "../../validators/age";
+import {TemplateService} from "../../app/services/template.service";
 
 /**
  * Generated class for the NewTransactionPage page.
@@ -63,14 +64,14 @@ export class NewTransactionPage {
 
     return this.execLater;
   }
-  constructor( public formBuilder: FormBuilder,   public toastCtrl: ToastController, public navCtrl: NavController, public navParams: NavParams, public userService: User, public transferServicerino: TransferService) {
+  constructor( public formBuilder: FormBuilder,   public toastCtrl: ToastController, public navCtrl: NavController, public navParams: NavParams, public userService: User, public transferServicerino: TransferService, public templateServicerino: TemplateService) {
     this.setExecLater(false);
     this.transaction.type = "now";
 
     this.transactionForm = formBuilder.group({
       source: [this.userService._user],
       recipient: ['', Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z ]*'), Validators.required])],
-      iban: ['', Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z0-9 ]*'), Validators.required])],
+      destination: ['', Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z0-9 ]*'), Validators.required])],
       amount: [0.01, Validators.compose([Validators.maxLength(30), Validators.pattern('^(\\d*\\.)?\\d+$'), Validators.required])],
       type: ['now'],
       reference:  ['', Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z0-9 ]*'), Validators.required])],
@@ -87,7 +88,7 @@ export class NewTransactionPage {
   cancel() {
     this.transactionForm = this.formBuilder.group({
       recipient: ['', Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z ]*'), Validators.required])],
-      iban: ['', Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z0-9 ]*'), Validators.required])],
+      destination: ['', Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z0-9 ]*'), Validators.required])],
       amount: ['0', Validators.compose([Validators.maxLength(30), Validators.pattern('^(\\d*\\.)?\\d+$'), Validators.required])],
       type: ['now'],
       reference:  ['', Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z0-9 ]*'), Validators.required])],
@@ -99,6 +100,10 @@ export class NewTransactionPage {
     doTransaction() {
       console.log(this.transactionForm.value);
       //let tempTransfer = JSON.parse(JSON.stringify(this.transaction));
+
+      if(this.getSaveAsTemplate()==true) {
+        this.templateServicerino.createTemplate(this.transactionForm.controls['destination'], this.transactionForm.controls['recipient'], this.transactionForm.controls['amount'], this.transactionForm.controls['reference'] );
+      }
       this.transferServicerino.transfer(JSON.stringify(this.transactionForm.value)).subscribe((resp : any) => {
       console.log(resp);
       if (resp.status === "success") {

@@ -23,7 +23,7 @@
 
              <ion-item>
           <ion-label fixed>{{ 'IBAN' | translate }}</ion-label>
-          <ion-input  [class.invalid]="!transactionForm.controls.iban.valid && (transactionForm.controls.iban.dirty || submitAttempt)" formControlName="iban" type="text" ></ion-input>
+          <ion-input  [class.invalid]="!transactionForm.controls.destination.valid && (transactionForm.controls.destination.dirty || submitAttempt)" formControlName="destination" type="text" ></ion-input>
                <p>Please enter a valid IBAN.</p>
         </ion-item>
 

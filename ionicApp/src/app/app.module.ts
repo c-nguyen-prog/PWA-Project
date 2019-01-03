@@ -12,8 +12,10 @@ import { IonicApp, IonicErrorHandler, IonicModule,  } from 'ionic-angular';
 import { Items } from '../mocks/providers/items';
 import {Settings, User, Api, TransferService} from '../providers';
 import { AppComponent } from './app.component';
+import {TemplateService} from "./services/template.service";
 import {SignupPage} from "../pages/signup/signup";
 import {SignupPage2} from "../pages/signup2/signup2";
+import {Template} from "./interfaces/template";
 //import {IonicRouteStrategy} from "@ionic/angular";
 //import { AppRoutingModule } from './app-routing.module';
 
@@ -69,6 +71,7 @@ export function provideSettings(storage: Storage) {
     Camera,
     SplashScreen,
     TransferService,
+    TemplateService,
   //  { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     StatusBar,
     { provide: Settings, useFactory: provideSettings, deps: [Storage] },

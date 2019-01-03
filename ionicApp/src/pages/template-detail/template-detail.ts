@@ -2,7 +2,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { ActivatedRoute } from '@angular/router';
-import { TemplatesService } from '../../app/services/templates.service';
+import { TemplateService } from '../../app/services/template.service';
 import { Template } from '../../app/interfaces/template';
 
 @Component({
@@ -14,7 +14,7 @@ export class templateDetailPage implements OnInit {
 
   private template: Template;
 
-  constructor(private route: ActivatedRoute, private templatesService: TemplatesService, private navCtrl: NavController) {
+  constructor(private route: ActivatedRoute, private templatesService: TemplateService, private navCtrl: NavController) {
 
     // Initialise a placeholder note until the actual note can be loaded in
     this.template = {
