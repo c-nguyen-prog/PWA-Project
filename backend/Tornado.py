@@ -261,11 +261,11 @@ class SignUpHandler(tornado.web.RequestHandler):
 """
 Function to handle request for a transaction, json format: 
 {
-    "source": source_username,
+    "source": source_username (or iban),
     "destination": iban,
     "amount": amount,
     "type": type (now/date/standing)
-    "date": date,
+    "date": date YY-MM-DD,
     "reference": reference
 }
 """
@@ -321,6 +321,7 @@ Function to handle request for user info, json format:
     //session_id
 }
 """
+# TODO: User changes info
 class UserInfoHandler(tornado.web.RequestHandler):
 
     def set_default_headers(self):
@@ -418,6 +419,7 @@ class ContactHandler(tornado.web.RequestHandler):
         message = data["message"]
         client = motor.motor_tornado.MotorClient('mongodb://localhost:27017')  # Connect to MongoDB server
         db = client.progappjs                                                  # Get database progappjs
+
         user_message = {
             "name": name,
             "email": email,
