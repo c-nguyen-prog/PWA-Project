@@ -6,7 +6,8 @@ import { Template } from '../interfaces/template';
 @Injectable(
 
 )
-export class TemplatesService {
+
+export class TemplateService {
   public templates: Template[] = [];
   public loaded: boolean = false;
 
@@ -48,18 +49,21 @@ export class TemplatesService {
   }
 
 
-  createTemplate(title): void {
+    createTemplate(destination, recipient, amount, reference): void {
 
-    //create unique id that is one larger than current largest id
-    let id = Math.max(...this.templates.map(template => parseInt(template.id)), 0) + 1;
+      //create unique id that is one larger than current largest id
+      let id = Math.max(...this.templates.map(template => parseInt(template.id)), 0) + 1;
 
-    this.templates.push({
-      id: id.toString(),
-      title: title,
-      content: ''
-    });
-    this.save();
-  }
+      this.templates.push({
+        id: id.toString(),
+        destination: destination, //iban
+        recipient: recipient,
+        amount: amount,
+        reference: reference
+
+      });
+      this.save();
+    }
 
   deleteTemplate(template): void {
     //get index in array of param note

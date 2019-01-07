@@ -82,6 +82,7 @@ export class LoginPage {
         }
       }
     }, (err) => {
+      //this.navCtrl.push(MainPage);  THIS LINE IS ONLY FOR TESTING PURPOSES
       // Unable to log in
       console.log("ERROR login.ts");
       let toast = this.toastCtrl.create({

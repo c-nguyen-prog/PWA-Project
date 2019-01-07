@@ -6,6 +6,7 @@ import {Transaction} from "../../app/interfaces/iTransaction";
 import {setExistingDeepLinkConfig} from "@ionic/app-scripts/dist/deep-linking";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AgeValidator} from "../../validators/age";
+import {TemplateService} from "../../app/services/template.service";
 
 /**
  * Generated class for the NewTransactionPage page.
@@ -25,17 +26,26 @@ export class NewTransactionPage {
  public transaction: Transaction =
    {
     source: this.userService._user,
-    iban: '00425680345 ',
-    description: 'salary',
-    bookingDate: new Date().toISOString(),
+    destination: '00425680345 ',
+    reference: 'salary',
+    date: new Date().toDateString(),
     amount: 420,
     recipient: 'Jeb Bush',
-     execMode: "now"
+     type: "now"
 
 };
 
-  execMode: string;
+  type: string;
   private execLater: boolean = false;
+  private saveAsTemplate: boolean = false;
+
+  public setSaveAsTemplate(value: boolean) {
+    this.saveAsTemplate = value;
+  }
+
+  public getSaveAsTemplate() {
+    return this.saveAsTemplate;
+  }
 
   public setExecLater(value: boolean) {
     if (value==true) {
@@ -45,7 +55,7 @@ export class NewTransactionPage {
       var nextDay = new Date(day);
       nextDay.setDate(day.getDate()+1);
       console.log(nextDay);
-      this.transaction.bookingDate = nextDay.toISOString();
+      this.transaction.date = nextDay.toDateString();
     }
     this.execLater = value;
   }
@@ -54,17 +64,18 @@ export class NewTransactionPage {
 
     return this.execLater;
   }
-  constructor( public formBuilder: FormBuilder,   public toastCtrl: ToastController, public navCtrl: NavController, public navParams: NavParams, public userService: User, public transferServicerino: TransferService) {
+  constructor( public formBuilder: FormBuilder,   public toastCtrl: ToastController, public navCtrl: NavController, public navParams: NavParams, public userService: User, public transferServicerino: TransferService, public templateServicerino: TemplateService) {
     this.setExecLater(false);
-    this.transaction.execMode = "now";
+    this.transaction.type = "now";
 
     this.transactionForm = formBuilder.group({
+      source: [this.userService._user],
       recipient: ['', Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z ]*'), Validators.required])],
-      iban: ['', Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z0-9 ]*'), Validators.required])],
-      amount: ['', Validators.compose([Validators.maxLength(30), Validators.pattern('^(\\d*\\.)?\\d+$'), Validators.required])],
-      execMode: ['now'],
-      description:  ['', Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z0-9 ]*'), Validators.required])],
-      bookingDate: [new Date().toISOString()]
+      destination: ['', Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z0-9 ]*'), Validators.required])],
+      amount: [0.01, Validators.compose([Validators.maxLength(30), Validators.pattern('^(\\d*\\.)?\\d+$'), Validators.required])],
+      type: ['now'],
+      reference:  ['', Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z0-9 ]*'), Validators.required])],
+      date: [new Date().toISOString().split('T')[0]]
 
     });
 
@@ -75,12 +86,24 @@ export class NewTransactionPage {
 
   }
   cancel() {
-    this.navCtrl.push('NewTransactionPage');
+    this.transactionForm = this.formBuilder.group({
+      recipient: ['', Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z ]*'), Validators.required])],
+      destination: ['', Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z0-9 ]*'), Validators.required])],
+      amount: ['0', Validators.compose([Validators.maxLength(30), Validators.pattern('^(\\d*\\.)?\\d+$'), Validators.required])],
+      type: ['now'],
+      reference:  ['', Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z0-9 ]*'), Validators.required])],
+      date: [new Date().toUTCString()]
+
+    });
   }
 
     doTransaction() {
       console.log(this.transactionForm.value);
       //let tempTransfer = JSON.parse(JSON.stringify(this.transaction));
+
+      if(this.getSaveAsTemplate()==true) {
+        this.templateServicerino.createTemplate(this.transactionForm.controls['destination'], this.transactionForm.controls['recipient'], this.transactionForm.controls['amount'], this.transactionForm.controls['reference'] );
+      }
       this.transferServicerino.transfer(JSON.stringify(this.transactionForm.value)).subscribe((resp : any) => {
       console.log(resp);
       if (resp.status === "success") {

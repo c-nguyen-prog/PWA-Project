@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AlertController, NavController } from '@ionic/angular';
-import { TemplatesService } from '../../app/services/templates.service';
+import { TemplateService } from '../../app/services/template.service';
 
 @Component({
   selector: 'template-home',
@@ -9,7 +9,7 @@ import { TemplatesService } from '../../app/services/templates.service';
 })
 export class TemplateHome implements OnInit {
 
-  constructor(private templatesService: TemplatesService, private alertCtrl: AlertController, private navCtrl: NavController){
+  constructor(private templatesService: TemplateService, private alertCtrl: AlertController, private navCtrl: NavController){
 
   }
 

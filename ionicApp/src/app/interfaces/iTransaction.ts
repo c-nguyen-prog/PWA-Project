@@ -6,12 +6,12 @@ import {User} from "../../providers";
 
 export interface Transaction {
   source: User,
-  iban: string;
-  description: string;
-  bookingDate: string;
-  amount: number;
+  destination: string; //iban
   recipient: string;
-  execMode: string;
+  amount: number;
+  type: string;
+  date: string;
+  reference: string;
 }
 
 export interface TransactionsRoot {

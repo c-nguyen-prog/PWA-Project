@@ -68,7 +68,7 @@ export class SignupPage{
       email: ['', Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z0-9._]+[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$')])], //https://forum.ionicframework.com/t/email-regex/102423/6
       password: ['', Validators.compose([Validators.required, Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$')])], //https://stackoverflow.com/questions/19605150/regex-for-password-must-contain-at-least-eight-characters-at-least-one-number-a
       passwordValidation: ['', Validators.compose([Validators.required])],
-      phone: ['', Validators.compose([Validators.required, Validators.maxLength(11), Validators.pattern('[0-9]*')])],
+      phone: ['', Validators.compose([Validators.required, Validators.maxLength(15), Validators.pattern('[0-9]*')])],
       address: ['', Validators.required],
       zipcode: ['', Validators.compose([Validators.required, Validators.pattern('[0-9]{5}')])],
       city: ['', Validators.compose([Validators.required, Validators.pattern('[a-zA-Z]*')])],
@@ -89,7 +89,6 @@ export class SignupPage{
   }
 
   doSignup() {
-
     // Attempt to login in through our User service
     let tempAccount = JSON.parse(JSON.stringify(this.account));
     tempAccount.password = new Hashes.SHA512().hex(tempAccount.password);

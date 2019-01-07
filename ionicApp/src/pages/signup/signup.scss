@@ -127,6 +127,11 @@ page-signup {
     color: white;
   }
 
+  .signup{
+    background-color: color($colors, button, base);
+    color: white;
+  }
+
 
   page-login .item-md.item-input.ng-valid.item-input-has-value:not(.input-has-focus):not(.item-input-has-focus) .item-inner, page-login .item-md.item-input.ng-valid.input-has-value:not(.input-has-focus):not(.item-input-has-focus) .item-inner {
     width: 95%;

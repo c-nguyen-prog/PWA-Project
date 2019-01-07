@@ -1,12 +1,12 @@
 /*import { TestBed } from '@angular/core/testing';
 
-import { TemplatesService} from './templates.service';
+import { TemplateService} from './templates.service';
 
-describe('TemplatesService', () => {
+describe('TemplateService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: TemplatesService = TestBed.get(TemplatesService);
+    const service: TemplateService = TestBed.get(TemplateService);
     expect(service).toBeTruthy();
   });
 });

@@ -40,7 +40,7 @@ export class TabsPage {
 
     this.overviewPages = [
       { title: 'Overview', component: 'ListMasterPage' },
-      { title: 'Search', component: 'SearchPage' },
+      { title: 'New transaction', component: 'NewTransactionPage' },
       { title: 'Personal Data', component: 'SettingsPage'}
     ];
   }

@@ -38,6 +38,7 @@ export class AppComponent {
     { title: 'Signup', component: 'SignupPage' },
     { title: 'About Us', component: 'AboutPage'},
     { title: 'Contact', component: 'ContactPage'},
+
   ]
 
 
