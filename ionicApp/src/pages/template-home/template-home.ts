@@ -36,7 +36,7 @@ export class TemplateHome implements OnInit {
         {
           text: 'Save',
           handler: (data) => {
-            this.templatesService.createTemplate(data.title);
+           // this.templatesService.createTemplate(data.title);
           }
         }
       ]

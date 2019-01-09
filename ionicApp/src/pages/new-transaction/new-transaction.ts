@@ -7,6 +7,7 @@ import {setExistingDeepLinkConfig} from "@ionic/app-scripts/dist/deep-linking";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AgeValidator} from "../../validators/age";
 import {TemplateService} from "../../app/services/template.service";
+import {Template} from "../../app/interfaces/template";
 
 /**
  * Generated class for the NewTransactionPage page.
@@ -23,6 +24,7 @@ import {TemplateService} from "../../app/services/template.service";
 export class NewTransactionPage {
   submitAttempt: boolean = false;
   transactionForm: FormGroup;
+  templates: Template[];
  public transaction: Transaction =
    {
     source: this.userService._user,
@@ -67,7 +69,7 @@ export class NewTransactionPage {
   constructor( public formBuilder: FormBuilder,   public toastCtrl: ToastController, public navCtrl: NavController, public navParams: NavParams, public userService: User, public transferServicerino: TransferService, public templateServicerino: TemplateService) {
     this.setExecLater(false);
     this.transaction.type = "now";
-
+    this.templates = this.templateServicerino.getAllTemplates();
     this.transactionForm = formBuilder.group({
       source: [this.userService._user],
       recipient: ['', Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z ]*'), Validators.required])],

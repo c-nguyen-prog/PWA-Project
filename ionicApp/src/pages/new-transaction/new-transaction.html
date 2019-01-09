@@ -63,7 +63,11 @@
              </ion-item>
              <ion-item>
                <ion-label>Load template</ion-label>
-               <ion-select></ion-select>
+               <ion-select>
+                 <ion-option *ngFor = "let template of templates;">
+                   {{templates}}
+                 </ion-option>
+               </ion-select>
              </ion-item>
 
         <div class="buttons" padding align="center">

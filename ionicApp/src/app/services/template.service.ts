@@ -37,7 +37,9 @@ export class TemplateService {
 
   }
 
-
+  getAllTemplates(): Template[] {
+    return this.templates;
+  }
   save(): void {
     //save current note array
     this.storage.set('templates', this.templates);
@@ -76,14 +78,6 @@ export class TemplateService {
     }
 
   }
-
-
-
-
-
-
-
-
 
 
 
