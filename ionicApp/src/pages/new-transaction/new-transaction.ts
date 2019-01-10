@@ -69,6 +69,7 @@ export class NewTransactionPage {
   constructor( public formBuilder: FormBuilder,   public toastCtrl: ToastController, public navCtrl: NavController, public navParams: NavParams, public userService: User, public transferServicerino: TransferService, public templateServicerino: TemplateService) {
     this.setExecLater(false);
     this.transaction.type = "now";
+    this.templateServicerino.createTemplate("DE365849", "John Johnson", 420, "Testerino");
     this.templates = this.templateServicerino.getAllTemplates();
     this.transactionForm = formBuilder.group({
       source: [this.userService._user],

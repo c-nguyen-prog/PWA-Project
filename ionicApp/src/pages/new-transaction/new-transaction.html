@@ -63,9 +63,9 @@
              </ion-item>
              <ion-item>
                <ion-label>Load template</ion-label>
-               <ion-select>
+               <ion-select (change)="this.transactionForm.patchValue({recipient: template.recipient, destination: template.destination, amount: template.amount, reference: template.reference})">
                  <ion-option *ngFor = "let template of templates;">
-                   {{templates}}
+                   {{template.reference}}
                  </ion-option>
                </ion-select>
              </ion-item>
