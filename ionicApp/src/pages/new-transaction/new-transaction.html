@@ -11,25 +11,20 @@
 <ion-content padding>
   <div class="transaction-form">
     <form [formGroup]="transactionForm" (submit)="doTransaction()">
-
            <ion-list>
         <ion-item>
           <ion-label fixed>{{ 'Recipient' | translate }}</ion-label>
-          <ion-input  [class.invalid]="!transactionForm.controls.recipient.valid && (transactionForm.controls.recipient.dirty || submitAttempt)" formControlName="recipient" type="text"  ></ion-input>
+          <ion-input  [class.invalid]="!transactionForm.controls['recipient'].valid && (transactionForm.controls['recipient'].dirty || submitAttempt)" [formControl]="transactionForm.controls['recipient']" type="text"  ></ion-input>
           <p>Please enter a valid name.</p>
         </ion-item>
-
-
-
              <ion-item>
           <ion-label fixed>{{ 'IBAN' | translate }}</ion-label>
-          <ion-input  [class.invalid]="!transactionForm.controls.destination.valid && (transactionForm.controls.destination.dirty || submitAttempt)" formControlName="destination" type="text" ></ion-input>
+          <ion-input  [class.invalid]="!transactionForm.controls['destination'].valid && (transactionForm.controls['destination'].dirty || submitAttempt)" [formControl]="transactionForm.controls['destination']" type="text" ></ion-input>
                <p>Please enter a valid IBAN.</p>
         </ion-item>
-
         <ion-item>
           <ion-label fixed>{{ 'Amount' | translate }}</ion-label>
-          <ion-input [class.invalid]="!transactionForm.controls.amount.valid && (transactionForm.controls.amount.dirty || submitAttempt)" formControlName="amount"  type="number"  min="0.01" class="quantity" required ></ion-input>
+          <ion-input [class.invalid]="!transactionForm.controls['amount'].valid && (transactionForm.controls['amount'].dirty || submitAttempt)" [formControl]="transactionForm.controls['amount']"  type="number"  min="0.01" class="quantity" required ></ion-input>
           <p>Please enter a valid amount.</p>
         </ion-item>
         <ion-item>
@@ -38,32 +33,26 @@
             <ion-option value="now" (ionSelect)="setExecLater(false)">As soon as possible</ion-option>
             <ion-option value="future"  (ionSelect)="setExecLater(true)">Future date</ion-option>
             <ion-option value="recurrent"  (ionSelect)="setExecLater(true)">Standing order</ion-option>
-
           </ion-select>
         </ion-item>
         <ion-item>
           <ion-label>{{ 'Execution date' | translate }}</ion-label>
           <ion-datetime formControlName="date" [disabled]="!getExecLater()" displayFormat="YYYY-MM-DD">
-
           </ion-datetime>
-      <!--    <ion-input  [(ngModel)]="transaction.date" name="date" type="Date">
-
-          </ion-input>-->
-
         </ion-item>
         <ion-item>
           <ion-label fixed>{{ 'Description' | translate }}</ion-label>
-          <ion-input formControlName="reference" type="text" ></ion-input>
+          <ion-input [formControl]="transactionForm.controls['reference']" type="text" ></ion-input>
         </ion-item>
-
              <ion-item>
                <ion-checkbox [checked]="saveAsTemplate" ></ion-checkbox>
                <ion-label  fixed>{{'Save' | translate }}</ion-label>
-
              </ion-item>
+           </ion-list>
+    </form>
              <ion-item>
                <ion-label>Load template</ion-label>
-               <ion-select (change)="this.transactionForm.patchValue({recipient: template.recipient, destination: template.destination, amount: template.amount, reference: template.reference})">
+               <ion-select [(ngModel)]="selectObj" (ionChange)="onSelectChange($event, selectObj)">
                  <ion-option *ngFor = "let template of templates;">
                    {{template.reference}}
                  </ion-option>
@@ -74,8 +63,8 @@
           <button class="buttonerino" ion-button color="primary" block>{{ 'Accept' | translate }}</button>
           <button type="button" (click)="cancel()" class="buttonerino"  ion-button color="primary" block>{{ 'Reset' | translate }}</button>
         </div>
-      </ion-list>
 
-    </form>
+
+
   </div>
 </ion-content>

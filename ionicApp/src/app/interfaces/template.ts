@@ -4,4 +4,6 @@ export interface Template {
   recipient: string;
   amount: number;
   reference: string;
+
 }
+

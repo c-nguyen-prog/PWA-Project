@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {ChangeDetectorRef, Component} from '@angular/core';
 import { User } from '../../providers';
 import { TransferService } from '../../providers';
 import {IonicPage, NavController, NavParams, ToastController} from 'ionic-angular';
@@ -25,6 +25,7 @@ export class NewTransactionPage {
   submitAttempt: boolean = false;
   transactionForm: FormGroup;
   templates: Template[];
+  selectObj: Template;
  public transaction: Transaction =
    {
     source: this.userService._user,
@@ -40,6 +41,7 @@ export class NewTransactionPage {
   type: string;
   private execLater: boolean = false;
   private saveAsTemplate: boolean = false;
+
 
   public setSaveAsTemplate(value: boolean) {
     this.saveAsTemplate = value;
@@ -66,11 +68,15 @@ export class NewTransactionPage {
 
     return this.execLater;
   }
-  constructor( public formBuilder: FormBuilder,   public toastCtrl: ToastController, public navCtrl: NavController, public navParams: NavParams, public userService: User, public transferServicerino: TransferService, public templateServicerino: TemplateService) {
+  constructor( public formBuilder: FormBuilder, private _cdr: ChangeDetectorRef,   public toastCtrl: ToastController, public navCtrl: NavController, public navParams: NavParams, public userService: User, public transferServicerino: TransferService, public templateServicerino: TemplateService) {
+
     this.setExecLater(false);
     this.transaction.type = "now";
     this.templateServicerino.createTemplate("DE365849", "John Johnson", 420, "Testerino");
     this.templates = this.templateServicerino.getAllTemplates();
+    console.log(this.templates);
+    console.log(this.selectObj);
+    console.log("finished loading stuff");
     this.transactionForm = formBuilder.group({
       source: [this.userService._user],
       recipient: ['', Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z ]*'), Validators.required])],
@@ -81,6 +87,36 @@ export class NewTransactionPage {
       date: [new Date().toISOString().split('T')[0]]
 
     });
+
+  }
+  onSelectChange(selected:any,selectObj){
+    console.log(selected,selectObj);
+    console.log( "selectObj is" + selectObj);
+    console.log("recipient is" + selectObj.recipient);
+    console.log("amount is" + selectObj.destination);
+    console.log("amount is" + selectObj.amount);
+    console.log("reference is" + selectObj.reference);
+    this.transactionForm.patchValue({recipient: selectObj.recipient, destination:
+      selectObj.destination, amount: selectObj.amount, reference: selectObj.reference});
+    this.transactionForm.controls['recipient'].setValue(selectObj.recipient);
+    this.transactionForm.controls['destination'].setValue(selectObj.destination);
+    this.transactionForm.controls['amount'].setValue(selectObj.amount);
+    this.transactionForm.controls['reference'].setValue(selectObj.reference);
+    this._cdr.detectChanges();
+/*
+    this.transactionForm.updateValueAndValidity();
+
+    this.transactionForm.reset();
+    this.transactionForm = this.formBuilder.group( {
+      source: [this.userService._user],
+      recipient: [selectObj.recipient, Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z ]*'), Validators.required])],
+      destination: [selectObj.destination, Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z0-9 ]*'), Validators.required])],
+      amount: [selectObj.amount, Validators.compose([Validators.maxLength(30), Validators.pattern('^(\\d*\\.)?\\d+$'), Validators.required])],
+      type: ['now'],
+      reference:  [selectObj.reference, Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z0-9 ]*'), Validators.required])],
+      date: [new Date().toISOString().split('T')[0]]
+    })
+    */
 
   }
 
