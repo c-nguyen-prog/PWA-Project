@@ -8,6 +8,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AgeValidator} from "../../validators/age";
 import {TemplateService} from "../../app/services/template.service";
 import {Template} from "../../app/interfaces/template";
+import {equals} from "@ngx-translate/core/src/util";
 
 /**
  * Generated class for the NewTransactionPage page.
@@ -90,18 +91,41 @@ export class NewTransactionPage {
 
   }
   onSelectChange(selected:any,selectObj){
+   let referencerino: string;
+   let amounterino: number;
+   let destinationerino: string;
+   let recipienterino: string;
+
     console.log(selected,selectObj);
-    console.log( "selectObj is" + selectObj);
-    console.log("recipient is" + selectObj.recipient);
-    console.log("amount is" + selectObj.destination);
-    console.log("amount is" + selectObj.amount);
-    console.log("reference is" + selectObj.reference);
+    console.log( "selectObj is " + selectObj.toString());
+    console.log("recipient is " + selectObj.recipient);
+    console.log("destination is " + selectObj.destination);
+    console.log("amount is " + selectObj.amount);
+    console.log("reference is " + selectObj.reference);
+    this.templates.forEach(function (value) {
+      console.log("the template we have is")
+      console.log(value);
+
+      if( selectObj.toString().indexOf(value.reference)>-1) {
+        console.log("found match")
+        referencerino = value.reference;
+        amounterino = value.amount;
+        recipienterino = value.recipient;
+        destinationerino = value.destination;
+      }
+    });
+
+    console.log( "selectObj is " + selectObj.toString());
+    console.log("recipient is " + recipienterino);
+    console.log("destination is " + destinationerino);
+    console.log("amount is " + amounterino);
+    console.log("reference is " + amounterino);
     this.transactionForm.patchValue({recipient: selectObj.recipient, destination:
       selectObj.destination, amount: selectObj.amount, reference: selectObj.reference});
-    this.transactionForm.controls['recipient'].setValue(selectObj.recipient);
-    this.transactionForm.controls['destination'].setValue(selectObj.destination);
-    this.transactionForm.controls['amount'].setValue(selectObj.amount);
-    this.transactionForm.controls['reference'].setValue(selectObj.reference);
+    this.transactionForm.controls['recipient'].setValue(recipienterino);
+    this.transactionForm.controls['destination'].setValue(destinationerino);
+    this.transactionForm.controls['amount'].setValue(amounterino);
+    this.transactionForm.controls['reference'].setValue(referencerino);
     this._cdr.detectChanges();
 /*
     this.transactionForm.updateValueAndValidity();
