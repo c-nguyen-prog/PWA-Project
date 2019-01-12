@@ -82,7 +82,8 @@
   "ERROR-SIGNUP-TIN":"Bitte geben sie eine gültige Steuer-ID (11 Ziffern) an",
   "ERROR-SIGNUP-NATION":"Bitte geben Sie ein existierendes Land an",
 
-  "LIST_MASTER_TITLE": "Artikel",
+  "LIST_MASTER_TITLE": "Kontoübersicht",
+  "BALANCE": "Kontostand",
 
   "ITEM_CREATE_TITLE": "Neuer Artikel",
   "ITEM_CREATE_CHOOSE_IMAGE": "Artikel hinzufügen",

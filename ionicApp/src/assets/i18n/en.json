@@ -84,7 +84,8 @@
   "ERROR-SIGNUP-TIN":"A Tax-ID consists of 11 numbers",
   "ERROR-SIGNUP-NATION":"Please enter an existent nation or country",
 
-  "LIST_MASTER_TITLE": "Items",
+  "LIST_MASTER_TITLE": "Account Overview",
+  "BALANCE": "Balance",
 
   "ITEM_CREATE_TITLE": "New Item",
   "ITEM_CREATE_CHOOSE_IMAGE": "Add Image",
