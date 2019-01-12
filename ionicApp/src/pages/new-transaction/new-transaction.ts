@@ -41,7 +41,7 @@ export class NewTransactionPage {
 
   type: string;
   private execLater: boolean = false;
-  private saveAsTemplate: boolean = false;
+  public saveAsTemplate: boolean = false;
 
 
   public setSaveAsTemplate(value: boolean) {
@@ -119,28 +119,15 @@ export class NewTransactionPage {
     console.log("recipient is " + recipienterino);
     console.log("destination is " + destinationerino);
     console.log("amount is " + amounterino);
-    console.log("reference is " + amounterino);
-    this.transactionForm.patchValue({recipient: selectObj.recipient, destination:
-      selectObj.destination, amount: selectObj.amount, reference: selectObj.reference});
+    console.log("reference is " + referencerino);
+    console.log("Finished loading template, please continue");
+   // this.transactionForm.patchValue({recipient: selectObj.recipient, destination:
+     // selectObj.destination, amount: selectObj.amount, reference: selectObj.reference});
     this.transactionForm.controls['recipient'].setValue(recipienterino);
     this.transactionForm.controls['destination'].setValue(destinationerino);
     this.transactionForm.controls['amount'].setValue(amounterino);
     this.transactionForm.controls['reference'].setValue(referencerino);
     this._cdr.detectChanges();
-/*
-    this.transactionForm.updateValueAndValidity();
-
-    this.transactionForm.reset();
-    this.transactionForm = this.formBuilder.group( {
-      source: [this.userService._user],
-      recipient: [selectObj.recipient, Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z ]*'), Validators.required])],
-      destination: [selectObj.destination, Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z0-9 ]*'), Validators.required])],
-      amount: [selectObj.amount, Validators.compose([Validators.maxLength(30), Validators.pattern('^(\\d*\\.)?\\d+$'), Validators.required])],
-      type: ['now'],
-      reference:  [selectObj.reference, Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z0-9 ]*'), Validators.required])],
-      date: [new Date().toISOString().split('T')[0]]
-    })
-    */
 
   }
 
@@ -161,11 +148,25 @@ export class NewTransactionPage {
   }
 
     doTransaction() {
+      let referencerino: string;
+      let amounterino: number;
+      let destinationerino: string;
+      let recipienterino: string;
+      referencerino = this.transactionForm.value['reference'];
+      console.log("The value of this thing to test called referencerino is:" + referencerino);
+      console.log("The value of the form is: ")
       console.log(this.transactionForm.value);
-      //let tempTransfer = JSON.parse(JSON.stringify(this.transaction));
-
+     // let tempTransfer = JSON.parse(JSON.stringify(this.transaction));
+      console.log("Save? " + this.getSaveAsTemplate());
       if(this.getSaveAsTemplate()==true) {
-        this.templateServicerino.createTemplate(this.transactionForm.controls['destination'], this.transactionForm.controls['recipient'], this.transactionForm.controls['amount'], this.transactionForm.controls['reference'] );
+        console.log("The value of the form  AFTER TICKING SAVE is: ")
+        console.log(this.transactionForm.value);
+        console.log("What is going to be saved is: ");
+        console.log("Destination: " + this.transactionForm.get('destination'));
+        console.log("Recipient: " + this.transactionForm.controls['destination']);
+        console.log("Amount: " + this.transactionForm.controls['destination']);
+        console.log("Destination: " + this.transactionForm.controls['destination']);
+        this.templateServicerino.createTemplate(this.transactionForm.value['destination'], this.transactionForm.value['recipient'], this.transactionForm.value['amount'], this.transactionForm.value['reference'] );
       }
       this.transferServicerino.transfer(JSON.stringify(this.transactionForm.value)).subscribe((resp : any) => {
       console.log(resp);

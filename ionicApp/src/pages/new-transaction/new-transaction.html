@@ -11,7 +11,7 @@
 <ion-content padding>
   <div class="transaction-form">
     <form [formGroup]="transactionForm" (submit)="doTransaction()">
-           <ion-list>
+           <ion-list class="listerino">
         <ion-item>
           <ion-label fixed>{{ 'Recipient' | translate }}</ion-label>
           <ion-input  [class.invalid]="!transactionForm.controls['recipient'].valid && (transactionForm.controls['recipient'].dirty || submitAttempt)" [formControl]="transactionForm.controls['recipient']" type="text"  ></ion-input>
@@ -44,14 +44,15 @@
           <ion-label fixed>{{ 'Description' | translate }}</ion-label>
           <ion-input [formControl]="transactionForm.controls['reference']" type="text" ></ion-input>
         </ion-item>
-             <ion-item>
-               <ion-checkbox [checked]="saveAsTemplate" ></ion-checkbox>
-               <ion-label  fixed>{{'Save' | translate }}</ion-label>
-             </ion-item>
            </ion-list>
     </form>
              <ion-item>
-               <ion-label>Load template</ion-label>
+               <ion-checkbox  [checked]="saveAsTemplate" [(ngModel)]="saveAsTemplate" ></ion-checkbox>
+               <ion-label  fixed>{{'Save' | translate }}</ion-label>
+             </ion-item>
+
+             <ion-item>
+               <ion-label class="loader">Load template</ion-label>
                <ion-select [(ngModel)]="selectObj" (ionChange)="onSelectChange($event, selectObj)">
                  <ion-option *ngFor = "let template of templates;">
                    {{template.reference}}
@@ -60,7 +61,7 @@
              </ion-item>
 
         <div class="buttons" padding align="center">
-          <button class="buttonerino" ion-button color="primary" block>{{ 'Accept' | translate }}</button>
+          <button class="buttonerino" (click)="doTransaction()" ion-button color="primary" block>{{ 'Accept' | translate }}</button>
           <button type="button" (click)="cancel()" class="buttonerino"  ion-button color="primary" block>{{ 'Reset' | translate }}</button>
         </div>
 

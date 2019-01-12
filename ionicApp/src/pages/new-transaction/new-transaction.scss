@@ -1,4 +1,7 @@
 page-new-transaction {
+  .listerino{
+    margin-bottom: 0px;
+  }
 
   .quantity::-webkit-inner-spin-button,
   .quantity::-webkit-outer-spin-button {
@@ -47,14 +50,20 @@ page-new-transaction {
 
     }
 
+
     .transaction-form{
       width: 67%;
       padding-left:33%;
+      margin-bottom: 0px;
     }
     .picker-wrapper {
       margin-top:0%;
       top:0px;
       transform: translateY(-50%);
+    }
+    .loader {
+      padding-top: 0px;
+      margin-top: 0px;
     }
   }
 
