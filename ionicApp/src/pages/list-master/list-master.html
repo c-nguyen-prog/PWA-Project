@@ -1,12 +1,10 @@
-  <ion-header>
-
+<ion-header>
   <ion-navbar>
     <ion-title>{{ 'LIST_MASTER_TITLE' | translate }}</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content>
-
   <ion-list class="transaction-list">
     <ion-item *ngFor="let item of transactions">
       <ion-grid>
@@ -15,11 +13,14 @@
             {{item.source}}
           </ion-col>
           <ion-col>
-            {{item.amount}}
+            <div *ngIf="(item.source === 'simon.zibat@gmail.com')" class="outgoing">
+              -{{item.amount}}€
+            </div>
+              <div *ngIf="!(item.source === 'simon.zibat@gmail.com')" class="incoming">
+                {{item.amount}}€
+              </div>
           </ion-col>
-
         </ion-row>
-
       </ion-grid>
     </ion-item>
   </ion-list>

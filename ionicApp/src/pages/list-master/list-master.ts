@@ -17,15 +17,12 @@ export class ListMasterPage {
     this.loadTransactions();
   }
 
+
   loadTransactions(){
     let data:Observable<any>;
     data = this.http.post('http://localhost:8888/user/transactions', {username: localStorage.getItem("username")});
     data.subscribe(result=>{
       this.transactions = result;
     })
-  }
-
-  transactionClick(transaction:number){
-    alert(transaction);
   }
 }

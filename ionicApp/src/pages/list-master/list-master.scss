@@ -16,4 +16,12 @@ page-list-master {
   .transaction-list{
     margin-top: 55px;
   }
+
+  .incoming{
+    color: color($colors, button, base);
+  }
+
+  .outgoing{
+    color: red;
+  }
 }
