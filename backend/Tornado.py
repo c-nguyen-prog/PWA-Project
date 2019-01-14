@@ -382,7 +382,8 @@ class UserTransactionsHandler(tornado.web.RequestHandler):
         pass
 
     def options(self):
-        pass
+        self.set_status(204)
+        self.finish()
 
     # Function to handle HTTP POST Request for user transaction
     @tornado.gen.coroutine
