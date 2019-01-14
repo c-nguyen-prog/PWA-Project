@@ -101,7 +101,6 @@ def do_standing_order(old_transaction):
 
 
 if __name__ == '__main__':
-    # TODO: ONLY RUNS ON WORK DAY?
     while True:
         now = datetime.datetime.now()
         pending_transactions = get_transactions()

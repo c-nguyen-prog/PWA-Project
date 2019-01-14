@@ -291,7 +291,8 @@ class TransactionHandler(tornado.web.RequestHandler):
         reference = data["reference"]
         now = datetime.datetime.now()
         created_date = str(now.year) + "-" + str(now.month) + "-" + str(now.day)
-        transaction = {"source": source,                                       # Create new transaction, status initial
+        transaction = {
+                        "source": source,                                       # Create new transaction, status initial
                        "destination": destination,
                        "amount": amount,
                        "type": type,
@@ -380,6 +381,9 @@ class UserTransactionsHandler(tornado.web.RequestHandler):
     def get(self):
         pass
 
+    def options(self):
+        pass
+    
     # Function to handle HTTP POST Request for user info
     @tornado.gen.coroutine
     def post(self):
@@ -389,7 +393,7 @@ class UserTransactionsHandler(tornado.web.RequestHandler):
         print(username)
         client = motor.motor_tornado.MotorClient('mongodb://localhost:27017')  # Connect to MongoDB server
         db = client.progappjs                                                  # Get database progappjs
-        cursor = db.transactions.find({"source": username}, {"_id": 0})                    # Search username in DB
+        cursor = db.transactions.find({"source": username}, {"_id": 0})        # Search username in DB
         docs = yield cursor.to_list(10)
         print(docs)
 
