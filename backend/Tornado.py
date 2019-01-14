@@ -305,6 +305,13 @@ class TransactionHandler(tornado.web.RequestHandler):
         db = client.progappjs                                                  # Get database progappjs
         db.transactions.insert_one(transaction)                                # Add new transaction to db
         executor.submit(await self.pending_transaction(transaction))           # Set transaction as pending
+        json_response = {
+            "status": "OK"
+        }
+        self.write(json.dumps(json_response))
+        self.set_header('Content-Type', 'application/json')
+        print(json_response)
+        self.finish()
 
     # TODO: Error handling for wrong sender info
     async def pending_transaction(self, transaction):

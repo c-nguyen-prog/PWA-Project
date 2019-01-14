@@ -29,7 +29,7 @@ export class NewTransactionPage {
   selectObj: Template;
  public transaction: Transaction =
    {
-    source: this.userService._user,
+    source: localStorage.getItem("username"),
     destination: '00425680345 ',
     reference: 'salary',
     date: new Date().toDateString(),
@@ -79,7 +79,7 @@ export class NewTransactionPage {
     console.log(this.selectObj);
     console.log("finished loading stuff");
     this.transactionForm = formBuilder.group({
-      source: [this.userService._user],
+      source: [localStorage.getItem("username")],
       recipient: ['', Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z ]*'), Validators.required])],
       destination: ['', Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z0-9 ]*'), Validators.required])],
       amount: [0.01, Validators.compose([Validators.maxLength(30), Validators.pattern('^(\\d*\\.)?\\d+$'), Validators.required])],
