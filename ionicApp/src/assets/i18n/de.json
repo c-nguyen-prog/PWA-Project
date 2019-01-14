@@ -75,7 +75,7 @@
   "ERROR-SIGNUP-AGE": "Zur Registrierung bei DigiBank müssen Sie mindestens 18 Jahre alt sein",
   "ERROR-SIGNUP-MAIL":"Bitte geben Sie eine gültige E-Mailadresse an",
   "ERROR-SIGNUP-PASSWORD":"Bitte geben Sie ein sicheres Passwort an: Mindestens 8 Zeichen, ein Großbuchstabe, ein Kleinbuchstabe, eine Zahl und ein Sonderzeichen",
-  "ERROR-SIGNUP-PASSWORDVALIDATION": "Die Passwörter müssen übereinstimmen",
+  "ERROR-SIGNUP-PASSWORDVALIDATION": "Bitte wiederholen Sie ihr Passwort",
   "ERROR-SIGNUP-PHONE":"Bitte geben Sie Ihre Telefonnummer ohne Unterbrechungen oder Sonderzeichen an",
   "ERROR-SIGNUP-ZIP":"Postleitzahlen haben 5 Ziffern",
   "ERROR-SIGNUP-CITY":"Bitte geben Sie eine existierende Stadt an",
