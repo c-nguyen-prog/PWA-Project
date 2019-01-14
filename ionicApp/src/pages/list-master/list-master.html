@@ -7,15 +7,15 @@
 
 <ion-content>
 
-  <ion-list>
-    <ion-item *ngFor="let item of transactions" (click)="transactionClick(item.id)">
+  <ion-list class="transaction-list">
+    <ion-item *ngFor="let item of transactions">
       <ion-grid>
         <ion-row>
           <ion-col>
-            {{item.id}}
+            {{item.source}}
           </ion-col>
           <ion-col>
-            {{item.title}}
+            {{item.amount}}
           </ion-col>
 
         </ion-row>
