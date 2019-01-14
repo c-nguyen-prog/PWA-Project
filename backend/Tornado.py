@@ -383,8 +383,8 @@ class UserTransactionsHandler(tornado.web.RequestHandler):
 
     def options(self):
         pass
-    
-    # Function to handle HTTP POST Request for user info
+
+    # Function to handle HTTP POST Request for user transaction
     @tornado.gen.coroutine
     def post(self):
         data = json.loads(self.request.body)                                   # Get json request for transaction
@@ -393,10 +393,13 @@ class UserTransactionsHandler(tornado.web.RequestHandler):
         print(username)
         client = motor.motor_tornado.MotorClient('mongodb://localhost:27017')  # Connect to MongoDB server
         db = client.progappjs                                                  # Get database progappjs
-        cursor = db.transactions.find({"source": username}, {"_id": 0})        # Search username in DB
+        document = yield db.users.find_one({"username": username})  # Search username in DB
+        print(document)
+        iban = document["iban"]
+        print(iban)
+        cursor = db.transactions.find({"$or": [{"destination": iban},{"source": username}]}, {"_id": 0})
         docs = yield cursor.to_list(10)
         print(docs)
-
         self.write(json.dumps(docs))
         self.set_header('Content-Type', 'application/json')
         self.finish()

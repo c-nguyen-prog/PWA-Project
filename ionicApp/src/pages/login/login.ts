@@ -52,6 +52,7 @@ export class LoginPage {
     this.user.login(JSON.stringify(tempAccount)).subscribe((resp : any) => {
       console.log(resp);
       if (resp.status === "success") {
+        localStorage.setItem("username", this.account.email);
         this.navCtrl.push(MainPage);
         console.log("Successfully logged in");
         let toast = this.toastCtrl.create({
