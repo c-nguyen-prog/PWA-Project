@@ -20,8 +20,8 @@ export class LoginPage {
     password: string
   } =
     {
-    email: "admin",
-    password: "admin"
+    email: "",
+    password: ""
   };
 
   // Our translated text strings

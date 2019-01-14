@@ -88,6 +88,9 @@
                 <ion-label fixed>{{ 'PASSWORD' | translate }}</ion-label>
                 <ion-input type="password" formControlName="passwordValidation"></ion-input>
               </ion-item>
+              <ion-item *ngIf="passwordMatch" text-wrap>
+                <p>{{ 'ERROR-SIGNUP-PASSWORDVALIDATION' | translate }}.</p>
+              </ion-item>
 
               <ion-item>
                 <ion-label fixed>{{ 'PHONE' | translate }}</ion-label>

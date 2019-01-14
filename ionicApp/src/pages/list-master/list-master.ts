@@ -19,7 +19,7 @@ export class ListMasterPage {
 
   loadTransactions(){
     let data:Observable<any>;
-    data = this.http.get('https://jsonplaceholder.typicode.com/posts');
+    data = this.http.post('http://localhost:8888/users/transactions', {username: localStorage.getItem("username")});
     data.subscribe(result=>{
       this.transactions = result;
     })

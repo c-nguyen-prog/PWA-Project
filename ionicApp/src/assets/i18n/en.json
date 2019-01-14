@@ -77,7 +77,7 @@
   "ERROR-SIGNUP-AGE": "You have to be at least of age 18 to register for DigiBank",
   "ERROR-SIGNUP-MAIL":"Please enter a valid mail address",
   "ERROR-SIGNUP-PASSWORD":"Please enter a secure password: At least 8 characters, one upper case, one lower case. one number and one special character",
-  "ERROR-SIGNUP-PASSWORDVALIDATION": "Both passwords have to be the same",
+  "ERROR-SIGNUP-PASSWORDVALIDATION": "Please repeat your password",
   "ERROR-SIGNUP-PHONE":"Please enter a valid phone numer without any breaks or special characters",
   "ERROR-SIGNUP-ZIP":"A german postal code has 5 numbers",
   "ERROR-SIGNUP-CITY":"please enter an existent city",
