@@ -4,23 +4,39 @@
   </ion-navbar>
 </ion-header>
 
+
 <ion-content>
+  <ion-searchbar
+    (ionInput)="filter($event.target.value)"></ion-searchbar>
   <ion-list class="transaction-list">
-    <ion-item *ngFor="let item of transactions">
+    <ion-item *ngFor="let item of filterTransactions">
       <ion-grid>
         <ion-row>
           <ion-col>
-            {{item.source}}
+            <div *ngIf="(item.source === user)">
+              To: {{item.destination}}
+            </div>
+            <div *ngIf="!(item.source === user)">
+              From: {{item.destination}}€
+            </div>
           </ion-col>
           <ion-col>
-            <div *ngIf="(item.source === 'simon.zibat@gmail.com')" class="outgoing">
+            <div *ngIf="(item.source === user)" class="outgoing">
               -{{item.amount}}€
             </div>
-              <div *ngIf="!(item.source === 'simon.zibat@gmail.com')" class="incoming">
-                {{item.amount}}€
-              </div>
+            <div *ngIf="!(item.source === user)" class="incoming">
+              {{item.amount}}€
+            </div>
           </ion-col>
         </ion-row>
+      <ion-row>
+        <ion-col col-4>
+          {{item.date}}
+        </ion-col>
+        <ion-col col-8>
+          {{item.reference}}
+        </ion-col>
+      </ion-row>
       </ion-grid>
     </ion-item>
   </ion-list>

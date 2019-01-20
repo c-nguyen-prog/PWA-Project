@@ -13,8 +13,12 @@ import {Observable} from "rxjs";
 })
 export class ListMasterPage {
   public transactions:any;
+  public filterTransactions:any;
+  public user:string;
+
   constructor(public navCtrl: NavController, public http: HttpClient) {
     this.loadTransactions();
+    this.user = localStorage.getItem("username");
   }
 
 
@@ -25,4 +29,16 @@ export class ListMasterPage {
       this.transactions = result;
     })
   }
+
+  filter(param:any):void {
+    this.loadTransactions();
+    let val: string = param;
+
+    if (val.trim() !== '') {
+      this.filterTransactions= this.transactions.filter((item) => {
+          return item.source.toLowerCase().indexOf(val.toLowerCase()) > -1 || item.destination.toLowerCase().indexOf(val.toLowerCase()) > -1 || item.reference.toLowerCase().indexOf(val.toLowerCase()) > -1;
+        })
+    }
+  }
+
 }
