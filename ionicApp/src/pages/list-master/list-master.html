@@ -5,10 +5,10 @@
 </ion-header>
 
 
-<ion-content>
+<ion-content class="transaction-list">
   <ion-searchbar
     (ionInput)="filter($event.target.value)"></ion-searchbar>
-  <ion-list class="transaction-list">
+  <ion-list >
     <ion-item *ngFor="let item of filterTransactions">
       <ion-grid>
         <ion-row>
@@ -17,7 +17,7 @@
               To: {{item.destination}}
             </div>
             <div *ngIf="!(item.source === user)">
-              From: {{item.destination}}€
+              From: {{item.destination}}
             </div>
           </ion-col>
           <ion-col>

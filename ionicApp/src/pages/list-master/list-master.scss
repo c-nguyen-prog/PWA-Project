@@ -24,4 +24,17 @@ page-list-master {
   .outgoing{
     color: red;
   }
+/*
+  @media (min-width: 994px) {
+    .transaction-list {
+      width: 30%;
+    }
+  }
+
+  @media (max-width: 994px) {
+    .transaction-list {
+      max-width: 290px;
+    }
+  }
+  */
 }

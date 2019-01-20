@@ -19,6 +19,7 @@ export class ListMasterPage {
   constructor(public navCtrl: NavController, public http: HttpClient) {
     this.loadTransactions();
     this.user = localStorage.getItem("username");
+    this.filterTransactions = this.transactions;
   }
 
 
@@ -38,6 +39,8 @@ export class ListMasterPage {
       this.filterTransactions= this.transactions.filter((item) => {
           return item.source.toLowerCase().indexOf(val.toLowerCase()) > -1 || item.destination.toLowerCase().indexOf(val.toLowerCase()) > -1 || item.reference.toLowerCase().indexOf(val.toLowerCase()) > -1;
         })
+    } else {
+      this.filterTransactions = this.transactions;
     }
   }
 
