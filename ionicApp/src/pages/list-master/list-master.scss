@@ -19,11 +19,18 @@ page-list-master {
 
   .incoming{
     color: color($colors, button, base);
+    font-size: 14px;
   }
 
   .outgoing{
     color: red;
+    font-size: 14px;
   }
+
+  .destinationText, .dateText, .referenceText{
+    font-size: 12px;
+  }
+
 /*
   @media (min-width: 994px) {
     .transaction-list {

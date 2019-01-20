@@ -13,27 +13,27 @@
       <ion-grid>
         <ion-row>
           <ion-col>
-            <div *ngIf="(item.source === user)">
-              To: {{item.destination}}
+            <div *ngIf="(item.source === user)" class="destinationText">
+              {{'LIST_MASTER_FROM' | translate}} {{item.destination}}
             </div>
-            <div *ngIf="!(item.source === user)">
-              From: {{item.destination}}
+            <div *ngIf="!(item.source === user)" class="destinationText">
+              {{'LIST_MASTER_FROM' | translate}} {{item.destination}}
             </div>
           </ion-col>
           <ion-col>
-            <div *ngIf="(item.source === user)" class="outgoing">
+            <div *ngIf="(item.source === user)" class="outgoing" end>
               -{{item.amount}}€
             </div>
-            <div *ngIf="!(item.source === user)" class="incoming">
+            <div *ngIf="!(item.source === user)" class="incoming" end>
               {{item.amount}}€
             </div>
           </ion-col>
         </ion-row>
       <ion-row>
-        <ion-col col-4>
-          {{item.date}}
+        <ion-col col-4 class="dateText">
+          {{item.date || dd/MM/yy}}
         </ion-col>
-        <ion-col col-8>
+        <ion-col col-8 class="referenceText">
           {{item.reference}}
         </ion-col>
       </ion-row>

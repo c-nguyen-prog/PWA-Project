@@ -85,7 +85,9 @@
   "ERROR-SIGNUP-NATION":"Please enter an existent nation or country",
 
   "LIST_MASTER_TITLE": "Account Overview",
-  "BALANCE": "Balance",
+  "BALANCE": "Current balance: ",
+  "LIST_MASTER_FROM" : "From: ",
+  "LIST_MASTER_TO" : "To: ",
 
   "ITEM_CREATE_TITLE": "New Item",
   "ITEM_CREATE_CHOOSE_IMAGE": "Add Image",
