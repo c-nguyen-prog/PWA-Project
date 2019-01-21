@@ -88,6 +88,10 @@
   "BALANCE": "Current balance: ",
   "LIST_MASTER_FROM" : "From: ",
   "LIST_MASTER_TO" : "To: ",
+  "LIST_MASTER_OTHERS" :"Incoming",
+  "LIST_MASTER_OWN" : "Outgoing",
+  "LIST_MASTER_ALL" : "All",
+  "LIST_MASTER_TRANS" : "Transactions:",
 
   "ITEM_CREATE_TITLE": "New Item",
   "ITEM_CREATE_CHOOSE_IMAGE": "Add Image",

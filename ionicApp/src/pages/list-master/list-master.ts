@@ -19,7 +19,6 @@ export class ListMasterPage {
   constructor(public navCtrl: NavController, public http: HttpClient) {
     this.loadTransactions();
     this.user = localStorage.getItem("username");
-    this.filterTransactions = this.transactions;
   }
 
 
@@ -28,11 +27,11 @@ export class ListMasterPage {
     data = this.http.post('http://localhost:8888/user/transactions', {username: localStorage.getItem("username")});
     data.subscribe(result=>{
       this.transactions = result;
+      this.filterTransactions = this.transactions;
     })
   }
 
   filter(param:any):void {
-    this.loadTransactions();
     let val: string = param;
 
     if (val.trim() !== '') {

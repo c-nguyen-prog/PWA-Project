@@ -86,6 +86,10 @@
   "BALANCE": "Momentaner Kontostand: ",
   "LIST_MASTER_FROM" : "Von: ",
   "LIST_MASTER_TO" : "Nach: ",
+  "LIST_MASTER_OTHERS" :"Eingehend",
+  "LIST_MASTER_OWN" : "Ausgehend",
+  "LIST_MASTER_ALL" : "Alle",
+  "LIST_MASTER_TRANS" : "Transaktionen:",
 
   "ITEM_CREATE_TITLE": "Neuer Artikel",
   "ITEM_CREATE_CHOOSE_IMAGE": "Artikel hinzufügen",
