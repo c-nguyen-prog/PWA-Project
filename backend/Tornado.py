@@ -280,6 +280,10 @@ class TransactionHandler(tornado.web.RequestHandler):
     def get(self):
         pass
 
+    def options(self):
+        self.set_status(204)
+        self.finish()
+
     async def post(self):
         data = json.loads(self.request.body)                                   # Get json request for transaction
         print(data)

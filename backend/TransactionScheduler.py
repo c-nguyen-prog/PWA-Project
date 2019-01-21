@@ -106,7 +106,7 @@ if __name__ == '__main__':
         pending_transactions = get_transactions()
 
         for transaction in pending_transactions:
-            if transaction["type"] == "sofort":
+            if transaction["type"] == "now":
                 print(transaction)
                 do_transaction(transaction)
 

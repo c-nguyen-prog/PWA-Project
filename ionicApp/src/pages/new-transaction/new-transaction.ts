@@ -29,7 +29,7 @@ export class NewTransactionPage {
   selectObj: Template;
  public transaction: Transaction =
    {
-    source: localStorage.getItem("username"),
+    source: localStorage.getItem("username").toString(),
     destination: '00425680345 ',
     reference: 'salary',
     date: new Date().toDateString(),
