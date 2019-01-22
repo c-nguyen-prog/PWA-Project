@@ -5,7 +5,7 @@ import {User} from "../../providers";
 
 
 export interface Transaction {
-  source: User,
+  source: string,
   destination: string; //iban
   recipient: string;
   amount: number;

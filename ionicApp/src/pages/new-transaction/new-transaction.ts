@@ -148,10 +148,11 @@ export class NewTransactionPage {
   }
 
     doTransaction() {
+      this.transactionForm.value['amount'] = parseFloat(this.transactionForm.value['amount']);
       let referencerino: string;
-      let amounterino: number;
-      let destinationerino: string;
-      let recipienterino: string;
+     // let amounterino: number;
+      //let destinationerino: string;
+      //let recipienterino: string;
       referencerino = this.transactionForm.value['reference'];
       console.log("The value of this thing to test called referencerino is:" + referencerino);
       console.log("The value of the form is: ")
