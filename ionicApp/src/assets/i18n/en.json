@@ -23,7 +23,7 @@
   "TIN": "Tax ID",
   "NATIONALITY": "Nationality",
 
-  "TAB1_TITLE": "Items",
+  "TAB1_TITLE": "Account Overview",
   "TAB2_TITLE": "New Transaction",
   "TAB3_TITLE": "Settings",
 
@@ -85,13 +85,15 @@
   "ERROR-SIGNUP-NATION":"Please enter an existent nation or country",
 
   "LIST_MASTER_TITLE": "Account Overview",
-  "BALANCE": "Current balance: ",
+  "BALANCE": "Balance: ",
   "LIST_MASTER_FROM" : "From: ",
   "LIST_MASTER_TO" : "To: ",
-  "LIST_MASTER_OTHERS" :"Incoming",
-  "LIST_MASTER_OWN" : "Outgoing",
-  "LIST_MASTER_ALL" : "All",
   "LIST_MASTER_TRANS" : "Transactions:",
+  "LIST_MASTER_ALL" : "All",
+  "LIST_MASTER_PENDING" : "Pending",
+  "LIST_MASTER_DONE" : "Booked",
+  "LIST_MASTER_DATE" :"Scheduled",
+  "LIST_MASTER_REPEAT" : "Standing Orders",
 
   "ITEM_CREATE_TITLE": "New Item",
   "ITEM_CREATE_CHOOSE_IMAGE": "Add Image",

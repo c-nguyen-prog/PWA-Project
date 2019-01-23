@@ -13,8 +13,10 @@ import {Observable} from "rxjs";
 })
 export class ListMasterPage {
   public transactions:any;
+  public transactionsArray:any;
   public filterTransactions:any;
   public user:string;
+  public balance:number;
 
   constructor(public navCtrl: NavController, public http: HttpClient) {
     this.loadTransactions();
@@ -27,20 +29,37 @@ export class ListMasterPage {
     data = this.http.post('http://localhost:8888/user/transactions', {username: localStorage.getItem("username")});
     data.subscribe(result=>{
       this.transactions = result;
-      this.filterTransactions = this.transactions;
+      this.balance = this.transactions.balance;
+      this.filterTransactions = this.transactions.transactions;
+      this.transactionsArray = this.transactions.transactions;
     })
   }
 
   filter(param:any):void {
     let val: string = param;
 
+    this.filterTransactions = this.transactionsArray;
+
     if (val.trim() !== '') {
-      this.filterTransactions= this.transactions.filter((item) => {
+      this.filterTransactions= this.filterTransactions.filter((item) => {
           return item.source.toLowerCase().indexOf(val.toLowerCase()) > -1 || item.destination.toLowerCase().indexOf(val.toLowerCase()) > -1 || item.reference.toLowerCase().indexOf(val.toLowerCase()) > -1;
         })
-    } else {
-      this.filterTransactions = this.transactions;
     }
   }
 
+  filter2(param:any):void {
+    let val: string = param;
+    this.filterTransactions = this.transactionsArray;
+    if (val.trim() !== 'all') {
+      if (val.trim() == 'done' || val.trim() == 'pending') {
+        this.filterTransactions = this.filterTransactions.filter((item) => {
+          return item.status.toLowerCase().indexOf(val.toLowerCase()) > -1;
+        })
+      } else {
+        this.filterTransactions = this.filterTransactions.filter((item) => {
+          return item.type.toLowerCase().indexOf(val.toLowerCase()) > -1;
+        })
+      }
+    }
+  }
 }

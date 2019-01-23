@@ -1,6 +1,6 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>{{ 'LIST_MASTER_TITLE' | translate }}</ion-title>
+    <ion-title>{{ 'BALANCE' | translate }}{{balance}}€</ion-title>
   </ion-navbar>
 </ion-header>
 
@@ -13,14 +13,18 @@
          <ion-searchbar (ionInput)="filter($event.target.value)"></ion-searchbar>
        </ion-col>
        <ion-col>
+
          <ion-item>
            <ion-label fixed> {{'LIST_MASTER_TRANS' | translate}}</ion-label>
-           <ion-select>
+           <ion-select (ionChange)="filter2($event)">
              <ion-option value="all" [selected]="true">{{'LIST_MASTER_ALL' | translate}}</ion-option>
-             <ion-option value="own">{{'LIST_MASTER_OWN' | translate}}</ion-option>
-             <ion-option value="others">{{'LIST_MASTER_OTHERS' | translate}}</ion-option>
+             <ion-option value="pending">{{'LIST_MASTER_PENDING' | translate}}</ion-option>
+             <ion-option value="done">{{'LIST_MASTER_DONE' | translate}}</ion-option>
+             <ion-option value="date">{{'LIST_MASTER_DATE' | translate}}</ion-option>
+             <ion-option value="standing">{{'LIST_MASTER_REPEAT' | translate}}</ion-option>
            </ion-select>
          </ion-item>
+
        </ion-col>
      </ion-row>
 
