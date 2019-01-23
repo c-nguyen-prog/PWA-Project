@@ -4,6 +4,13 @@ import pymongo
 
 
 def increment_date(date):
+
+    """
+    This method calculate the next date in a standing order transaction.
+    :param date: current execution date of the transaction
+    :return: execution date in next month of the transaction (in String)
+    """
+
     date = datetime.datetime.strptime(date, "%Y-%m-%d")
     new_month = date.month % 12 + 1
 
@@ -38,6 +45,11 @@ def increment_date(date):
 
 
 def get_transactions():
+    """
+    This method finds all pending transactions in the database, sort them after created date and returns them as a list
+    :return: list of pending transactions
+    """
+
     client = pymongo.MongoClient("mongodb://localhost:27017")
     db = client.progappjs
     pending_transactions = db.transactions.find({"status": "pending"})
@@ -46,6 +58,12 @@ def get_transactions():
 
 
 def do_transaction(transaction):
+    """
+    This method executes a pending transaction
+    :param transaction: the input pending transaction
+    :return: None
+    """
+
     client = pymongo.MongoClient("mongodb://localhost:27017")
     db = client.progappjs
     source = db.users.find_one({"username": transaction["source"]})
@@ -58,7 +76,7 @@ def do_transaction(transaction):
              "$push": {"pending_transaction": transaction["_id"]}})
 
         update_dest = db.users.update_one(
-            {"username": transaction["destination"],
+            {"username": transaction["destination_username"],
              "pending_transaction": {"$ne": transaction["_id"]}},
             {"$inc": {"balance": +transaction["amount"]},
              "$push": {"pending_transaction": transaction["_id"]}})
@@ -71,7 +89,7 @@ def do_transaction(transaction):
             {"$pull": {"pending_transaction": transaction["_id"]}})
 
         update_dest = db.users.update_one(
-            {"username": transaction["destination"]},
+            {"username": transaction["destination_username"]},
             {"$pull": {"pending_transaction": transaction["_id"]}})
 
         update_transaction = db.transactions.update_one(
@@ -84,12 +102,20 @@ def do_transaction(transaction):
 
 
 def do_standing_order(old_transaction):
+    """
+    This method executes a pending standing order transaction.
+    It executes the transaction as a normal transaction and creates a new one with next execution date
+    :param old_transaction: the transaction that is to be executed
+    :return: None
+    """
+
     client = pymongo.MongoClient("mongodb://localhost:27017")
     db = client.progappjs
 
     new_date = increment_date(old_transaction["date"])
     new_transaction = {"source": old_transaction["source"],
                        "destination": old_transaction["destination"],
+                       "destination_username": old_transaction["destination_username"],
                        "amount": old_transaction["amount"],
                        "type": old_transaction["type"],
                        "date": new_date,
