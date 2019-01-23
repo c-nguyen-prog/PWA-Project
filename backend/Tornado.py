@@ -46,6 +46,7 @@ class MainHandler(tornado.web.RequestHandler):
 
 
 """
+POST /login
 Function to handle login process, json format:
     {
         "email": String,
@@ -129,6 +130,7 @@ class LogInHandler(tornado.web.RequestHandler):
 
 
 """
+POST /signup
 Function to handle sign up request, json format: 
 {
     title = String
@@ -251,7 +253,8 @@ class SignUpHandler(tornado.web.RequestHandler):
 
 
 """
-Function to handle request for a transaction, json format: 
+POST /transaction
+Function to handle request for a new transaction, json format: 
 {
     "source": String source_username (or iban),
     "destination": String iban,
@@ -294,7 +297,7 @@ class TransactionHandler(tornado.web.RequestHandler):
         if destination_user is not None:
             destination_username = destination_user["username"]
             transaction = {
-                            "source": source,                                       # Create new transaction, status initial
+                            "source": source,                                       # Create new transaction: initial
                             "destination": destination,
                             "destination_username": destination_username,
                             "amount": amount,
@@ -310,7 +313,7 @@ class TransactionHandler(tornado.web.RequestHandler):
                 "status": "OK"
             }
         else:
-            print("IBAN not found")
+            print("Destination IBAN not found")
             json_response = {
                 "status": "fail"
             }
@@ -329,7 +332,8 @@ class TransactionHandler(tornado.web.RequestHandler):
 
 
 """
-Function to handle request for user info, json format:
+POST /user/info
+Function to handle request for user info (Settings), json format:
 {
     "username": String,
     //session_id
@@ -377,6 +381,7 @@ class UserInfoHandler(tornado.web.RequestHandler):
 
 
 """
+POST /user/transactions
 Function to handle request for a user's transaction list (Overview Page), json format:
 {
     "username": String,
@@ -398,22 +403,24 @@ class UserTransactionsHandler(tornado.web.RequestHandler):
         self.finish()
 
     # Function to handle HTTP POST Request for user transaction
-    @tornado.gen.coroutine
-    def post(self):
+    async def post(self):
         data = json.loads(self.request.body)                                   # Get json request for transaction
         print(data)
         username = data["username"]
-        print(username)
         client = motor.motor_tornado.MotorClient('mongodb://localhost:27017')  # Connect to MongoDB server
         db = client.progappjs                                                  # Get database progappjs
-        document = yield db.users.find_one({"username": username})  # Search username in DB
+        document = await db.users.find_one({"username": username})             # Search username in DB
         print(document)
+        balance = document["balance"]
         iban = document["iban"]
-        print(iban)
         cursor = db.transactions.find({"$or": [{"destination": iban}, {"source": username}]}, {"_id": 0})
-        docs = yield cursor.to_list(10)
-        print(docs)
-        self.write(json.dumps(docs))
+        docs = await cursor.to_list(10)
+        json_response = {
+            "balance": balance,
+            "transactions": docs
+        }
+        print(json_response)
+        self.write(json.dumps(json_response))
         self.set_header('Content-Type', 'application/json')
         self.finish()
 
