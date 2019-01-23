@@ -8,9 +8,11 @@ import tornado.websocket
 import json
 import bcrypt
 import motor.motor_tornado
+import pymongo
+
+import os
 import datetime
 import random
-import pymongo
 from concurrent.futures import ThreadPoolExecutor
 from tornado import options
 
@@ -19,7 +21,7 @@ executor = ThreadPoolExecutor(8)  # declare 8 threads
 
 class MainHandler(tornado.web.RequestHandler):
     def get(self):
-        self.write("visit /api for api")
+        self.write("IONIC SERVER REST API")
 
 
 """
@@ -447,7 +449,6 @@ class Application(tornado.web.Application):
 
         handlers = [
             (r"/", MainHandler),
-            (r"/websocket", WebSocket),
             (r"/login", LogInHandler),
             (r"/signup", SignUpHandler),
             (r"/transaction", TransactionHandler),
