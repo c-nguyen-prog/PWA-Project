@@ -141,11 +141,11 @@ if __name__ == '__main__':
                     transaction_date = datetime.datetime.strptime(transaction["date"], "%Y-%m-%d")
                     if transaction_date.year == now.year and transaction_date.month == now.month \
                             and transaction_date.day == now.day:
-                        if transaction["type"] == "normal":
+                        if transaction["type"] == "date":
                             print(transaction)
                             do_transaction(transaction)
-                        elif transaction["type"] == "standing_order":
+                        elif transaction["type"] == "standing":
                             print(transaction)
                             do_standing_order(transaction)
 
-        time.sleep(3)
+        time.sleep(2)
