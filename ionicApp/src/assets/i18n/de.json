@@ -23,7 +23,7 @@
   "CONTACTUS": "Kontakt",
   "ABOUTUS": "Über uns",
 
-  "TAB1_TITLE": "Items",
+  "TAB1_TITLE": "Kontoübersicht",
   "TAB2_TITLE": "Neue Transaktion",
   "TAB3_TITLE": "Einstellung",
 
@@ -83,13 +83,15 @@
   "ERROR-SIGNUP-NATION":"Bitte geben Sie ein existierendes Land an",
 
   "LIST_MASTER_TITLE": "Kontoübersicht",
-  "BALANCE": "Momentaner Kontostand: ",
+  "BALANCE": "Saldo: ",
   "LIST_MASTER_FROM" : "Von: ",
   "LIST_MASTER_TO" : "Nach: ",
-  "LIST_MASTER_OTHERS" :"Eingehend",
-  "LIST_MASTER_OWN" : "Ausgehend",
-  "LIST_MASTER_ALL" : "Alle",
   "LIST_MASTER_TRANS" : "Transaktionen:",
+  "LIST_MASTER_ALL" : "Alle",
+  "LIST_MASTER_PENDING" : "Anstehend",
+  "LIST_MASTER_DONE" : "Gebucht",
+  "LIST_MASTER_DATE" :"Terminüberweisungen",
+  "LIST_MASTER_REPEAT" : "Daueraufträge",
 
   "ITEM_CREATE_TITLE": "Neuer Artikel",
   "ITEM_CREATE_CHOOSE_IMAGE": "Artikel hinzufügen",
