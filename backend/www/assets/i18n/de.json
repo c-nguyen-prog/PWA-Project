@@ -1,0 +1,124 @@
+{
+  "BACK_BUTTON_TEXT": "Zurück",
+
+  "MENU":"DigiBank",
+  "TITLE": "Anrede",
+  "MISTER": "Herr",
+  "MADAM": "Frau",
+  "NAME": "Name",
+  "PASSWORD": "Passwort",
+  "EMAIL": "E-Mail",
+  "USERNAME": "Benutzername",
+  "SURNAME": "Vorname",
+  "DOB": "Geburtsdatum",
+  "PHONE": "Telefon",
+  "ADDRESS": "Adresse",
+  "ZIP": "Postleitzahl",
+  "CITY": "Wohnort",
+  "TIN": "Steuer-ID",
+  "NATIONALITY": "Nationalität",
+
+  "LOGIN": "Anmelden",
+  "SIGNUP": "Registrieren",
+  "CONTACTUS": "Kontakt",
+  "ABOUTUS": "Über uns",
+
+  "TAB1_TITLE": "Items",
+  "TAB2_TITLE": "Neue Transaktion",
+  "TAB3_TITLE": "Einstellung",
+
+  "MAP_TITLE": "Karte",
+
+  "TUTORIAL_SKIP_BUTTON": "Überspringen",
+  "TUTORIAL_CONTINUE_BUTTON": "Fortfahren",
+
+  "TUTORIAL_SLIDE1_TITLE": "Hallo Ionic Super Starter App",
+  "TUTORIAL_SLIDE1_DESCRIPTION": "Die <b>Ionic Super Starter App</b> ist eine umfangreiche Starter App mit vielen vorgefertigten Seiten und Best Practices.",
+
+  "TUTORIAL_SLIDE2_TITLE": "Wie soll man die Super Starter App verwenden",
+  "TUTORIAL_SLIDE2_DESCRIPTION": "Nutze und bearbeite die Funktionen und Seiten die du benötigst und lösche den Rest. Wähle aus einer Vielzahl an Layouts, wie Anmelden, Registrieren, Tabs und einer Tutorial Seite.",
+
+  "TUTORIAL_SLIDE3_TITLE": "Los gehts",
+  "TUTORIAL_SLIDE3_DESCRIPTION": "Du brauchst Hilfe? Sieh dir das README File an um mehr zu erfahren.",
+
+
+  "WELCOME_INTRO": "Digibank",
+
+  "SETTINGS_TITLE": "Einstellungen",
+  "SETTINGS_OPTION1": "Option 1",
+  "SETTINGS_OPTION2": "Option 2",
+  "SETTINGS_OPTION3": "Option 3",
+  "SETTINGS_OPTION4": "Option 4",
+
+  "SETTINGS_PROFILE_BUTTON": "Daten ändern",
+
+  "SETTINGS_PAGE_PROFILE": "Daten ändern",
+
+  "WELCOME_TITLE": "Willkommen",
+  "WELCOME-BIG-TITLE": "Willkommen bei DigiBank!",
+
+  "WELCOME-CARD-1-TEXT" : "WELCOME-CARD-1-TEXT",
+  "WELCOME-CARD-2-TEXT" : "WELCOME-CARD-2-TEXT",
+  "WELCOME-CARD-3-TEXT" : "WELCOME-CARD-3-TEXT",
+
+  "LOGIN_TITLE": "Anmelden",
+  "LOGIN_ERROR": "Fehler beim Anmelden, bitte überprüfen Sie Ihre Angaben und versuchen Sie es erneut",
+  "SERVER_ERROR": "Fehler bei der Serverrückmeldung",
+  "ACCOUNT_ERROR": "Ihr Konto ist nicht aktiviert, bitte kontaktieren Sie unseren Kundenservice",
+  "LOGIN_BUTTON": "Anmelden",
+  "SIGNUP_TITLE": "Registrieren",
+  "SIGNUP_ERROR": "Fehler beim Registrieren, bitte überprüfen Sie Ihre Angaben und versuchen Sie es erneut",
+  "SIGNUP_BUTTON": "Registrieren",
+
+  "ERROR-SIGNUP-FIRSTNAME":"Bitte geben Sie einen gültigen Namen ein",
+  "ERROR-SIGNUP-LASTNAME":"Bitte geben Sie einen gültigen Nachnamen ein",
+  "ERROR-SIGNUP-AGE": "Zur Registrierung bei DigiBank müssen Sie mindestens 18 Jahre alt sein",
+  "ERROR-SIGNUP-MAIL":"Bitte geben Sie eine gültige E-Mailadresse an",
+  "ERROR-SIGNUP-PASSWORD":"Bitte geben Sie ein sicheres Passwort an: Mindestens 8 Zeichen, ein Großbuchstabe, ein Kleinbuchstabe, eine Zahl und ein Sonderzeichen",
+  "ERROR-SIGNUP-PASSWORDVALIDATION": "Bitte wiederholen Sie ihr Passwort",
+  "ERROR-SIGNUP-PHONE":"Bitte geben Sie Ihre Telefonnummer ohne Unterbrechungen oder Sonderzeichen an",
+  "ERROR-SIGNUP-ZIP":"Postleitzahlen haben 5 Ziffern",
+  "ERROR-SIGNUP-CITY":"Bitte geben Sie eine existierende Stadt an",
+  "ERROR-SIGNUP-TIN":"Bitte geben sie eine gültige Steuer-ID (11 Ziffern) an",
+  "ERROR-SIGNUP-NATION":"Bitte geben Sie ein existierendes Land an",
+
+  "LIST_MASTER_TITLE": "Kontoübersicht",
+  "BALANCE": "Momentaner Kontostand: ",
+  "LIST_MASTER_FROM" : "Von: ",
+  "LIST_MASTER_TO" : "Nach: ",
+  "LIST_MASTER_OTHERS" :"Eingehend",
+  "LIST_MASTER_OWN" : "Ausgehend",
+  "LIST_MASTER_ALL" : "Alle",
+  "LIST_MASTER_TRANS" : "Transaktionen:",
+
+  "ITEM_CREATE_TITLE": "Neuer Artikel",
+  "ITEM_CREATE_CHOOSE_IMAGE": "Artikel hinzufügen",
+
+  "ITEM_NAME_PLACEHOLDER": "Name",
+  "ITEM_ABOUT_PLACEHOLDER": "Mehr",
+
+  "DONE_BUTTON": "Fertig",
+  "CANCEL_BUTTON": "Schließen",
+  "DELETE_BUTTON": "Löschen",
+
+  "CARDS_TITLE": "Sozial",
+
+  "SEARCH_TITLE": "Suche",
+  "SEARCH_PLACEHOLDER": "Suche in der Artikel-Liste, z.B. \"Donald Duck\"",
+
+  "ABOUT_US": "Willkommen bei DIGIBANK, Ihrer Nummer eins für alle Online-Banking-Angelegenheiten. Unser Ziel ist, Ihnen das Beste Bankkonto zu bieten, wobei der Schwerpunkt auf der Sicherheit Ihres Geldes und einem hervorragenden Kundenservice liegt. Die DIGIBANK wurde 2018 von Chi, Raakulan, Santiago und Simon gegründet und hat sich seit ihren Anfängen an der Frankfurter Fachhochschule weit entfernt. Als wir unser Projekt begannen, haben wir über alle anderen Anbieter nachgedacht und beschlossen, ein neues einzigartiges Online-Banking zu implementieren, bei dem der Kunde unsere oberste Priorität hat. Wir bedienen jetzt Kunden in ganz Deutschland und freuen uns, Teil des neuen, herausragenden Flügels der Finanzbranche zu sein. Wir hoffen, dass Ihnen unser Produkt so gut gefällt, wie wir es Ihnen anbieten. Wenn Sie Fragen oder Anmerkungen haben, zögern Sie bitte nicht, uns zu kontaktieren. Mit freundlichen Grüßen,  DIGIBANK-Team",
+
+  "AU_THEHISTORY": "DIGIBANK Geschichte",
+  "AU_HISTORY_TXT1": "DIGIBANK wurde 2018 als Software-Projekt des Kurses Informatik mobile Anwendungen an der Hochschule Frankfurt University of Applied Sciences implementiert. DIGIBANK wurde von Chi, Raakulan, Santiago und Simon gegründet.",
+  "AU_HISTORY_TXT2": "Unser Ziel ist es, Ihnen das Beste Bankkonto anzubieten, mit dem Fokus auf hervorragenden Service für alle Kunden.",
+  "AU_TEAM": "Das Team der DIGIBANK",
+  "AU_FRONTDEV": "Frontend Entwickler",
+  "AU_BACKDEV": "Backend Entwickler",
+
+  "C_NAME": "Name",
+  "C_MAIL": "e-Mail",
+  "C_PHONENUMBER": "Mobile Nummer",
+  "C_MESSAGE": "Nachricht",
+  "C_SUBMIT": "Senden"
+
+}
