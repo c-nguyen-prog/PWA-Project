@@ -15,29 +15,6 @@ from concurrent.futures import ThreadPoolExecutor
 from tornado import options
 
 executor = ThreadPoolExecutor(8)  # declare 8 threads
-json_data = []
-
-
-class WebSocket(tornado.websocket.WebSocketHandler):
-    global json_data
-
-    @tornado.gen.coroutine
-    def open(self):
-        try:
-            while True:
-                yield self.write_message(json.dumps(json_data))
-                yield tornado.gen.sleep(3)
-        except tornado.websocket.WebSocketClosedError:
-            print("")
-
-    def on_message(self, message):
-        pass
-
-    def data_received(self, message):
-        pass
-
-    def on_close(self):
-        pass
 
 
 class MainHandler(tornado.web.RequestHandler):
