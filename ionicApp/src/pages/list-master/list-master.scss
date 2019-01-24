@@ -27,14 +27,13 @@ page-list-master {
     font-size: 14px;
   }
 
-  .destinationText, .dateText, .referenceText{
+  .destinationText, .dateText, .referenceText, .optionText{
     font-size: 12px;
   }
 
-/*
   @media (min-width: 994px) {
     .transaction-list {
-      width: 30%;
+      width: 80%;
     }
   }
 
@@ -43,5 +42,4 @@ page-list-master {
       max-width: 290px;
     }
   }
-  */
 }

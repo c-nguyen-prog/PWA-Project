@@ -12,7 +12,7 @@ import {Observable} from "rxjs";
   templateUrl: 'list-master.html'
 })
 export class ListMasterPage {
-  public transactions:any;
+  public serverResponse:any;
   public transactionsArray:any;
   public filterTransactions:any;
   public user:string;
@@ -28,16 +28,16 @@ export class ListMasterPage {
     let data:Observable<any>;
     data = this.http.post('http://localhost:8888/user/transactions', {username: localStorage.getItem("username")});
     data.subscribe(result=>{
-      this.transactions = result;
-      this.balance = this.transactions.balance;
-      this.filterTransactions = this.transactions.transactions;
-      this.transactionsArray = this.transactions.transactions;
-    })
+      this.serverResponse = result
+      this.balance = this.serverResponse.balance;
+      this.filterTransactions = this.serverResponse.transactions.reverse();
+      this.transactionsArray = this.serverResponse.transactions.reverse();
+    });
+
   }
 
   filter(param:any):void {
     let val: string = param;
-
     this.filterTransactions = this.transactionsArray;
 
     if (val.trim() !== '') {
