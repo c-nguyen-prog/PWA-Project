@@ -42,7 +42,7 @@ export class ListMasterPage {
 
     if (val.trim() !== '') {
       this.filterTransactions= this.filterTransactions.filter((item) => {
-          return item.source.toLowerCase().indexOf(val.toLowerCase()) > -1 || item.destination.toLowerCase().indexOf(val.toLowerCase()) > -1 || item.reference.toLowerCase().indexOf(val.toLowerCase()) > -1;
+          return item.source.toLowerCase().indexOf(val.toLowerCase()) > -1 || item.destination_username.toLowerCase().indexOf(val.toLowerCase()) > -1 || item.reference.toLowerCase().indexOf(val.toLowerCase()) > -1;
         })
     }
   }
