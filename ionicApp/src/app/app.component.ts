@@ -29,15 +29,22 @@ import { Settings } from '../providers';
 export class AppComponent {
   rootPage = FirstRunPage;
 
+  populateMenu() {
+    let array =  [
+      { title: 'Home', component: 'WelcomePage'},
+      { title: 'Login', component: 'LoginPage' },
+      { title: 'Signup', component: 'SignupPage' },
+      { title: 'About Us', component: 'AboutPage'},
+      { title: 'Contact', component: 'ContactPage'},
+    ];
+    if (localStorage.getItem("username")) {
+      array.push({title: 'Overview', component: 'TabsPage'});
+      array.push({title: 'New Transaction', component: 'NewTransactionPage'});
+    }
+    return array
+  }
   @ViewChild(Nav) nav: Nav;
-
-  pages: any[] = [
-    { title: 'Home', component: 'WelcomePage'},
-    { title: 'Login', component: 'LoginPage' },
-    { title: 'Signup', component: 'SignupPage' },
-    { title: 'About Us', component: 'AboutPage'},
-    { title: 'Contact', component: 'ContactPage'},
-  ]
+  pages: any[] = this.populateMenu();
 
 
   constructor(private translate: TranslateService, platform: Platform, settings: Settings, private config: Config, private statusBar: StatusBar, private splashScreen: SplashScreen) {

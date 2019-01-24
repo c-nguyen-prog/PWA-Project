@@ -19,16 +19,16 @@ export class ListMasterPage {
   public balance:number;
 
   constructor(public navCtrl: NavController, public http: HttpClient) {
-    this.loadTransactions();
     this.user = localStorage.getItem("username");
+    this.loadTransactions();
   }
 
 
   loadTransactions(){
     let data:Observable<any>;
-    data = this.http.post('http://localhost:8888/user/transactions', {username: localStorage.getItem("username")});
+    data = this.http.post('http://localhost:8888/user/transactions', {username: this.user});
     data.subscribe(result=>{
-      this.serverResponse = result
+      this.serverResponse = result;
       this.balance = this.serverResponse.balance;
       this.filterTransactions = this.serverResponse.transactions.reverse();
       this.transactionsArray = this.serverResponse.transactions.reverse();
