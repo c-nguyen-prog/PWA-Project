@@ -17,10 +17,14 @@ export class ListMasterPage {
   public filterTransactions:any;
   public user:string;
   public balance:number;
+  public filterSearch: string;
+  public filterOption: string;
 
   constructor(public navCtrl: NavController, public http: HttpClient) {
     this.user = localStorage.getItem("username");
     this.loadTransactions();
+    this.filterOption = 'all';
+    this.filterSearch = '';
   }
 
 
@@ -36,30 +40,35 @@ export class ListMasterPage {
 
   }
 
-  filter(param:any):void {
-    let val: string = param;
-    this.filterTransactions = this.transactionsArray;
-
-    if (val.trim() !== '') {
-      this.filterTransactions= this.filterTransactions.filter((item) => {
-          return item.source.toLowerCase().indexOf(val.toLowerCase()) > -1 || item.destination_username.toLowerCase().indexOf(val.toLowerCase()) > -1 || item.reference.toLowerCase().indexOf(val.toLowerCase()) > -1;
-        })
-    }
+  filterSearchbar(param:any):void {
+    this.filterSearch = param.toString().trim().toLowerCase();
+    this.filter();
   }
 
-  filter2(param:any):void {
-    let val: string = param;
+  filterChooseOption(param:any):void {
+    this.filterOption = param.toString().trim().toLowerCase();
+    this.filter();
+  }
+
+  filter(){
     this.filterTransactions = this.transactionsArray;
-    if (val.trim() !== 'all') {
-      if (val.trim() == 'done' || val.trim() == 'pending') {
+
+    if (this.filterOption !== 'all') {
+      if (this.filterOption == 'done' || this.filterOption == 'pending') {
         this.filterTransactions = this.filterTransactions.filter((item) => {
-          return item.status.toLowerCase().indexOf(val.toLowerCase()) > -1;
+          return item.status.toLowerCase().indexOf(this.filterOption) > -1;
         })
       } else {
         this.filterTransactions = this.filterTransactions.filter((item) => {
-          return item.type.toLowerCase().indexOf(val.toLowerCase()) > -1;
+          return item.type.toLowerCase().indexOf(this.filterOption) > -1;
         })
       }
+    }
+
+    if (this.filterSearch !== '') {
+      this.filterTransactions= this.filterTransactions.filter((item) => {
+        return item.source.toLowerCase().indexOf(this.filterSearch) > -1 || item.destination_username.toLowerCase().indexOf(this.filterSearch) > -1 || item.reference.toLowerCase().indexOf(this.filterSearch) > -1;
+      })
     }
   }
 }

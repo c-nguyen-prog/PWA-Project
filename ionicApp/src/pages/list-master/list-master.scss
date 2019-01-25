@@ -16,8 +16,14 @@ page-list-master {
   .menu-button {
     color: white;
   }
-  .transaction-list{
+  .transactionContent{
     margin-top: 55px;
+    position: relative;
+
+  }
+
+  .searchbar{
+
   }
 
   .incoming{
@@ -30,19 +36,25 @@ page-list-master {
     font-size: 14px;
   }
 
-  .destinationText, .dateText, .referenceText, .optionText{
+  .destinationText{
+    font-size: 14px;
+  }
+
+  .referenceText, .dateText{
     font-size: 12px;
   }
 
   @media (min-width: 994px) {
-    .transaction-list {
-      width: 80%;
+    .transactionContent {
+      width: 75%;
+      padding-left: 25%;
     }
   }
 
   @media (max-width: 994px) {
-    .transaction-list {
-      max-width: 290px;
+    .transactionContent {
+      max-width: 730px;
+      position: center !important;
     }
   }
 }

@@ -8,61 +8,61 @@
 </ion-header>
 
 
-<ion-content class="transaction-list">
+<ion-content>
+  <div class = "transactionContent">
 
-   <ion-grid>
-     <ion-row>
-       <ion-col>
-         <ion-searchbar (ionInput)="filter($event.target.value)"></ion-searchbar>
-       </ion-col>
-       <ion-col>
+     <ion-grid align-items-baseline>
+       <ion-row>
+         <ion-col>
+           <ion-searchbar (ionInput)="filterSearchbar($event.target.value)" class="searchbar"></ion-searchbar>
+         </ion-col>
 
-         <ion-item>
-           <ion-label floating> {{'LIST_MASTER_TRANS' | translate}}</ion-label>
-           <ion-select (ionChange)="filter2($event)">
-             <ion-option value="all" [selected]="true">{{'LIST_MASTER_ALL' | translate}}</ion-option>
-             <ion-option value="pending">{{'LIST_MASTER_PENDING' | translate}}</ion-option>
-             <ion-option value="done">{{'LIST_MASTER_DONE' | translate}}</ion-option>
-             <ion-option value="date">{{'LIST_MASTER_DATE' | translate}}</ion-option>
-             <ion-option value="standing">{{'LIST_MASTER_REPEAT' | translate}}</ion-option>
-           </ion-select>
-         </ion-item>
+         <ion-col>
+           <ion-item>
+             <ion-label floating> {{'LIST_MASTER_TRANS' | translate}}</ion-label>
+             <ion-select (ionChange)="filterChooseOption($event)">
+               <ion-option value="all" [selected]="true">{{'LIST_MASTER_ALL' | translate}}</ion-option>
+               <ion-option value="pending">{{'LIST_MASTER_PENDING' | translate}}</ion-option>
+               <ion-option value="done">{{'LIST_MASTER_DONE' | translate}}</ion-option>
+               <ion-option value="date">{{'LIST_MASTER_DATE' | translate}}</ion-option>
+               <ion-option value="standing">{{'LIST_MASTER_REPEAT' | translate}}</ion-option>
+             </ion-select>
+           </ion-item>
+         </ion-col>
+       </ion-row>
+     </ion-grid>
 
-       </ion-col>
-     </ion-row>
-
-   </ion-grid>
-
-  <ion-list>
-    <ion-item *ngFor="let item of filterTransactions">
-      <ion-grid>
+    <ion-list>
+      <ion-item *ngFor="let item of filterTransactions" class = "transactionEntry">
+        <ion-grid>
+          <ion-row>
+            <ion-col col-10>
+              <div *ngIf="(item.source === user)" class="destinationText">
+                {{'LIST_MASTER_TO' | translate}} {{item.destination_username}}
+              </div>
+              <div *ngIf="!(item.source === user)" class="destinationText">
+                {{'LIST_MASTER_FROM' | translate}} {{item.source}}
+              </div>
+            </ion-col>
+            <ion-col col-2>
+              <div *ngIf="(item.source === user)" class="outgoing" item-end>
+                -{{item.amount}}€
+              </div>
+              <div *ngIf="!(item.source === user)" class="incoming" item-end>
+                {{item.amount}}€
+              </div>
+            </ion-col>
+          </ion-row>
         <ion-row>
-          <ion-col>
-            <div *ngIf="(item.source === user)" class="destinationText">
-              {{'LIST_MASTER_TO' | translate}} {{item.destination_username}}
-            </div>
-            <div *ngIf="!(item.source === user)" class="destinationText">
-              {{'LIST_MASTER_FROM' | translate}} {{item.source}}
-            </div>
+          <ion-col col-4 class="dateText">
+            {{item.date | date: "dd/MM/yy"}}
           </ion-col>
-          <ion-col>
-            <div *ngIf="(item.source === user)" class="outgoing" end>
-              -{{item.amount}}€
-            </div>
-            <div *ngIf="!(item.source === user)" class="incoming" end>
-              {{item.amount}}€
-            </div>
+          <ion-col col-8 class="referenceText" text-wrap>
+            {{item.reference}}
           </ion-col>
         </ion-row>
-      <ion-row>
-        <ion-col col-4 class="dateText">
-          {{item.date | date: "dd/MM/yy"}}
-        </ion-col>
-        <ion-col col-8 class="referenceText">
-          {{item.reference}}
-        </ion-col>
-      </ion-row>
-      </ion-grid>
-    </ion-item>
-  </ion-list>
+        </ion-grid>
+      </ion-item>
+    </ion-list>
+  </div>
 </ion-content>
