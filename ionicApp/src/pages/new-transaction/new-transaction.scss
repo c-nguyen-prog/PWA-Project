@@ -1,4 +1,23 @@
 page-new-transaction {
+  ion-header {
+    .toolbar {
+      position: absolute;
+
+      .toolbar-background {
+        background: color($colors, button, base);
+      }
+      .toolbar-title {
+        color: white;
+        font-size: 20px;
+      }
+      ion-icon.back-button-icon.icon {
+        color: white;
+      }
+    }
+  }
+  .custom-icon{
+    color:white;
+  }
   .listerino{
     margin-bottom: 0px;
   }
