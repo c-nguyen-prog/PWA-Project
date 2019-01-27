@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component} from '@angular/core';
+import {ChangeDetectorRef, Component, ViewChild} from '@angular/core';
 import { User } from '../../providers';
 import { TransferService } from '../../providers';
 import {IonicPage, NavController, NavParams, ToastController} from 'ionic-angular';
@@ -23,8 +23,12 @@ import {equals} from "@ngx-translate/core/src/util";
   templateUrl: 'new-transaction.html',
 })
 export class NewTransactionPage {
+    @ViewChild('pushButton') pushButton;
+
+  disabledButton: boolean = false;
+
   readonly applicationServerPublicKey = 'BDFc2s7Haf2s9lt9ttYZGvwV366dP78zP-xps4Z3sKx9k_u3Wbb56vzC4FXMZJPyGZx_X7ke6rtKk1dCWok68N4';
-  readonly pushButton = document.querySelector('.js-push-btn');
+  //readonly pushButton = document.querySelector('.js-push-btn');
 
   isSubscribed = false;
   swRegistration = null;
@@ -35,7 +39,8 @@ export class NewTransactionPage {
   selectObj: Template;
  public transaction: Transaction =
    {
-    source: localStorage.getItem("username").toString(),
+     source: "Jeb",
+    //source: localStorage.getItem("username").toString(),
     destination: '00425680345 ',
     reference: 'salary',
     date: new Date().toDateString(),
@@ -76,6 +81,20 @@ export class NewTransactionPage {
     return this.execLater;
   }
   constructor( public formBuilder: FormBuilder, private _cdr: ChangeDetectorRef,   public toastCtrl: ToastController, public navCtrl: NavController, public navParams: NavParams, public userService: User, public transferServicerino: TransferService, public templateServicerino: TemplateService) {
+    const myWorker = new Worker('/src/app/sw.js');
+
+    myWorker.onmessage = (event) => {
+      //what happens onmessage receiving goes here
+
+    };
+
+    myWorker.postMessage('worker running');
+
+
+
+
+
+
 
     if ('serviceWorker' in navigator && 'PushManager' in window) {
       console.log('Service Worker and Push is supported');
@@ -85,7 +104,7 @@ export class NewTransactionPage {
           console.log('Service Worker is registered', swReg);
 
           this.swRegistration = swReg;
-          initializeUI();
+          this.initializeUI();
 
         })
         .catch(function(error) {
@@ -93,9 +112,8 @@ export class NewTransactionPage {
         });
     } else {
       console.warn('Push messaging is not supported');
-      pushButton.textContent = 'Push Not Supported';
+      this.pushButton.textContent = 'Push Not Supported';
     }
-
 
 
 
@@ -244,9 +262,10 @@ export class NewTransactionPage {
 
 
    updateBtn() {
+
     if (Notification.permission === 'denied') {
       this.pushButton.textContent = 'Push Messaging Blocked.';
-      this.pushButton.disabled = true;
+      this.disabledButton = true;
       this.updateSubscriptionOnServer(null);
       return;
     }
@@ -256,8 +275,8 @@ export class NewTransactionPage {
     } else {
       this.pushButton.textContent = 'Enable Push Messaging';
     }
+    this.disabledButton = false;
 
-    this.pushButton.disabled = false;
   }
 
 

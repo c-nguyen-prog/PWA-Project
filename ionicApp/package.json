@@ -26,15 +26,16 @@
     "@ionic-native/file-path": "^5.0.0",
     "@ionic-native/splash-screen": "~4.15.0",
     "@ionic-native/status-bar": "~4.15.0",
-    "@ionic/angular": "^4.0.0-beta.17",
+    "@ionic/angular": "^4.0.0",
     "@ionic/storage": "2.2.0",
     "@ngx-translate/core": "8.0.0",
     "@ngx-translate/http-loader": "^2.0.0",
+    "@types/node": "^10.12.18",
     "cordova-plugin-filepath": "1.5.1",
     "ionic-angular": "3.9.2",
     "ionicons": "3.0.0",
     "jshashes": "^1.0.7",
-    "moment": "^2.23.0",
+    "moment": "^2.24.0",
     "ng2-validation": "^4.2.0",
     "rxjs": "5.5.11",
     "sw-toolbox": "3.6.0",
@@ -42,8 +43,8 @@
     "zone.js": "0.8.26"
   },
   "devDependencies": {
-    "@ionic/app-scripts": "^3.2.1",
-    "typescript": "~2.9.2"
+    "@ionic/app-scripts": "^3.2.2",
+    "typescript": "~3.2.4"
   },
   "description": "Online Banking PWA made for the 5th semester project under the supervision of Professor Dr. Ruth Schorr by Minh Chi N. (backend), Raakulan R. (front-end), Simon Z. (Front-end and transphobia) Santiago E. M. A. B. (front-end) ",
   "cordova": {

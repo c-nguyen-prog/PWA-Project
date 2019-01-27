@@ -36,6 +36,10 @@
 
   });
 
+self.onmessage = function(event) {
+    //send notification
+};
+
 
   self.addEventListener('notificationclick', function(event) {
     console.log('[Service Worker] Notification click Received.');

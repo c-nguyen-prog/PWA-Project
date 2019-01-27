@@ -66,8 +66,8 @@
         <div class="buttons" padding align="center">
           <button class="buttonerino" (click)="doTransaction()" ion-button color="primary" block>{{ 'Accept' | translate }}</button>
           <button type="button" (click)="cancel()" class="buttonerino"  ion-button color="primary" block>{{ 'Reset' | translate }}</button>
-        </div>
-     <button ion-button (click)="updateBtn()"  color="primary" block>{{ 'Enable notifications' | translate }}</button>
+       </div>
+  <button #pushButton ion-button  (click)="updateBtn()" [disabled]="disabledButton" color="primary" block>{{ 'Enable notifications' | translate }}</button>
 
     <script src="scripts/main.js"></script>
 

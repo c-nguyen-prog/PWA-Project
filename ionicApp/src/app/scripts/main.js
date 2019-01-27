@@ -63,7 +63,7 @@ if ('serviceWorker' in navigator && 'PushManager' in window) {
 
 
 function updateBtn() {
-   if (Notification.permission === 'denied') {
+   if (Notification.pefrmission === 'denied') {
     pushButton.textContent = 'Push Messaging Blocked.';
     pushButton.disabled = true;
     updateSubscriptionOnServer(null);
