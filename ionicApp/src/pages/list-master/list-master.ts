@@ -22,11 +22,16 @@ export class ListMasterPage {
 
   constructor(public navCtrl: NavController, public http: HttpClient) {
     this.user = localStorage.getItem("username");
-    this.loadTransactions();
+    if(navigator.onLine) {
+      this.loadTransactions();
+    } else {
+      this.filterTransactions = localStorage.getItem("transactions");
+      this.transactionsArray = localStorage.getItem("transactions");
+      this.balance = +localStorage.getItem("balance");
+    }
     this.filterOption = 'all';
     this.filterSearch = '';
   }
-
 
   loadTransactions(){
     let data:Observable<any>;
@@ -34,8 +39,10 @@ export class ListMasterPage {
     data.subscribe(result=>{
       this.serverResponse = result;
       this.balance = this.serverResponse.balance;
-      this.filterTransactions = this.serverResponse.transactions.reverse();
-      this.transactionsArray = this.serverResponse.transactions.reverse();
+      this.filterTransactions = this.serverResponse.transactions;
+      this.transactionsArray = this.serverResponse.transactions;
+      localStorage.setItem("transactions", this.serverResponse.transactions);
+      localStorage.setItem("balance", this.serverResponse.balance)
     });
 
   }
