@@ -5,6 +5,7 @@ import { Item } from '../../models/item';
 import { Items } from '../../providers';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
+import {json} from "ng2-validation/dist/json";
 
 @IonicPage()
 @Component({
@@ -25,8 +26,10 @@ export class ListMasterPage {
     if(navigator.onLine) {
       this.loadTransactions();
     } else {
-      this.filterTransactions = localStorage.getItem("transactions");
-      this.transactionsArray = localStorage.getItem("transactions");
+      let trans = localStorage.getItem('transactions');
+      let transArr = JSON.parse(trans);
+      this.filterTransactions = transArr;
+      this.transactionsArray = transArr;
       this.balance = +localStorage.getItem("balance");
     }
     this.filterOption = 'all';
@@ -41,7 +44,8 @@ export class ListMasterPage {
       this.balance = this.serverResponse.balance;
       this.filterTransactions = this.serverResponse.transactions;
       this.transactionsArray = this.serverResponse.transactions;
-      localStorage.setItem("transactions", this.serverResponse.transactions);
+      let json = JSON.stringify(this.serverResponse.transactions)
+      localStorage.setItem("transactions", json);
       localStorage.setItem("balance", this.serverResponse.balance)
     });
 
