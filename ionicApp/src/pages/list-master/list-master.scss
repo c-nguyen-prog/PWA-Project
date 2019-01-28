@@ -22,8 +22,24 @@ page-list-master {
 
   }
 
-  .searchbar{
+  .loadMore {
+    background-color: color($colors, button, base);
+    color: white;
+  }
 
+  .loadMore:hover {
+    background: color($colors, buttonActivated, base);
+    color: white;
+  }
+
+  .loadMore-padding {
+    padding-top: 25px;
+    bottom: 20px;
+    width: 60%;
+    min-width: 200px;
+    height: 200px;
+    background: transparent !important;
+    margin: 0 auto;
   }
 
   .incoming{

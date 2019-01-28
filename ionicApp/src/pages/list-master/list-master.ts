@@ -16,20 +16,24 @@ export class ListMasterPage {
   public serverResponse:any;
   public transactionsArray:any;
   public filterTransactions:any;
+  public wholeArray:any;
   public user:string;
   public balance:number;
+  public arraySize: number;
   public filterSearch: string;
   public filterOption: string;
 
   constructor(public navCtrl: NavController, public http: HttpClient) {
     this.user = localStorage.getItem("username");
+    this.arraySize = 9;
     if(navigator.onLine) {
       this.loadTransactions();
     } else {
       let trans = localStorage.getItem('transactions');
       let transArr = JSON.parse(trans);
-      this.filterTransactions = transArr;
-      this.transactionsArray = transArr;
+      this.wholeArray = transArr;
+      this.filterTransactions = this.wholeArray.slice(0,this.arraySize);
+      this.transactionsArray = this.filterTransactions;
       this.balance = +localStorage.getItem("balance");
     }
     this.filterOption = 'all';
@@ -42,13 +46,13 @@ export class ListMasterPage {
     data.subscribe(result=>{
       this.serverResponse = result;
       this.balance = this.serverResponse.balance;
-      this.filterTransactions = this.serverResponse.transactions;
-      this.transactionsArray = this.serverResponse.transactions;
-      let json = JSON.stringify(this.serverResponse.transactions)
+      this.wholeArray = this.serverResponse.transactions;
+      this.filterTransactions = this.wholeArray.slice(0,this.arraySize);
+      this.transactionsArray = this.filterTransactions;
+      let json = JSON.stringify(this.serverResponse.transactions);
       localStorage.setItem("transactions", json);
-      localStorage.setItem("balance", this.serverResponse.balance)
+      localStorage.setItem("balance", this.serverResponse.balance);
     });
-
   }
 
   filterSearchbar(param:any):void {
@@ -81,5 +85,10 @@ export class ListMasterPage {
         return item.source.toLowerCase().indexOf(this.filterSearch) > -1 || item.destination_username.toLowerCase().indexOf(this.filterSearch) > -1 || item.reference.toLowerCase().indexOf(this.filterSearch) > -1;
       })
     }
+  }
+
+  slice(){
+    this.arraySize +=10;
+    this.filter();
   }
 }
