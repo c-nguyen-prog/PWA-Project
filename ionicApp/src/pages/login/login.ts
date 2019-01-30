@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { IonicPage, NavController, ToastController } from 'ionic-angular';
+import {IonicPage, Nav, NavController, ToastController} from 'ionic-angular';
 import { User } from '../../providers';
 import { MainPage } from '../';
 
@@ -52,7 +52,8 @@ export class LoginPage {
     this.user.login(JSON.stringify(tempAccount)).subscribe((resp : any) => {
       console.log(resp);
       if (resp.status === "success") {
-        localStorage.setItem("username", this.account.email);
+
+        sessionStorage.setItem("username", this.account.email);
         this.navCtrl.push(MainPage);
         console.log("Successfully logged in");
         let toast = this.toastCtrl.create({

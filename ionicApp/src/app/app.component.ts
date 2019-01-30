@@ -4,7 +4,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { TranslateService } from '@ngx-translate/core';
 import { Config, Nav, Platform } from 'ionic-angular';
 
-import { FirstRunPage } from '../pages';
+import {FirstRunPage, Tab1Root} from '../pages';
 import { Settings } from '../providers';
 
 @Component({
@@ -27,7 +27,16 @@ import { Settings } from '../providers';
   <ion-nav #content [root]="rootPage"></ion-nav>`
 })
 export class AppComponent {
-  rootPage = FirstRunPage;
+
+  rootPage = this.showHomePage();
+
+  showHomePage() {
+    if (sessionStorage.getItem("username")) {
+      return Tab1Root
+    } else {
+      return FirstRunPage
+    }
+  }
 
   populateMenu() {
     let array =  [
@@ -37,7 +46,7 @@ export class AppComponent {
       { title: 'About Us', component: 'AboutPage'},
       { title: 'Contact', component: 'ContactPage'},
     ];
-    if (localStorage.getItem("username")) {
+    if (sessionStorage.getItem("username")) {
       array.push({title: 'Overview', component: 'TabsPage'});
       array.push({title: 'New Transaction', component: 'NewTransactionPage'});
     }

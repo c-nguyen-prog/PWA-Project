@@ -34,8 +34,8 @@
           <ion-label >Execution mode</ion-label>
           <ion-select formControlName="type" >
             <ion-option value="now" (ionSelect)="setExecLater(false)">As soon as possible</ion-option>
-            <ion-option value="future"  (ionSelect)="setExecLater(true)">Future date</ion-option>
-            <ion-option value="recurrent"  (ionSelect)="setExecLater(true)">Standing order</ion-option>
+            <ion-option value="date"  (ionSelect)="setExecLater(true)">Future date</ion-option>
+            <ion-option value="standing"  (ionSelect)="setExecLater(true)">Standing order</ion-option>
           </ion-select>
         </ion-item>
         <ion-item>

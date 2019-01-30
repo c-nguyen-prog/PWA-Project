@@ -137,7 +137,7 @@ if __name__ == '__main__':
                 do_transaction(transaction)
 
             else:
-                if now.hour == 9 and now.minute == 0 and now.second == 0:
+                #if now.hour == 9 and now.minute == 0 and now.second == 0:
                     transaction_date = datetime.datetime.strptime(transaction["date"], "%Y-%m-%d")
                     if transaction_date.year == now.year and transaction_date.month == now.month \
                             and transaction_date.day == now.day:

@@ -15,6 +15,8 @@ import datetime
 import random
 from concurrent.futures import ThreadPoolExecutor
 from tornado import options
+from backend.Push import send_web_push
+from backend.PushSettings import *
 
 executor = ThreadPoolExecutor(8)  # declare 8 threads
 
@@ -393,7 +395,7 @@ class UserTransactionsHandler(tornado.web.RequestHandler):
         balance = document["balance"]
         iban = document["iban"]
         cursor = db.transactions.find({"$or": [{"destination": iban}, {"source": username}]}, {"_id": 0})
-        docs = await cursor.to_list(10)
+        docs = await cursor.to_list(length=1000)
         json_response = {
             "balance": balance,
             "transactions": docs
@@ -444,6 +446,73 @@ class ContactHandler(tornado.web.RequestHandler):
         self.finish()
 
 
+"""
+POST /subscription
+Function to handle request for push notification subscription, json format:
+{
+    username: String,
+    subscription_info: {
+                         "endpoint": "https://updates.push.services.mozilla.com/push/v1/gAA...",
+                         "keys": {
+                                    "auth": "k8J...",
+                                    "p256dh": "BOr..."
+                                 }
+                       }
+}
+"""
+class PushSubscriptionHandler(tornado.web.RequestHandler):
+    def set_default_headers(self):
+        self.set_header("Access-Control-Allow-Origin", "*")
+        self.set_header("Access-Control-Allow-Headers", "x-requested-with")
+        self.set_header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS')
+        self.set_header("Access-Control-Allow-Headers", "access-control-allow-origin,authorization,content-type")
+
+    def get(self):
+        pass
+
+    def options(self):
+        self.set_status(204)
+        self.finish()
+
+    async def post(self):
+        data = json.loads(self.request.body)
+        print(data)
+        json_response = {
+            "public_key": PUBLIC_KEY
+        }
+        print(json_response)
+        self.write(json.dumps(json_response))
+        self.set_header('Content-Type', 'application/json')
+        self.finish()
+
+
+class PushHandler(tornado.web.RequestHandler):
+    def set_default_headers(self):
+        self.set_header("Access-Control-Allow-Origin", "*")
+        self.set_header("Access-Control-Allow-Headers", "x-requested-with")
+        self.set_header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS')
+        self.set_header("Access-Control-Allow-Headers", "access-control-allow-origin,authorization,content-type")
+
+    def get(self):
+        pass
+
+    def options(self):
+        self.set_status(204)
+        self.finish()
+
+    async def post(self):
+        data = json.loads(self.request.body)
+        print(data)
+        json_response = {
+            "moo": "moo"
+        }
+        send_web_push(json.loads(user.subscription_token), message)
+        print(json_response)
+        self.write(json.dumps(json_response))
+        self.set_header('Content-Type', 'application/json')
+        self.finish()
+
+
 class Application(tornado.web.Application):
     def __init__(self):
 
@@ -454,7 +523,9 @@ class Application(tornado.web.Application):
             (r"/transaction", TransactionHandler),
             (r"/user/info", UserInfoHandler),
             (r"/user/transactions", UserTransactionsHandler),
-            (r"/contact", ContactHandler)
+            (r"/contact", ContactHandler),
+            (r"/subscription", PushSubscriptionHandler),
+            (r"/push", PushHandler)
             # Add more paths here
         ]
 
