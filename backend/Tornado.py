@@ -198,7 +198,8 @@ class SignUpHandler(tornado.web.RequestHandler):
                                                   "balance": 0,
                                                   "type": "user",
                                                   "status": "pending",
-                                                  "pending_transaction": []
+                                                  "pending_transaction": [],
+                                                  "subscription_info": []
                                                   })
             json_response = {
                 "status": "success"
@@ -474,18 +475,39 @@ class PushSubscriptionHandler(tornado.web.RequestHandler):
         self.set_status(204)
         self.finish()
 
+    # TODO: Check for duplicate before adding to DB
     async def post(self):
         data = json.loads(self.request.body)
         print(data)
-        json_response = {
-            "public_key": PUBLIC_KEY
-        }
+        username = data["username"]
+        subscription_info = data["subscription_info"]
+        client = motor.motor_tornado.MotorClient('mongodb://localhost:27017')  # Connect to MongoDB server
+        db = client.progappjs
+        document = await db.users.find_one({"username": username})
+        if document is not None:
+            result = await db.users.update_one({"username": username},
+                                               {"$push": {"pending_transaction": subscription_info}})
+            json_response = {
+                "status": "OK",
+                "public_key": PUBLIC_KEY
+            }
+        else:
+            json_response = {
+                "status": "fail"
+            }
         print(json_response)
         self.write(json.dumps(json_response))
         self.set_header('Content-Type', 'application/json')
         self.finish()
 
 
+"""
+POST /push
+Function to handle request for push notification, json format:
+{
+    username: String,
+}
+"""
 class PushHandler(tornado.web.RequestHandler):
     def set_default_headers(self):
         self.set_header("Access-Control-Allow-Origin", "*")
@@ -500,13 +522,60 @@ class PushHandler(tornado.web.RequestHandler):
         self.set_status(204)
         self.finish()
 
+    # TODO: Add sending notification when receiving transaction, add to DB when user is offline
     async def post(self):
         data = json.loads(self.request.body)
         print(data)
+        username = data["username"]
+        client = motor.motor_tornado.MotorClient('mongodb://localhost:27017')  # Connect to MongoDB server
+        db = client.progappjs
+        document = await db.users.find_one({"username": username})
+        if document is not None:
+            subscription_infos = document["subscription_info"]
+            if len(subscription_infos) > 0:
+                for subscription_info in subscription_infos:
+                    send_web_push(subscription_info, "You have received 1000€ XD")
+
+            json_response = {
+                "status": "OK",
+            }
+        else:
+            json_response = {
+                "status": "fail"
+            }
+        print(json_response)
+        self.write(json.dumps(json_response))
+        self.set_header('Content-Type', 'application/json')
+        self.finish()
+
+
+class PushTestHandler(tornado.web.RequestHandler):
+    def set_default_headers(self):
+        self.set_header("Access-Control-Allow-Origin", "*")
+        self.set_header("Access-Control-Allow-Headers", "x-requested-with")
+        self.set_header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS')
+        self.set_header("Access-Control-Allow-Headers", "access-control-allow-origin,authorization,content-type")
+
+    def get(self):
+        pass
+
+    def options(self):
+        self.set_status(204)
+        self.finish()
+
+    async def post(self):
+        subscription_info = {
+                                "endpoint":"https://fcm.googleapis.com/fcm/send/c37QRTHs__w:APA91bGASHOs8eUJp35gNK80s1lBZoYye4Gj7LpmzrTbZ32U3s-I1IyBUGEMf53DbLXP2MMwtGFS9A_dShFAIWtzhFICkoZHa2MSR8jj1sC6kF2Imxl6X8eHTjN3gs6eO1HkMpLGXPcs",
+                                "expirationTime": "null",
+                                "keys": {
+                                            "p256dh":"BGhR6uT-mVsCZyQ19qhd5MM6JqHO5JLWzO4XLd-o8k5_Z73Qk7cDxSer9i4FC21Dw_o79SFqezJcjoymIx_u0dQ",
+                                            "auth":"QJeM08qGmHypxOMSy2jzTA"
+                                        }
+                             }
+        send_web_push(subscription_info, "You have received 1000€ XD")
         json_response = {
-            "moo": "moo"
+            "status": "OK"
         }
-        send_web_push(json.loads(user.subscription_token), message)
         print(json_response)
         self.write(json.dumps(json_response))
         self.set_header('Content-Type', 'application/json')
@@ -525,7 +594,8 @@ class Application(tornado.web.Application):
             (r"/user/transactions", UserTransactionsHandler),
             (r"/contact", ContactHandler),
             (r"/subscription", PushSubscriptionHandler),
-            (r"/push", PushHandler)
+            (r"/push", PushHandler),
+            (r"/pushtest", PushTestHandler)
             # Add more paths here
         ]
 

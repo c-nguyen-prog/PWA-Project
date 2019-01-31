@@ -7,3 +7,5 @@
 node_modules/
 .idea/encodings.xml
 .idea/mongoSettings.xml
+backend/__pycache__/PushSettings.cpython-36.pyc
+backend/__pycache__/Push.cpython-36.pyc
