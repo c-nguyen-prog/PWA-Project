@@ -29,12 +29,12 @@ export class ListMasterPage {
     if(navigator.onLine) {
       this.loadTransactions();
     } else {
-      let trans = localStorage.getItem('transactions');
+      let trans = sessionStorage.getItem('transactions');
       let transArr = JSON.parse(trans);
       this.wholeArray = transArr;
       this.filterTransactions = this.wholeArray.slice(0,this.arraySize);
       this.transactionsArray = this.filterTransactions;
-      this.balance = +localStorage.getItem("balance");
+      this.balance = +sessionStorage.getItem("balance");
     }
     this.filterOption = 'all';
     this.filterSearch = '';
@@ -50,8 +50,8 @@ export class ListMasterPage {
       this.filterTransactions = this.wholeArray.slice(0,this.arraySize);
       this.transactionsArray = this.filterTransactions;
       let json = JSON.stringify(this.serverResponse.transactions);
-      localStorage.setItem("transactions", json);
-      localStorage.setItem("balance", this.serverResponse.balance);
+      sessionStorage.setItem("transactions", json);
+      sessionStorage.setItem("balance", this.serverResponse.balance);
     });
   }
 
