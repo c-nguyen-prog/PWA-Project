@@ -34,7 +34,7 @@ export class ListMasterPage {
       this.wholeArray = transArr;
       this.filterTransactions = this.wholeArray.slice(0,this.arraySize);
       this.transactionsArray = this.filterTransactions;
-      this.balance = +sessionStorage.getItem("balance");
+      this.balance = sessionStorage.getItem("balance");
     }
     this.filterOption = 'all';
     this.filterSearch = '';

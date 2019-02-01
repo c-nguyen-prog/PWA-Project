@@ -81,6 +81,14 @@ export class LoginPage {
             position: 'top'
           });
           toast.present();
+        }  else if (resp.user.name === "N/A") {
+          console.log("ERROR: Account isn't active");
+          let toast = this.toastCtrl.create({
+            message: this.loginErrorString,
+            duration: 3000,
+            position: 'top'
+          });
+          toast.present();
         }
       }
     }, (err) => {

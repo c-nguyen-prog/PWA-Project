@@ -507,6 +507,7 @@ POST /push
 Function to handle request for push notification, json format:
 {
     username: String,
+    message: String
 }
 """
 class PushHandler(tornado.web.RequestHandler):
@@ -581,13 +582,24 @@ class PushTestHandler(tornado.web.RequestHandler):
         })
         for sub in subscription_info:
             status = send_web_push(sub, "You have received 1000€ XD")
-        json_response = {
-            "status": status
-        }
+            json_response = {
+                "status": status
+            }
         print(json_response)
         self.write(json.dumps(json_response))
         self.set_header('Content-Type', 'application/json')
         self.finish()
+
+
+class LoggingWebsocket(tornado.websocket.WebSocketHandler):
+    async def open(self):
+        pass
+
+    def on_message(self, message):
+        print(message)
+
+    def on_close(self):
+        pass
 
 
 class Application(tornado.web.Application):
@@ -603,7 +615,8 @@ class Application(tornado.web.Application):
             (r"/contact", ContactHandler),
             (r"/subscription", PushSubscriptionHandler),
             (r"/push", PushHandler),
-            (r"/pushtest", PushTestHandler)
+            (r"/pushtest", PushTestHandler),
+            (r"/logging", LoggingWebsocket)
             # Add more paths here
         ]
 
