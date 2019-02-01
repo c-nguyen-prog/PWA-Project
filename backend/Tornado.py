@@ -392,7 +392,7 @@ class UserTransactionsHandler(tornado.web.RequestHandler):
         client = motor.motor_tornado.MotorClient('mongodb://localhost:27017')  # Connect to MongoDB server
         db = client.progappjs                                                  # Get database progappjs
         document = await db.users.find_one({"username": username})             # Search username in DB
-        print(document)
+        #print(document)
         balance = document["balance"]
         iban = document["iban"]
         cursor = db.transactions.find({"$or": [{"destination": iban}, {"source": username}]}, {"_id": 0})
@@ -422,7 +422,7 @@ class ContactHandler(tornado.web.RequestHandler):
     # Function to handle HTTP POST Request for user info
     async def post(self):
         data = json.loads(self.request.body)                                   # Get json request for transaction
-        print(data)
+        print("USER TRANSACTIONS REQ" + str(data))
         name = data["name"]
         email = data["email"]
         phone = data["phoneNumber"]
@@ -565,13 +565,13 @@ class PushTestHandler(tornado.web.RequestHandler):
         subscription_info = []
         # local chrome
         subscription_info.append({
-                                "endpoint":"https://fcm.googleapis.com/fcm/send/c37QRTHs__w:APA91bGASHOs8eUJp35gNK80s1lBZoYye4Gj7LpmzrTbZ32U3s-I1IyBUGEMf53DbLXP2MMwtGFS9A_dShFAIWtzhFICkoZHa2MSR8jj1sC6kF2Imxl6X8eHTjN3gs6eO1HkMpLGXPcs",
-                                "expirationTime": "null",
-                                "keys": {
-                                            "p256dh":"BGhR6uT-mVsCZyQ19qhd5MM6JqHO5JLWzO4XLd-o8k5_Z73Qk7cDxSer9i4FC21Dw_o79SFqezJcjoymIx_u0dQ",
-                                            "auth":"QJeM08qGmHypxOMSy2jzTA"
-                                        }
-                             })
+            "endpoint":"https://fcm.googleapis.com/fcm/send/c37QRTHs__w:APA91bGASHOs8eUJp35gNK80s1lBZoYye4Gj7LpmzrTbZ32U3s-I1IyBUGEMf53DbLXP2MMwtGFS9A_dShFAIWtzhFICkoZHa2MSR8jj1sC6kF2Imxl6X8eHTjN3gs6eO1HkMpLGXPcs",
+            "expirationTime": "null",
+            "keys": {
+                        "p256dh":"BGhR6uT-mVsCZyQ19qhd5MM6JqHO5JLWzO4XLd-o8k5_Z73Qk7cDxSer9i4FC21Dw_o79SFqezJcjoymIx_u0dQ",
+                        "auth":"QJeM08qGmHypxOMSy2jzTA"
+                    }
+         })
         # local firefox
         subscription_info.append({
             "endpoint": "https://updates.push.services.mozilla.com/wpush/v2/gAAAAABcUu-gHfn_2wLAVI3c8TRGNAKbgfjM0ffq6G8WPuL23f67FEwXAYq6wQrogNUlKNSeIsP4WZHcOSUuD9SxB9jc0BUsAfcECVrDVlJIWptLln1mw5EiyAeMl5cmBEqTYLXRCKLbGS1hrKb4nNbge9PoJRweeIb96FXnox-blk7s7cw6XL0",
