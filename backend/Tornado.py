@@ -238,7 +238,7 @@ class SignUpHandler(tornado.web.RequestHandler):
 POST /transaction
 Function to handle request for a new transaction, json format: 
 {
-    "source": String source_username (or iban),
+    "source": String source_username,
     "destination": String iban,
     "amount": Float amount,
     "type": String [now/date/standing]
@@ -267,6 +267,7 @@ class TransactionHandler(tornado.web.RequestHandler):
 
         data = json.loads(self.request.body)                                   # Get json request for transaction
         print("TRANSACTION REQ:" + str(data))
+
         source = data["source"]
         destination = data["destination"]
         amount = data["amount"]
@@ -275,13 +276,19 @@ class TransactionHandler(tornado.web.RequestHandler):
         reference = data["reference"]
         now = datetime.datetime.now()
         created_date = str(now.year) + "-" + str(now.month) + "-" + str(now.day)
+        source_user = await db.users.find_one({"username": source})
+        source_name = source_user["name"]["first_name"] + " " + source_user["name"]["last_name"]
+
         destination_user = await db.users.find_one({"iban": destination})
         if destination_user is not None:
             destination_username = destination_user["username"]
+            destination_name = destination_user["name"]["first_name"] + " " + destination_user["name"]["last_name"]
             transaction = {
                             "source": source,                                       # Create new transaction: initial
+                            "source_name": source_name,
                             "destination": destination,
                             "destination_username": destination_username,
+                            "destination_name": destination_name,
                             "amount": amount,
                             "type": type,
                             "date": date,

@@ -114,8 +114,10 @@ def do_standing_order(old_transaction):
 
     new_date = increment_date(old_transaction["date"])
     new_transaction = {"source": old_transaction["source"],
+                       "source_name": old_transaction["source_name"],
                        "destination": old_transaction["destination"],
                        "destination_username": old_transaction["destination_username"],
+                       "destination_name": old_transaction["destination_name"],
                        "amount": old_transaction["amount"],
                        "type": old_transaction["type"],
                        "date": new_date,
