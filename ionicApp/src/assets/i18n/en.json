@@ -95,6 +95,7 @@
   "LIST_MASTER_DATE" :"Scheduled",
   "LIST_MASTER_REPEAT" : "Standing Orders",
   "INCREASE_SIZE" : "Load more",
+  "DECREASE_SIZE" : "Load less",
 
   "ITEM_CREATE_TITLE": "New Item",
   "ITEM_CREATE_CHOOSE_IMAGE": "Add Image",

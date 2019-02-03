@@ -34,7 +34,7 @@ export class ListMasterPage {
       this.wholeArray = transArr;
       this.filterTransactions = this.wholeArray.slice(0,this.arraySize);
       this.transactionsArray = this.filterTransactions;
-      this.balance = sessionStorage.getItem("balance");
+      this.balance = +sessionStorage.getItem("balance");
     }
     this.filterOption = 'all';
     this.filterSearch = '';
@@ -88,7 +88,20 @@ export class ListMasterPage {
   }
 
   slice(){
+    this.arraySize -=10;
+    this.filter();
+  }
+
+  expand(){
     this.arraySize +=10;
     this.filter();
+  }
+
+  checkSizeBig(){
+    return this.arraySize < this.filterTransactions.length;
+  }
+
+  checkSizeSmall(){
+    return 10 < this.filterTransactions.length;
   }
 }

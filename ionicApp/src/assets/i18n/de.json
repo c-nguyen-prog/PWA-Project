@@ -92,7 +92,8 @@
   "LIST_MASTER_DONE" : "Gebucht",
   "LIST_MASTER_DATE" :"Terminüberweisungen",
   "LIST_MASTER_REPEAT" : "Daueraufträge",
-  "INCREASE_SIZE" : "Mehr laden",
+  "INCREASE_SIZE" : "Mehr",
+  "DECREASE_SIZE" : "Weniger",
 
   "ITEM_CREATE_TITLE": "Neuer Artikel",
   "ITEM_CREATE_CHOOSE_IMAGE": "Artikel hinzufügen",
