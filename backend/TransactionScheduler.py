@@ -1,7 +1,10 @@
 import datetime
 import time
 import pymongo
+import requests
+import json
 
+PUSH_SERVER = "http://localhost:8888/push"
 
 def increment_date(date):
 
@@ -95,6 +98,15 @@ def do_transaction(transaction):
         update_transaction = db.transactions.update_one(
             {"_id": transaction["_id"]},
             {"$set": {"status": "done"}})
+
+        message = "You have received " + str(transaction["amount"]) + "€ from " + transaction["source_name"]
+        payload = {
+            "username": transaction["destination_username"],
+            "message": message
+        }
+        request = requests.post(PUSH_SERVER, data=json.dumps(payload))
+        print(request.text)
+
     else:
         print("Source is BROKE, transaction canceled")
         update_transaction = db.transactions.update_one(

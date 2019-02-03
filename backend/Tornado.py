@@ -494,7 +494,7 @@ class PushSubscriptionHandler(tornado.web.RequestHandler):
         document = await db.users.find_one({"username": username})
         if document is not None:
             result = await db.users.update_one({"username": username},
-                                               {"$push": {"pending_transaction": subscription_info}})
+                                               {"$push": {"subscription_info": subscription_info}})
             json_response = {
                 "status": "OK",
                 "public_key": PUBLIC_KEY
@@ -543,7 +543,7 @@ class PushHandler(tornado.web.RequestHandler):
             subscription_infos = document["subscription_info"]
             if len(subscription_infos) > 0:
                 for subscription_info in subscription_infos:
-                    status = send_web_push(subscription_info, "You have received 1000€ XD")
+                    status = send_web_push(subscription_info, data["message"])
 
         json_response = {
             "status": status
