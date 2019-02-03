@@ -1,11 +1,7 @@
 import { Component } from '@angular/core';
-import { IonicPage, ModalController, NavController } from 'ionic-angular';
-
-import { Item } from '../../models/item';
-import { Items } from '../../providers';
+import { IonicPage, NavController } from 'ionic-angular';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {json} from "ng2-validation/dist/json";
 
 @IonicPage()
 @Component({
@@ -82,7 +78,7 @@ export class ListMasterPage {
 
     if (this.filterSearch !== '') {
       this.filterTransactions= this.filterTransactions.filter((item) => {
-        return item.source.toLowerCase().indexOf(this.filterSearch) > -1 || item.destination_username.toLowerCase().indexOf(this.filterSearch) > -1 || item.reference.toLowerCase().indexOf(this.filterSearch) > -1;
+        return item.source_user.toLowerCase().indexOf(this.filterSearch) > -1 || item.destination_user.toLowerCase().indexOf(this.filterSearch) > -1 || item.reference.toLowerCase().indexOf(this.filterSearch) > -1;
       })
     }
   }
@@ -98,10 +94,10 @@ export class ListMasterPage {
   }
 
   checkSizeBig(){
-    return this.arraySize < this.filterTransactions.length;
+    return Boolean(this.arraySize < (this.filterTransactions.length));
   }
 
   checkSizeSmall(){
-    return 10 < this.filterTransactions.length;
+    return Boolean (10 < (this.filterTransactions.length));
   }
 }

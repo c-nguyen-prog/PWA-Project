@@ -38,10 +38,10 @@
           <ion-row>
             <ion-col col-10>
               <div *ngIf="(item.source === user)" class="destinationText">
-                {{'LIST_MASTER_TO' | translate}} {{item.destination_username}}
+                {{'LIST_MASTER_TO' | translate}} {{item.destination_name}}
               </div>
               <div *ngIf="!(item.source === user)" class="destinationText">
-                {{'LIST_MASTER_FROM' | translate}} {{item.source}}
+                {{'LIST_MASTER_FROM' | translate}} {{item.source_name}}
               </div>
             </ion-col>
             <ion-col col-2>
