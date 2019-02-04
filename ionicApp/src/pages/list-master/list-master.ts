@@ -10,9 +10,8 @@ import {Observable} from "rxjs";
 })
 export class ListMasterPage {
   public serverResponse:any;
-  public transactionsArray:any;
   public filterTransactions:any;
-  public wholeArray:any;
+  public wholeArray:any = {length:0};
   public user:string;
   public balance:number;
   public arraySize: number;
@@ -21,7 +20,7 @@ export class ListMasterPage {
 
   constructor(public navCtrl: NavController, public http: HttpClient) {
     this.user = sessionStorage.getItem("username");
-    this.arraySize = 9;
+    this.arraySize = 10;
     if(navigator.onLine) {
       this.loadTransactions();
     } else {
@@ -29,7 +28,6 @@ export class ListMasterPage {
       let transArr = JSON.parse(trans);
       this.wholeArray = transArr;
       this.filterTransactions = this.wholeArray.slice(0,this.arraySize);
-      this.transactionsArray = this.filterTransactions;
       this.balance = +sessionStorage.getItem("balance");
     }
     this.filterOption = 'all';
@@ -44,7 +42,6 @@ export class ListMasterPage {
       this.balance = this.serverResponse.balance;
       this.wholeArray = this.serverResponse.transactions;
       this.filterTransactions = this.wholeArray.slice(0,this.arraySize);
-      this.transactionsArray = this.filterTransactions;
       let json = JSON.stringify(this.serverResponse.transactions);
       sessionStorage.setItem("transactions", json);
       sessionStorage.setItem("balance", this.serverResponse.balance);
@@ -62,7 +59,8 @@ export class ListMasterPage {
   }
 
   filter(){
-    this.filterTransactions = this.transactionsArray;
+
+    this.filterTransactions = this.wholeArray.slice(0, this.arraySize);
 
     if (this.filterOption !== 'all') {
       if (this.filterOption == 'done' || this.filterOption == 'pending') {
@@ -78,27 +76,27 @@ export class ListMasterPage {
 
     if (this.filterSearch !== '') {
       this.filterTransactions= this.filterTransactions.filter((item) => {
-        return item.source_user.toLowerCase().indexOf(this.filterSearch) > -1 || item.destination_user.toLowerCase().indexOf(this.filterSearch) > -1 || item.reference.toLowerCase().indexOf(this.filterSearch) > -1;
+        return item.source_name.toLowerCase().indexOf(this.filterSearch) > -1 || item.destination_name.toLowerCase().indexOf(this.filterSearch) > -1 || item.reference.toLowerCase().indexOf(this.filterSearch) > -1;
       })
     }
   }
 
   slice(){
-    this.arraySize -=10;
+    this.arraySize = this.arraySize - 10;
     this.filter();
   }
 
   expand(){
-    this.arraySize +=10;
+    this.arraySize = this.arraySize + 10;
     this.filter();
   }
-/*
+
   checkSizeBig(){
-    return Boolean(this.arraySize < (this.filterTransactions.length));
+    return Boolean(this.arraySize > this.wholeArray.length);
   }
 
   checkSizeSmall(){
-    return Boolean (10 < (this.filterTransactions.length));
+    return Boolean (10 >= this.arraySize);
   }
-  */
+
 }
