@@ -15,8 +15,8 @@ import datetime
 import random
 from concurrent.futures import ThreadPoolExecutor
 from tornado import options
-from backend.Push import send_web_push
-from backend.PushSettings import *
+from Push import send_web_push
+from PushSettings import *
 
 executor = ThreadPoolExecutor(8)  # declare 8 threads
 

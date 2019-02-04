@@ -92,7 +92,7 @@ export class ListMasterPage {
     this.arraySize +=10;
     this.filter();
   }
-
+/*
   checkSizeBig(){
     return Boolean(this.arraySize < (this.filterTransactions.length));
   }
@@ -100,4 +100,5 @@ export class ListMasterPage {
   checkSizeSmall(){
     return Boolean (10 < (this.filterTransactions.length));
   }
+  */
 }
