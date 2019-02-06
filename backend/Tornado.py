@@ -609,6 +609,49 @@ class LoggingWebsocket(tornado.websocket.WebSocketHandler):
         pass
 
 
+"""
+POST /user/activate
+Endpoint to handle request for activating an user account, json format:
+{
+    username: String,
+}
+"""
+class UserActivateHandler(tornado.web.RequestHandler):
+    def set_default_headers(self):
+        self.set_header("Access-Control-Allow-Origin", "*")
+        self.set_header("Access-Control-Allow-Headers", "x-requested-with")
+        self.set_header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS')
+        self.set_header("Access-Control-Allow-Headers", "access-control-allow-origin,authorization,content-type")
+
+    def get(self):
+        pass
+
+    def options(self):
+        self.set_status(204)
+        self.finish()
+
+    # TODO: Add sending notification when receiving transaction, add to DB when user is offline
+    async def post(self):
+        status = "fail"
+        data = json.loads(self.request.body)
+        print(data)
+        username = data["username"]
+        client = motor.motor_tornado.MotorClient('mongodb://localhost:27017')  # Connect to MongoDB server
+        db = client.progappjs
+        document = await db.users.find_one({"username": username})
+        if document is not None:
+            status = "OK"
+            update_transaction = db.users.update_one(
+                {"username": username},
+                {"$set": {"status": "active"}})
+        json_response = {
+            "status": status
+        }
+        print(json_response)
+        self.write(json.dumps(json_response))
+        self.set_header('Content-Type', 'application/json')
+        self.finish()
+
 class Application(tornado.web.Application):
     def __init__(self):
 
@@ -623,7 +666,8 @@ class Application(tornado.web.Application):
             (r"/subscription", PushSubscriptionHandler),
             (r"/push", PushHandler),
             (r"/pushtest", PushTestHandler),
-            (r"/logging", LoggingWebsocket)
+            (r"/logging", LoggingWebsocket),
+            (r"/user/activate", UserActivateHandler)
             # Add more paths here
         ]
 
