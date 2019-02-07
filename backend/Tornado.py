@@ -11,6 +11,7 @@ import motor.motor_tornado
 import pymongo
 
 import os
+import ssl
 import datetime
 import random
 from concurrent.futures import ThreadPoolExecutor
@@ -597,16 +598,24 @@ class PushTestHandler(tornado.web.RequestHandler):
         self.set_header('Content-Type', 'application/json')
         self.finish()
 
+cl = []
+class LoggingHandler(tornado.websocket.WebSocketHandler):
+    global cl
 
-class LoggingWebsocket(tornado.websocket.WebSocketHandler):
-    async def open(self):
-        pass
+    def check_origin(self, origin):
+        print("Connection Received from ", origin)
+        return True
+
+    def open(self):
+        if self not in cl:
+            cl.append(self)
 
     def on_message(self, message):
         print(message)
 
     def on_close(self):
-        pass
+        if self in cl:
+            cl.remove(self)
 
 
 """
@@ -630,7 +639,7 @@ class UserActivateHandler(tornado.web.RequestHandler):
         self.set_status(204)
         self.finish()
 
-    # TODO: Add sending notification when receiving transaction, add to DB when user is offline
+    # TODO:  add to DB when user is offline
     async def post(self):
         status = "fail"
         data = json.loads(self.request.body)
@@ -666,7 +675,7 @@ class Application(tornado.web.Application):
             (r"/subscription", PushSubscriptionHandler),
             (r"/push", PushHandler),
             (r"/pushtest", PushTestHandler),
-            (r"/logging", LoggingWebsocket),
+            (r"/logging", LoggingHandler),
             (r"/user/activate", UserActivateHandler)
             # Add more paths here
         ]
@@ -681,7 +690,12 @@ class Application(tornado.web.Application):
 if __name__ == "__main__":
     tornado.options.parse_command_line()
     app = Application()
-    server = tornado.httpserver.HTTPServer(app)
+    location = os.path.join(os.getcwd(), "certs")
+    print(location)
+    ssl_ctx = ssl.create_default_context(ssl.Purpose.CLIENT_AUTH)
+    ssl_ctx.load_cert_chain(os.path.join(location, "server.crt"),
+                            os.path.join(location, "server.key"))
+    server = tornado.httpserver.HTTPServer(app, ssl_options=ssl_ctx)
     server.listen(8888)
     print("Listening on http://localhost:8888")
     print("http://localhost:8888")
