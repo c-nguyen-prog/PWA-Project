@@ -25,7 +25,7 @@ from PushSettings import *
 from TransactionScheduler import Scheduler
 
 executor = ThreadPoolExecutor(8)  # declare 8 threads
-scheduler = None
+
 
 class MainHandler(tornado.web.RequestHandler):
     def get(self):
@@ -561,6 +561,9 @@ class PushHandler(tornado.web.RequestHandler):
         self.finish()
 
 
+"""
+TEST FUNCTION FOR PUSH NOTIFICATION
+"""
 class PushTestHandler(tornado.web.RequestHandler):
     def set_default_headers(self):
         self.set_header("Access-Control-Allow-Origin", "*")
@@ -605,6 +608,9 @@ class PushTestHandler(tornado.web.RequestHandler):
         self.finish()
 
 
+"""
+Websocket Handler for logging a user's status: online/offline
+"""
 class LoggingHandler(tornado.websocket.WebSocketHandler):
     def __init__(self, *args, **kwargs):
         super(LoggingHandler, self).__init__(*args, **kwargs)
@@ -704,44 +710,6 @@ class UserActivateHandler(tornado.web.RequestHandler):
         self.write(json.dumps(json_response))
         self.set_header('Content-Type', 'application/json')
         self.finish()
-
-
-class SchedulerHandler(tornado.web.RequestHandler):
-    global scheduler
-
-    def set_default_headers(self):
-        self.set_header("Access-Control-Allow-Origin", "*")
-        self.set_header("Access-Control-Allow-Headers", "x-requested-with")
-        self.set_header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS')
-        self.set_header("Access-Control-Allow-Headers", "access-control-allow-origin,authorization,content-type")
-
-    def options(self):
-        self.set_status(204)
-        self.finish()
-
-    async def get(self):
-        print("Scheduler get")
-        if scheduler is not None:
-            status = "fail"
-        else:
-            executor.submit(self.start_transaction_scheduler())
-            status = "OK"
-
-        json_response = {
-            "status": status
-        }
-        print(json_response)
-        self.write(json.dumps(json_response))
-        self.set_header('Content-Type', 'application/json')
-        self.finish()
-
-    def start_transaction_scheduler(self):
-        s = Scheduler()
-        s.start()
-        print("Scheduler started")
-
-    async def post(self):
-        pass
 
 
 class Application(tornado.web.Application):
