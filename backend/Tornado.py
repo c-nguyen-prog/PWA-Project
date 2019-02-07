@@ -1,3 +1,6 @@
+import subprocess
+import sys
+
 import tornado.ioloop
 import tornado
 import tornado.web
@@ -9,6 +12,7 @@ import json
 import bcrypt
 import motor.motor_tornado
 import pymongo
+import requests
 
 import os
 import ssl
@@ -18,9 +22,10 @@ from concurrent.futures import ThreadPoolExecutor
 from tornado import options
 from Push import send_web_push
 from PushSettings import *
+from TransactionScheduler import Scheduler
 
 executor = ThreadPoolExecutor(8)  # declare 8 threads
-
+scheduler = None
 
 class MainHandler(tornado.web.RequestHandler):
     def get(self):
@@ -200,7 +205,8 @@ class SignUpHandler(tornado.web.RequestHandler):
                                                   "type": "user",
                                                   "status": "pending",
                                                   "pending_transaction": [],
-                                                  "subscription_info": []
+                                                  "subscription_info": [],
+                                                  "online": False
                                                   })
             json_response = {
                 "status": "success"
@@ -624,6 +630,16 @@ class LoggingHandler(tornado.websocket.WebSocketHandler):
             if not document["online"]:
                 print(self.username + " went Online")
                 await self.set_user_offline(self.username, True)
+                messages = document["pending_notifications"]
+                if messages is not None:
+                    for message in messages:
+                        subscription_infos = document["subscription_info"]
+                        if len(subscription_infos) > 0:
+                            for subscription_info in subscription_infos:
+                                push_notification = send_web_push(subscription_info, message)
+                                remove_message = db.users.update_one(
+                                    {"username": self.username},
+                                    {"$pull": {"pending_notifications": message}})
 
     @tornado.gen.coroutine
     def on_close(self):
@@ -682,6 +698,45 @@ class UserActivateHandler(tornado.web.RequestHandler):
         self.set_header('Content-Type', 'application/json')
         self.finish()
 
+
+class SchedulerHandler(tornado.web.RequestHandler):
+    global scheduler
+
+    def set_default_headers(self):
+        self.set_header("Access-Control-Allow-Origin", "*")
+        self.set_header("Access-Control-Allow-Headers", "x-requested-with")
+        self.set_header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS')
+        self.set_header("Access-Control-Allow-Headers", "access-control-allow-origin,authorization,content-type")
+
+    def options(self):
+        self.set_status(204)
+        self.finish()
+
+    async def get(self):
+        print("Scheduler get")
+        if scheduler is not None:
+            status = "fail"
+        else:
+            executor.submit(self.start_transaction_scheduler())
+            status = "OK"
+
+        json_response = {
+            "status": status
+        }
+        print(json_response)
+        self.write(json.dumps(json_response))
+        self.set_header('Content-Type', 'application/json')
+        self.finish()
+
+    def start_transaction_scheduler(self):
+        s = Scheduler()
+        s.start()
+        print("Scheduler started")
+
+    async def post(self):
+        pass
+
+
 class Application(tornado.web.Application):
     def __init__(self):
 
@@ -697,7 +752,8 @@ class Application(tornado.web.Application):
             (r"/push", PushHandler),
             (r"/pushtest", PushTestHandler),
             (r"/logging", LoggingHandler),
-            (r"/user/activate", UserActivateHandler)
+            (r"/user/activate", UserActivateHandler),
+            (r"/scheduler", SchedulerHandler)
             # Add more paths here
         ]
 
@@ -706,6 +762,7 @@ class Application(tornado.web.Application):
         }
 
         tornado.web.Application.__init__(self, handlers, **settings)
+
 
 
 if __name__ == "__main__":
