@@ -99,4 +99,9 @@ export class ListMasterPage {
     return Boolean (10 >= this.arraySize);
   }
 
+  logout() {
+    sessionStorage.removeItem("username");
+    this.navCtrl.push('WelcomePage')
+  }
+
 }

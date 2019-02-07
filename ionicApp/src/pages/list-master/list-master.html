@@ -4,6 +4,13 @@
       <ion-icon name="menu" class="custom-icon"></ion-icon>
     </button>
     <ion-title>{{ 'BALANCE' | translate }}{{balance}}€</ion-title>
+   <ion-buttons right class="hide-small">
+    <ion-col col-6>
+      <button ion-button (click)="logout()" class="signup" round>Log out</button>
+    </ion-col>
+    <ion-col col-6>
+    </ion-col>
+  </ion-buttons>
   </ion-navbar>
 </ion-header>
 

@@ -371,6 +371,9 @@ export class NewTransactionPage {
       });
   }
 
-
+  logout() {
+    sessionStorage.removeItem("username");
+    this.navCtrl.push('WelcomePage')
+  }
 
 }

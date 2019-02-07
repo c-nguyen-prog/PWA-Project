@@ -609,6 +609,7 @@ class LoggingHandler(tornado.websocket.WebSocketHandler):
     def __init__(self, *args, **kwargs):
         super(LoggingHandler, self).__init__(*args, **kwargs)
         self.username = ""
+        self.set_offline = False
 
     def check_origin(self, origin):
         print("Connection Received from ", origin)
@@ -624,25 +625,33 @@ class LoggingHandler(tornado.websocket.WebSocketHandler):
         client = motor.motor_tornado.MotorClient('mongodb://localhost:27017')  # Connect to MongoDB server
         db = client.progappjs
         document = await db.users.find_one({"username": self.username})
-        if document is not None:
-            if not document["online"]:
-                print(self.username + " went Online")
-                await self.set_user_offline(self.username, True)
-                messages = document["pending_notifications"]
-                if messages is not None:
-                    for message in messages:
-                        subscription_infos = document["subscription_info"]
-                        if len(subscription_infos) > 0:
-                            for subscription_info in subscription_infos:
-                                push_notification = send_web_push(subscription_info, message)
-                                remove_message = db.users.update_one(
-                                    {"username": self.username},
-                                    {"$pull": {"pending_notifications": message}})
+        if status == "online":
+            if document is not None:
+                if not document["online"]:
+                    print(self.username + " went Online")
+                    await self.set_user_offline(self.username, True)
+                    messages = document["pending_notifications"]
+                    if messages is not None:
+                        for message in messages:
+                            subscription_infos = document["subscription_info"]
+                            if len(subscription_infos) > 0:
+                                for subscription_info in subscription_infos:
+                                    push_notification = send_web_push(subscription_info, message)
+                                    remove_message = db.users.update_one(
+                                         {"username": self.username},
+                                         {"$pull": {"pending_notifications": message}})
+        else:
+            if not self.set_offline:
+                print(self.username + " went Offline")
+                await self.set_user_offline(self.username, False)
+                self.set_offline = True
 
     @tornado.gen.coroutine
     def on_close(self):
-        print(self.username + " went Offline")
-        yield self.set_user_offline(self.username, False)
+        if not self.set_offline:
+            print(self.username + " went Offline")
+            yield self.set_user_offline(self.username, False)
+            self.set_offline = True
 
     async def set_user_offline(self, username, state):
         client = motor.motor_tornado.MotorClient('mongodb://localhost:27017')  # Connect to MongoDB server
@@ -763,7 +772,6 @@ class Application(tornado.web.Application):
 
         s = Scheduler()
         s.start()
-
 
 
 if __name__ == "__main__":
