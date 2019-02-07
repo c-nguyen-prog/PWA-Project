@@ -605,8 +605,6 @@ class PushTestHandler(tornado.web.RequestHandler):
         self.finish()
 
 
-
-
 class LoggingHandler(tornado.websocket.WebSocketHandler):
     def __init__(self, *args, **kwargs):
         super(LoggingHandler, self).__init__(*args, **kwargs)
@@ -763,6 +761,9 @@ class Application(tornado.web.Application):
 
         tornado.web.Application.__init__(self, handlers, **settings)
 
+        s = Scheduler()
+        s.start()
+
 
 
 if __name__ == "__main__":
@@ -774,6 +775,5 @@ if __name__ == "__main__":
                             os.path.join(location, "server.key"))
     server = tornado.httpserver.HTTPServer(app, ssl_options=ssl_ctx)
     server.listen(8888)
-    print("Listening on http://localhost:8888")
-    print("http://localhost:8888")
+    print("REST API Server started on: https://localhost:8888")
     tornado.ioloop.IOLoop.current().start()

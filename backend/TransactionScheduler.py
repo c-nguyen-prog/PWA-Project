@@ -12,6 +12,8 @@ class Scheduler(Thread):
     def __init__(self):
         Thread.__init__(self)
         print("Transaction Scheduler initialized")
+
+    def run(self):
         self.run_scheduler()
 
     def run_scheduler(self):
