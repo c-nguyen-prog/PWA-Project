@@ -598,24 +598,45 @@ class PushTestHandler(tornado.web.RequestHandler):
         self.set_header('Content-Type', 'application/json')
         self.finish()
 
-cl = []
+
+
+
 class LoggingHandler(tornado.websocket.WebSocketHandler):
-    global cl
+    def __init__(self, *args, **kwargs):
+        super(LoggingHandler, self).__init__(*args, **kwargs)
+        self.username = ""
 
     def check_origin(self, origin):
         print("Connection Received from ", origin)
         return True
 
     def open(self):
-        if self not in cl:
-            cl.append(self)
+        pass
 
-    def on_message(self, message):
-        print(message)
+    async def on_message(self, message):
+        data = json.loads(message)
+        self.username = data["username"]
+        status = data["status"]
+        client = motor.motor_tornado.MotorClient('mongodb://localhost:27017')  # Connect to MongoDB server
+        db = client.progappjs
+        document = await db.users.find_one({"username": self.username})
+        if document is not None:
+            if not document["online"]:
+                print(self.username + " went Online")
+                await self.set_user_offline(self.username, True)
 
+    @tornado.gen.coroutine
     def on_close(self):
-        if self in cl:
-            cl.remove(self)
+        print(self.username + " went Offline")
+        yield self.set_user_offline(self.username, False)
+
+    async def set_user_offline(self, username, state):
+        client = motor.motor_tornado.MotorClient('mongodb://localhost:27017')  # Connect to MongoDB server
+        db = client.progappjs
+        document = await db.users.find_one({"username": username})
+        if document is not None:
+            db.users.update_one({"username": username},
+                                {"$set": {"online": state}})
 
 
 """
@@ -691,7 +712,6 @@ if __name__ == "__main__":
     tornado.options.parse_command_line()
     app = Application()
     location = os.path.join(os.getcwd(), "certs")
-    print(location)
     ssl_ctx = ssl.create_default_context(ssl.Purpose.CLIENT_AUTH)
     ssl_ctx.load_cert_chain(os.path.join(location, "server.crt"),
                             os.path.join(location, "server.key"))
