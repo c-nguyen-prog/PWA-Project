@@ -727,8 +727,7 @@ class Application(tornado.web.Application):
             (r"/push", PushHandler),
             (r"/pushtest", PushTestHandler),
             (r"/logging", LoggingHandler),
-            (r"/user/activate", UserActivateHandler),
-            (r"/scheduler", SchedulerHandler)
+            (r"/user/activate", UserActivateHandler)
             # Add more paths here
         ]
 

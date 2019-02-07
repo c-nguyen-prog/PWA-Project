@@ -7,6 +7,7 @@ Backend
 - Windows: https://docs.mongodb.com/manual/tutorial/install-mongodb-on-windows/
 - Linux: https://docs.mongodb.com/manual/administration/install-on-linux/
 - MacOS: https://docs.mongodb.com/manual/tutorial/install-mongodb-on-os-x/
+
 ## Install Python and pip
 **Python 3.6 or above** is needed for backend server. 
 Due to the use of "async" functionality which is only available from python 3.6. 
@@ -49,13 +50,12 @@ pip3 install pywebpush
 pip3 install requests
 ~~~~
 
-## Run the servers
+## Run the server
 
 Navigate to backend folder and run the following commands:
 
-~~~~ run servers
+~~~~ run server
 python3 Tornado.py
-python3 TransactionScheduler.py
 ~~~~
 
 Frontend
@@ -70,6 +70,8 @@ Navigate to ionicApp and run command: `npm install`
 	
 ## Run the website
 Navigate to ionicApp and run command: `ionic serve`
+
+The www folder is prebuilt from source code and can also be deployed/opened directly using index.html
 
 
 
