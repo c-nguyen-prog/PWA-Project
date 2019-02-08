@@ -4,6 +4,7 @@ var online = false;
 
 ws = new WebSocket("wss://localhost:8888/logging");
 ws.onopen = function (event) {
+  console.log("ws connected")
 	setInterval(function() {
 		let data = null;
 		if (sessionStorage.getItem("username")) {

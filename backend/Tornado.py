@@ -581,22 +581,9 @@ class PushTestHandler(tornado.web.RequestHandler):
     async def post(self):
         subscription_info = []
         # local chrome
-        subscription_info.append({
-            "endpoint":"https://fcm.googleapis.com/fcm/send/c37QRTHs__w:APA91bGASHOs8eUJp35gNK80s1lBZoYye4Gj7LpmzrTbZ32U3s-I1IyBUGEMf53DbLXP2MMwtGFS9A_dShFAIWtzhFICkoZHa2MSR8jj1sC6kF2Imxl6X8eHTjN3gs6eO1HkMpLGXPcs",
-            "expirationTime": "null",
-            "keys": {
-                        "p256dh":"BGhR6uT-mVsCZyQ19qhd5MM6JqHO5JLWzO4XLd-o8k5_Z73Qk7cDxSer9i4FC21Dw_o79SFqezJcjoymIx_u0dQ",
-                        "auth":"QJeM08qGmHypxOMSy2jzTA"
-                    }
-         })
+        subscription_info.append({"endpoint":"https://fcm.googleapis.com/fcm/send/daAJFnSsZLU:APA91bFvm3k6xW5dxXxddjvouwFyEMltK8JhOs2_fkhdbeoZqFHKqLIDlOXpRx8ACAlEFNs1xXd_K7TfF5LpmNxJfR6275M4IrGBFbk8JdhqviWJcUVDXvhfkcmCFmrKWRpJaFmbgzCr","expirationTime":None,"keys":{"p256dh":"BLeLlMkkfwRuu615_fbMxoAVNhdeB9UyiJ1iIGCLg4wBGWg5xXJ_3MmAZ3deYTREXxFoInOng4DqMT9YFAi-sCc","auth":"3JAAILvnWYJoknN7zS-A8Q"}})
         # local firefox
-        subscription_info.append({
-            "endpoint": "https://updates.push.services.mozilla.com/wpush/v2/gAAAAABcUu-gHfn_2wLAVI3c8TRGNAKbgfjM0ffq6G8WPuL23f67FEwXAYq6wQrogNUlKNSeIsP4WZHcOSUuD9SxB9jc0BUsAfcECVrDVlJIWptLln1mw5EiyAeMl5cmBEqTYLXRCKLbGS1hrKb4nNbge9PoJRweeIb96FXnox-blk7s7cw6XL0",
-            "keys": {
-                "auth": "CUWP9340yuCzRtOSUmm-UQ",
-                "p256dh": "BLuI7_4iZQoUNV-QJlwQsNt0IptbZYfx0tqhDpEpWvCh7agF3Wud0hiB8Cvxmwc0JLQV-pfQGgoaOcV-kptgveA"
-            }
-        })
+        subscription_info.append({"endpoint":"https://updates.push.services.mozilla.com/wpush/v2/gAAAAABcXWwv-Pjz7gNwO8hkWvfBScm4qtY_UsDpiUuIObmfUeKPMywFJDO-nFFbikf-YzTWVx_X3ZPV1mJO3dwgw28lCpZvTaLMrvo2HUDgC_O4ZNLpBrn5Bs1k6xPpTcTYpAMYHSI53iMfbyCKliZKMHwMrHgjlpeiTHLG9IlqzaZCnoLvqDs","keys":{"auth":"ZAKOXB48KCwN9adzNKhu2A","p256dh":"BA8OgmO0iOhKe0RJ7arvbXlxO43CGNRtPkeJJVsaKPza7X2l2WHL8YMzVqvuGnXWBvcR3bhJ0XA7Vd_iAhv06uc"}})
         for sub in subscription_info:
             status = send_web_push(sub, "You have received 1000€ XD")
             json_response = {
@@ -689,7 +676,6 @@ class UserActivateHandler(tornado.web.RequestHandler):
         self.set_status(204)
         self.finish()
 
-    # TODO:  add to DB when user is offline
     async def post(self):
         status = "fail"
         data = json.loads(self.request.body)
