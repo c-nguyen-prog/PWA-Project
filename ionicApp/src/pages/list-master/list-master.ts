@@ -22,12 +22,12 @@ export class ListMasterPage {
   public arraySize: number;
   public filterSearch: string;
   public filterOption: string;
-  @ViewChild('pushButton') pushButton;
-
+  // @ViewChild('pushButton') pushButton;
+ 
   disabledButton: boolean;
 
   readonly applicationServerPublicKey = 'BDFc2s7Haf2s9lt9ttYZGvwV366dP78zP-xps4Z3sKx9k_u3Wbb56vzC4FXMZJPyGZx_X7ke6rtKk1dCWok68N4';
-  readonly pushButton = document.querySelector('.js-push-btn');
+  // readonly pushButton = document.querySelector('.js-push-btn');
 
   isSubscribed = false;
   swRegistration = null;
