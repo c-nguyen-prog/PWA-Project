@@ -47,7 +47,8 @@ export class LoginPage {
 
   // Attempt to login in through our User service
   doLogin() {
-    let tempAccount = JSON.parse(JSON.stringify(this.account));
+    this.navCtrl.push("ListMasterPage");
+   /* let tempAccount = JSON.parse(JSON.stringify(this.account));
     tempAccount.password = new Hashes.SHA512().hex(tempAccount.password);
     this.user.login(JSON.stringify(tempAccount)).subscribe((resp : any) => {
       console.log(resp);
@@ -101,11 +102,11 @@ export class LoginPage {
         position: 'top'
       });
       toast.present();
-    });
+    });*/
   }
 
   login() {
-    this.navCtrl.push('LoginPage');
+    this.navCtrl.push('ListMasterPage');
   }
 
   signup() {

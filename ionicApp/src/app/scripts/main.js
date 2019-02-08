@@ -17,11 +17,84 @@
 *
 */
 
+import { Api } from '../api/api';
+
 /* eslint-env browser, es6 */
 
 'use strict';
+/*
+ subscription info basically generates endpoint, it is linked to the browser and you get it with
+  swRegistrqation.pushmanager.getSubscription()
 
-const applicationServerPublicKey = 'BDFc2s7Haf2s9lt9ttYZGvwV366dP78zP-xps4Z3sKx9k_u3Wbb56vzC4FXMZJPyGZx_X7ke6rtKk1dCWok68N4';
+  file service worker is for defining the content of the push notification and declaring the listener (listening for incoming push notifications)
+
+endpoint is the localisation of the targeted device
+subscription info HAS endpoint info among OTHER THINGS
+
+pushSCript (formerly main.js) is the JS script where permissions, subscribe method (generate subscription info and turn into JSON string for endpoints)
+
+
+  */
+
+
+isSubscribed = false;
+
+
+setInterval(function attemptSubscription(){
+//what happens
+  var username = sessionStorage.getItem("username");
+
+  if(!username){
+
+    if (isSubscribed == false) {
+      subscribeUser();
+      isSubscribed = true;
+      sendSubscribeInfoToBackend(username, swRegistration.pushManager.getSubscription());
+      return; //or break or something that takes you out
+
+    } else {
+
+    }
+  }
+
+
+}, 5000);;
+
+
+function postAndCheck(postInfo) {
+  let seq = this.api.post('subscription', postInfo).share();
+  seq.subscribe((res) => {
+    // If the API returned a successful response, mark the user as logged in
+    if (res.status === "success") {
+
+    } else {
+    }
+  }, err => {
+    console.error('ERROR in subscription', err);
+  });
+
+  return seq;
+
+}
+
+
+
+function sendSubscribeInfoToBackend(username, subInfo){  //this is done once you're already subscribed
+  let sub_Info = {username: username, subscription_info: subInfo}
+  postAndCheck(sub_Info);
+
+}
+
+
+//using API send username, subscription_info to backend using
+//login(accountInfo: any)
+//{
+//let seq = this.api.post('login', accountInfo).share();
+//seq
+//  (replace login with subscription_info, of course)
+
+
+const applicationServerPublicKey = 'BAQrd8Zlbiw-GwnoZON03SKCTbM7S4MsopPDDJyr7c3_-PLAzZl1OQ4iMhTsqzqwwxPKuXohHBZiWvy6Tl35Qpk';
 
 const pushButton = document.querySelector('.js-push-btn');
 
@@ -42,28 +115,9 @@ function urlB64ToUint8Array(base64String) {
   }
   return outputArray;
 }
-if ('serviceWorker' in navigator && 'PushManager' in window) {
-  console.log('Service Worker and Push is supported');
-
-  navigator.serviceWorker.register('sw.js')
-  .then(function(swReg) {
-    console.log('Service Worker is registered', swReg);
-
-    swRegistration = swReg;
-     initializeUI();
-
-  })
-  .catch(function(error) {
-    console.error('Service Worker Error', error);
-  });
-} else {
-  console.warn('Push messaging is not supported');
-  pushButton.textContent = 'Push Not Supported';
-}
-
 
 function updateBtn() {
-   if (Notification.pefrmission === 'denied') {
+  if (Notification.permission === 'denied') {
     pushButton.textContent = 'Push Messaging Blocked.';
     pushButton.disabled = true;
     updateSubscriptionOnServer(null);
@@ -79,64 +133,8 @@ function updateBtn() {
   pushButton.disabled = false;
 }
 
-
-function initializeUI() {
-
- pushButton.addEventListener('click', function() {
-    pushButton.disabled = true;
-    if (isSubscribed) {
-      //  Unsubscribe user
-        unsubscribeUser();
-
-    } else {
-      subscribeUser();
-    }
-  });
-
-
-
-  // Set the initial subscription value
-  swRegistration.pushManager.getSubscription()
-  .then(function(subscription) {
-    isSubscribed = !(subscription === null);
-
-    updateSubscriptionOnServer(subscription);
-
-    if (isSubscribed) {
-      console.log('User IS subscribed.');
-    } else {
-      console.log('User is NOT subscribed.');
-    }
-
-    updateBtn();
-  });
-}
-
-
-function subscribeUser() {
-  const applicationServerKey = urlB64ToUint8Array(applicationServerPublicKey);
-  swRegistration.pushManager.subscribe({
-    userVisibleOnly: true,
-    applicationServerKey: applicationServerKey
-  })
-  .then(function(subscription) {
-    console.log('User is subscribed.');
-
-    updateSubscriptionOnServer(subscription);
-
-    isSubscribed = true;
-
-    updateBtn();
-  })
-  .catch(function(err) {
-    console.log('Failed to subscribe the user: ', err);
-    updateBtn();
-  });
-}
-
-
 function updateSubscriptionOnServer(subscription) {
-  // Send subscription to application server
+  // TODO: Send subscription to application server
 
   const subscriptionJson = document.querySelector('.js-subscription-json');
   const subscriptionDetails =
@@ -150,23 +148,89 @@ function updateSubscriptionOnServer(subscription) {
   }
 }
 
+function subscribeUser() {
+  const applicationServerKey = urlB64ToUint8Array(applicationServerPublicKey);
+  swRegistration.pushManager.subscribe({
+    userVisibleOnly: true,
+    applicationServerKey: applicationServerKey
+  })
+    .then(function(subscription) {
+      console.log('User is subscribed.');
+
+      updateSubscriptionOnServer(subscription);
+
+      isSubscribed = true;
+
+      updateBtn();
+    })
+    .catch(function(err) {
+      console.log('Failed to subscribe the user: ', err);
+      updateBtn();
+    });
+}
 
 function unsubscribeUser() {
   swRegistration.pushManager.getSubscription()
-  .then(function(subscription) {
-    if (subscription) {
-      return subscription.unsubscribe();
-    }
-  })
-  .catch(function(error) {
-    console.log('Error unsubscribing', error);
-  })
-  .then(function() {
-    updateSubscriptionOnServer(null);
+    .then(function(subscription) {
+      if (subscription) {
+        return subscription.unsubscribe();
+      }
+    })
+    .catch(function(error) {
+      console.log('Error unsubscribing', error);
+    })
+    .then(function() {
+      updateSubscriptionOnServer(null);
 
-    console.log('User is unsubscribed.');
-    isSubscribed = false;
+      console.log('User is unsubscribed.');
+      isSubscribed = false;
 
-    updateBtn();
-  });
+      updateBtn();
+    });
 }
+
+function initializeUI() {
+  pushButton.addEventListener('click', function() {
+    pushButton.disabled = true;
+    if (isSubscribed) {
+      unsubscribeUser();
+    } else {
+      subscribeUser();
+    }
+  });
+
+  // Set the initial subscription value
+  swRegistration.pushManager.getSubscription()
+    .then(function(subscription) {
+      isSubscribed = !(subscription === null);
+
+      updateSubscriptionOnServer(subscription);
+
+      if (isSubscribed) {
+        console.log('User IS subscribed.');
+      } else {
+        console.log('User is NOT subscribed.');
+      }
+
+      updateBtn();
+    });
+}
+
+if ('serviceWorker' in navigator && 'PushManager' in window) {
+  console.log('Service Worker and Push is supported');
+
+  navigator.serviceWorker.register('sw.js')
+    .then(function(swReg) {
+      console.log('Service Worker is registered', swReg);
+
+      swRegistration = swReg;
+      initializeUI();
+    })
+    .catch(function(error) {
+      console.error('Service Worker Error', error);
+    });
+} else {
+  console.warn('Push messaging is not supported');
+  pushButton.textContent = 'Push Not Supported';
+}
+

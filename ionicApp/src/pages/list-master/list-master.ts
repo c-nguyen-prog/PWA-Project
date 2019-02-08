@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import { IonicPage, ModalController, NavController } from 'ionic-angular';
 
 import { Item } from '../../models/item';
@@ -22,6 +22,16 @@ export class ListMasterPage {
   public arraySize: number;
   public filterSearch: string;
   public filterOption: string;
+  @ViewChild('pushButton') pushButton;
+
+  disabledButton: boolean;
+
+  readonly applicationServerPublicKey = 'BDFc2s7Haf2s9lt9ttYZGvwV366dP78zP-xps4Z3sKx9k_u3Wbb56vzC4FXMZJPyGZx_X7ke6rtKk1dCWok68N4';
+  readonly pushButton = document.querySelector('.js-push-btn');
+
+  isSubscribed = false;
+  swRegistration = null;
+
 
   constructor(public navCtrl: NavController, public http: HttpClient) {
 
@@ -93,4 +103,129 @@ export class ListMasterPage {
     this.arraySize +=10;
     this.filter();
   }
+
+  urlB64ToUint8Array(base64String) {
+    const padding = '='.repeat((4 - base64String.length % 4) % 4);
+    const base64 = (base64String + padding)
+      .replace(/\-/g, '+')
+      .replace(/_/g, '/');
+
+    const rawData = window.atob(base64);
+    const outputArray = new Uint8Array(rawData.length);
+
+    for (let i = 0; i < rawData.length; ++i) {
+      outputArray[i] = rawData.charCodeAt(i);
+    }
+    return outputArray;
+  }
+
+
+
+
+
+
+
+
+
+
+
+  subscribeUser() {
+    const applicationServerKey = this.urlB64ToUint8Array(this.applicationServerPublicKey);
+    this.swRegistration.pushManager.subscribe({
+      userVisibleOnly: true,
+      applicationServerKey: applicationServerKey
+    })
+      .then(function(subscription) {
+        console.log('User is subscribed.');
+
+        this.updateSubscriptionOnServer(subscription);
+
+        this.isSubscribed = true;
+
+        this.updateBtn();
+      })
+      .catch(function(err) {
+        console.log('Failed to subscribe the user: ', err);
+        this.updateBtn();
+      });
+  }
+
+
+  updateSubscriptionOnServer(subscription) {
+    // Send subscription to application server
+
+    const subscriptionJson = document.querySelector('.js-subscription-json');
+    const subscriptionDetails =
+      document.querySelector('.js-subscription-details');
+
+    if (subscription) {
+      subscriptionJson.textContent = JSON.stringify(subscription);
+      subscriptionDetails.classList.remove('is-invisible');
+    } else {
+      subscriptionDetails.classList.add('is-invisible');
+    }
+  }
+
+
+  ionViewDidLoad(){
+
+      const notification = new Notification('Notifications are enabled')
+
+      if (notification.permission === 'denied') {
+
+       // this.pushButton.textContent = 'Push Messaging Blocked.';
+        this.disabledButton = true;
+        this.updateSubscriptionOnServer(null);
+        return;
+      } else {
+        this.disabledButton = true;
+      } console.log("disabledbutton is "+this.disabledButton);
+      console.log("Requesting Permission")
+
+      Notification.requestPermission()
+        .then((result) => {
+          if(result === "denied"){
+            //Denied
+            return;
+          }
+          if(result === `default`){
+            //Closed
+            this.disabledButton = true;
+            return;
+          }
+
+          //Yay granted
+        });
+
+      if (this.isSubscribed) {
+       // this.pushButton.textContent = 'Disable Push Messaging';
+      } else {
+       // this.pushButton.textContent = 'Enable Push Messaging';
+      }
+      this.disabledButton = false;
+
+
+  }
+
+  unsubscribeUser() {
+    this.swRegistration.pushManager.getSubscription()
+      .then(function(subscription) {
+        if (subscription) {
+          return subscription.unsubscribe();
+        }
+      })
+      .catch(function(error) {
+        console.log('Error unsubscribing', error);
+      })
+      .then(function() {
+        this.updateSubscriptionOnServer(null);
+
+        console.log('User is unsubscribed.');
+        this.isSubscribed = false;
+
+        this.updateBtn();
+      });
+  }
+
+
 }

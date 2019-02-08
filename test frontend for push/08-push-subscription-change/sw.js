@@ -42,7 +42,7 @@ function urlB64ToUint8Array(base64String) {
   return outputArray;
 }
 
-self.addEventListener('push', function(event) {
+self.addEventListener('push', function(event) { //add this function to script
   console.log('[Service Worker] Push Received.');
   console.log(`[Service Worker] Push had this data: "${event.data.text()}"`);
   let message = event.data.text()
@@ -56,7 +56,7 @@ self.addEventListener('push', function(event) {
   event.waitUntil(self.registration.showNotification(title, options));
 });
 
-self.addEventListener('notificationclick', function(event) {
+self.addEventListener('notificationclick', function(event) { // add to script
   console.log('[Service Worker] Notification click Received.');
 
   event.notification.close();
@@ -66,7 +66,7 @@ self.addEventListener('notificationclick', function(event) {
   );
 });
 
-self.addEventListener('pushsubscriptionchange', function(event) {
+self.addEventListener('pushsubscriptionchange', function(event) { //add to script
   console.log('[Service Worker]: \'pushsubscriptionchange\' event fired.');
   const applicationServerKey = urlB64ToUint8Array(applicationServerPublicKey);
   event.waitUntil(
