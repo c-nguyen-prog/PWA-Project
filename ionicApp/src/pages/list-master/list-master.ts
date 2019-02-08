@@ -5,7 +5,6 @@ import { Item } from '../../models/item';
 import { Items } from '../../providers';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {json} from "ng2-validation/dist/json";
 
 @IonicPage()
 @Component({
@@ -14,9 +13,8 @@ import {json} from "ng2-validation/dist/json";
 })
 export class ListMasterPage {
   public serverResponse:any;
-  public transactionsArray:any;
   public filterTransactions:any;
-  public wholeArray:any;
+  public wholeArray:any = {length:0};
   public user:string;
   public balance:number;
   public arraySize: number;
@@ -37,7 +35,7 @@ export class ListMasterPage {
 
 
     this.user = sessionStorage.getItem("username");
-    this.arraySize = 9;
+    this.arraySize = 10;
     if(navigator.onLine) {
       this.loadTransactions();
     } else {
@@ -45,8 +43,7 @@ export class ListMasterPage {
       let transArr = JSON.parse(trans);
       this.wholeArray = transArr;
       this.filterTransactions = this.wholeArray.slice(0,this.arraySize);
-      this.transactionsArray = this.filterTransactions;
-      this.balance = sessionStorage.getItem("balance");
+      this.balance = +sessionStorage.getItem("balance");
     }
     this.filterOption = 'all';
     this.filterSearch = '';
@@ -54,13 +51,12 @@ export class ListMasterPage {
 
   loadTransactions(){
     let data:Observable<any>;
-    data = this.http.post('http://localhost:8888/user/transactions', {username: this.user});
+    data = this.http.post('https://localhost:8888/user/transactions', {username: this.user});
     data.subscribe(result=>{
       this.serverResponse = result;
       this.balance = this.serverResponse.balance;
       this.wholeArray = this.serverResponse.transactions;
       this.filterTransactions = this.wholeArray.slice(0,this.arraySize);
-      this.transactionsArray = this.filterTransactions;
       let json = JSON.stringify(this.serverResponse.transactions);
       sessionStorage.setItem("transactions", json);
       sessionStorage.setItem("balance", this.serverResponse.balance);
@@ -78,7 +74,8 @@ export class ListMasterPage {
   }
 
   filter(){
-    this.filterTransactions = this.transactionsArray;
+
+    this.filterTransactions = this.wholeArray.slice(0, this.arraySize);
 
     if (this.filterOption !== 'all') {
       if (this.filterOption == 'done' || this.filterOption == 'pending') {
@@ -94,13 +91,18 @@ export class ListMasterPage {
 
     if (this.filterSearch !== '') {
       this.filterTransactions= this.filterTransactions.filter((item) => {
-        return item.source.toLowerCase().indexOf(this.filterSearch) > -1 || item.destination_username.toLowerCase().indexOf(this.filterSearch) > -1 || item.reference.toLowerCase().indexOf(this.filterSearch) > -1;
+        return item.source_name.toLowerCase().indexOf(this.filterSearch) > -1 || item.destination_name.toLowerCase().indexOf(this.filterSearch) > -1 || item.reference.toLowerCase().indexOf(this.filterSearch) > -1;
       })
     }
   }
 
   slice(){
-    this.arraySize +=10;
+    this.arraySize = this.arraySize - 10;
+    this.filter();
+  }
+
+  expand(){
+    this.arraySize = this.arraySize + 10;
     this.filter();
   }
 
@@ -118,15 +120,6 @@ export class ListMasterPage {
     }
     return outputArray;
   }
-
-
-
-
-
-
-
-
-
 
 
   subscribeUser() {
@@ -227,5 +220,18 @@ export class ListMasterPage {
       });
   }
 
+
+  checkSizeBig(){
+    return Boolean(this.arraySize > this.wholeArray.length);
+  }
+
+  checkSizeSmall(){
+    return Boolean (10 >= this.arraySize);
+  }
+
+  logout() {
+    sessionStorage.removeItem("username");
+    this.navCtrl.push('WelcomePage')
+  }
 
 }

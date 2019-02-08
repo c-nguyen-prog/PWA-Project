@@ -6,7 +6,7 @@ import { Injectable } from '@angular/core';
  */
 @Injectable()
 export class Api {
-  url: string = 'http://localhost:8888';
+  url: string = 'https://localhost:8888';
 
   constructor(public http: HttpClient) {
   }

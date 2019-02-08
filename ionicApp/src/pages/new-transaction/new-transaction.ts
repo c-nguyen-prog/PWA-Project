@@ -128,7 +128,7 @@ export class NewTransactionPage {
     console.log(this.selectObj);
     console.log("finished loading stuff");
     this.transactionForm = formBuilder.group({
-      source: [localStorage.getItem("username")],
+      source: [sessionStorage.getItem("username")],
       recipient: ['', Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z ]*'), Validators.required])],
       destination: ['', Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z0-9 ]*'), Validators.required])],
       amount: [0.01, Validators.compose([Validators.maxLength(30), Validators.pattern('^(\\d*\\.)?\\d+$'), Validators.required])],
@@ -386,6 +386,9 @@ export class NewTransactionPage {
       });
   }
 
-
+  logout() {
+    sessionStorage.removeItem("username");
+    this.navCtrl.push('WelcomePage')
+  }
 
 }

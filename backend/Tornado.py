@@ -1,3 +1,6 @@
+import subprocess
+import sys
+
 import tornado.ioloop
 import tornado
 import tornado.web
@@ -9,14 +12,17 @@ import json
 import bcrypt
 import motor.motor_tornado
 import pymongo
+import requests
 
 import os
+import ssl
 import datetime
 import random
 from concurrent.futures import ThreadPoolExecutor
 from tornado import options
-from backend.Push import send_web_push
-from backend.PushSettings import *
+from Push import send_web_push
+from PushSettings import *
+from TransactionScheduler import Scheduler
 
 executor = ThreadPoolExecutor(8)  # declare 8 threads
 
@@ -199,7 +205,8 @@ class SignUpHandler(tornado.web.RequestHandler):
                                                   "type": "user",
                                                   "status": "pending",
                                                   "pending_transaction": [],
-                                                  "subscription_info": []
+                                                  "subscription_info": [],
+                                                  "online": False
                                                   })
             json_response = {
                 "status": "success"
@@ -238,7 +245,7 @@ class SignUpHandler(tornado.web.RequestHandler):
 POST /transaction
 Function to handle request for a new transaction, json format: 
 {
-    "source": String source_username (or iban),
+    "source": String source_username,
     "destination": String iban,
     "amount": Float amount,
     "type": String [now/date/standing]
@@ -267,6 +274,7 @@ class TransactionHandler(tornado.web.RequestHandler):
 
         data = json.loads(self.request.body)                                   # Get json request for transaction
         print("TRANSACTION REQ:" + str(data))
+
         source = data["source"]
         destination = data["destination"]
         amount = data["amount"]
@@ -275,13 +283,19 @@ class TransactionHandler(tornado.web.RequestHandler):
         reference = data["reference"]
         now = datetime.datetime.now()
         created_date = str(now.year) + "-" + str(now.month) + "-" + str(now.day)
+        source_user = await db.users.find_one({"username": source})
+        source_name = source_user["name"]["first_name"] + " " + source_user["name"]["last_name"]
+
         destination_user = await db.users.find_one({"iban": destination})
         if destination_user is not None:
             destination_username = destination_user["username"]
+            destination_name = destination_user["name"]["first_name"] + " " + destination_user["name"]["last_name"]
             transaction = {
                             "source": source,                                       # Create new transaction: initial
+                            "source_name": source_name,
                             "destination": destination,
                             "destination_username": destination_username,
+                            "destination_name": destination_name,
                             "amount": amount,
                             "type": type,
                             "date": date,
@@ -487,7 +501,7 @@ class PushSubscriptionHandler(tornado.web.RequestHandler):
         document = await db.users.find_one({"username": username})
         if document is not None:
             result = await db.users.update_one({"username": username},
-                                               {"$push": {"pending_transaction": subscription_info}})
+                                               {"$push": {"subscription_info": subscription_info}})
             json_response = {
                 "status": "OK",
                 "public_key": PUBLIC_KEY
@@ -536,7 +550,7 @@ class PushHandler(tornado.web.RequestHandler):
             subscription_infos = document["subscription_info"]
             if len(subscription_infos) > 0:
                 for subscription_info in subscription_infos:
-                    status = send_web_push(subscription_info, "You have received 1000€ XD")
+                    status = send_web_push(subscription_info, data["message"])
 
         json_response = {
             "status": status
@@ -547,6 +561,9 @@ class PushHandler(tornado.web.RequestHandler):
         self.finish()
 
 
+"""
+TEST FUNCTION FOR PUSH NOTIFICATION
+"""
 class PushTestHandler(tornado.web.RequestHandler):
     def set_default_headers(self):
         self.set_header("Access-Control-Allow-Origin", "*")
@@ -564,22 +581,9 @@ class PushTestHandler(tornado.web.RequestHandler):
     async def post(self):
         subscription_info = []
         # local chrome
-        subscription_info.append({
-            "endpoint":"https://fcm.googleapis.com/fcm/send/c37QRTHs__w:APA91bGASHOs8eUJp35gNK80s1lBZoYye4Gj7LpmzrTbZ32U3s-I1IyBUGEMf53DbLXP2MMwtGFS9A_dShFAIWtzhFICkoZHa2MSR8jj1sC6kF2Imxl6X8eHTjN3gs6eO1HkMpLGXPcs",
-            "expirationTime": "null",
-            "keys": {
-                        "p256dh":"BGhR6uT-mVsCZyQ19qhd5MM6JqHO5JLWzO4XLd-o8k5_Z73Qk7cDxSer9i4FC21Dw_o79SFqezJcjoymIx_u0dQ",
-                        "auth":"QJeM08qGmHypxOMSy2jzTA"
-                    }
-         })
+        subscription_info.append({"endpoint":"https://fcm.googleapis.com/fcm/send/daAJFnSsZLU:APA91bFvm3k6xW5dxXxddjvouwFyEMltK8JhOs2_fkhdbeoZqFHKqLIDlOXpRx8ACAlEFNs1xXd_K7TfF5LpmNxJfR6275M4IrGBFbk8JdhqviWJcUVDXvhfkcmCFmrKWRpJaFmbgzCr","expirationTime":None,"keys":{"p256dh":"BLeLlMkkfwRuu615_fbMxoAVNhdeB9UyiJ1iIGCLg4wBGWg5xXJ_3MmAZ3deYTREXxFoInOng4DqMT9YFAi-sCc","auth":"3JAAILvnWYJoknN7zS-A8Q"}})
         # local firefox
-        subscription_info.append({
-            "endpoint": "https://updates.push.services.mozilla.com/wpush/v2/gAAAAABcUu-gHfn_2wLAVI3c8TRGNAKbgfjM0ffq6G8WPuL23f67FEwXAYq6wQrogNUlKNSeIsP4WZHcOSUuD9SxB9jc0BUsAfcECVrDVlJIWptLln1mw5EiyAeMl5cmBEqTYLXRCKLbGS1hrKb4nNbge9PoJRweeIb96FXnox-blk7s7cw6XL0",
-            "keys": {
-                "auth": "CUWP9340yuCzRtOSUmm-UQ",
-                "p256dh": "BLuI7_4iZQoUNV-QJlwQsNt0IptbZYfx0tqhDpEpWvCh7agF3Wud0hiB8Cvxmwc0JLQV-pfQGgoaOcV-kptgveA"
-            }
-        })
+        subscription_info.append({"endpoint":"https://updates.push.services.mozilla.com/wpush/v2/gAAAAABcXWwv-Pjz7gNwO8hkWvfBScm4qtY_UsDpiUuIObmfUeKPMywFJDO-nFFbikf-YzTWVx_X3ZPV1mJO3dwgw28lCpZvTaLMrvo2HUDgC_O4ZNLpBrn5Bs1k6xPpTcTYpAMYHSI53iMfbyCKliZKMHwMrHgjlpeiTHLG9IlqzaZCnoLvqDs","keys":{"auth":"ZAKOXB48KCwN9adzNKhu2A","p256dh":"BA8OgmO0iOhKe0RJ7arvbXlxO43CGNRtPkeJJVsaKPza7X2l2WHL8YMzVqvuGnXWBvcR3bhJ0XA7Vd_iAhv06uc"}})
         for sub in subscription_info:
             status = send_web_push(sub, "You have received 1000€ XD")
             json_response = {
@@ -591,15 +595,107 @@ class PushTestHandler(tornado.web.RequestHandler):
         self.finish()
 
 
-class LoggingWebsocket(tornado.websocket.WebSocketHandler):
-    async def open(self):
+"""
+Websocket Handler for logging a user's status: online/offline
+"""
+class LoggingHandler(tornado.websocket.WebSocketHandler):
+    def __init__(self, *args, **kwargs):
+        super(LoggingHandler, self).__init__(*args, **kwargs)
+        self.username = ""
+        self.set_offline = False
+
+    def check_origin(self, origin):
+        print("Connection Received from ", origin)
+        return True
+
+    def open(self):
         pass
 
-    def on_message(self, message):
-        print(message)
+    async def on_message(self, message):
+        data = json.loads(message)
+        self.username = data["username"]
+        status = data["status"]
+        client = motor.motor_tornado.MotorClient('mongodb://localhost:27017')  # Connect to MongoDB server
+        db = client.progappjs
+        document = await db.users.find_one({"username": self.username})
+        if status == "online":
+            if document is not None:
+                if not document["online"]:
+                    print(self.username + " went Online")
+                    await self.set_user_offline(self.username, True)
+                    messages = document["pending_notifications"]
+                    if messages is not None:
+                        for message in messages:
+                            subscription_infos = document["subscription_info"]
+                            if len(subscription_infos) > 0:
+                                for subscription_info in subscription_infos:
+                                    push_notification = send_web_push(subscription_info, message)
+                                    remove_message = db.users.update_one(
+                                         {"username": self.username},
+                                         {"$pull": {"pending_notifications": message}})
+        else:
+            if not self.set_offline:
+                print(self.username + " went Offline")
+                await self.set_user_offline(self.username, False)
+                self.set_offline = True
 
+    @tornado.gen.coroutine
     def on_close(self):
+        if not self.set_offline:
+            print(self.username + " went Offline")
+            yield self.set_user_offline(self.username, False)
+            self.set_offline = True
+
+    async def set_user_offline(self, username, state):
+        client = motor.motor_tornado.MotorClient('mongodb://localhost:27017')  # Connect to MongoDB server
+        db = client.progappjs
+        document = await db.users.find_one({"username": username})
+        if document is not None:
+            db.users.update_one({"username": username},
+                                {"$set": {"online": state}})
+
+
+"""
+POST /user/activate
+Endpoint to handle request for activating an user account, json format:
+{
+    username: String,
+}
+"""
+class UserActivateHandler(tornado.web.RequestHandler):
+    def set_default_headers(self):
+        self.set_header("Access-Control-Allow-Origin", "*")
+        self.set_header("Access-Control-Allow-Headers", "x-requested-with")
+        self.set_header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS')
+        self.set_header("Access-Control-Allow-Headers", "access-control-allow-origin,authorization,content-type")
+
+    def get(self):
         pass
+
+    def options(self):
+        self.set_status(204)
+        self.finish()
+
+    async def post(self):
+        status = "fail"
+        data = json.loads(self.request.body)
+        print(data)
+        username = data["username"]
+        client = motor.motor_tornado.MotorClient('mongodb://localhost:27017')  # Connect to MongoDB server
+        db = client.progappjs
+        document = await db.users.find_one({"username": username})
+        if document is not None:
+            status = "OK"
+            update_transaction = db.users.update_one(
+                {"username": username},
+                {"$set": {"status": "active"}})
+        json_response = {
+            "status": status
+        }
+        print(json_response)
+        self.write(json.dumps(json_response))
+        self.set_header('Content-Type', 'application/json')
+        self.finish()
 
 
 class Application(tornado.web.Application):
@@ -616,7 +712,8 @@ class Application(tornado.web.Application):
             (r"/subscription", PushSubscriptionHandler),
             (r"/push", PushHandler),
             (r"/pushtest", PushTestHandler),
-            (r"/logging", LoggingWebsocket)
+            (r"/logging", LoggingHandler),
+            (r"/user/activate", UserActivateHandler)
             # Add more paths here
         ]
 
@@ -626,12 +723,18 @@ class Application(tornado.web.Application):
 
         tornado.web.Application.__init__(self, handlers, **settings)
 
+        s = Scheduler()
+        s.start()
+
 
 if __name__ == "__main__":
     tornado.options.parse_command_line()
     app = Application()
-    server = tornado.httpserver.HTTPServer(app)
+    location = os.path.join(os.getcwd(), "certs")
+    ssl_ctx = ssl.create_default_context(ssl.Purpose.CLIENT_AUTH)
+    ssl_ctx.load_cert_chain(os.path.join(location, "server.crt"),
+                            os.path.join(location, "server.key"))
+    server = tornado.httpserver.HTTPServer(app, ssl_options=ssl_ctx)
     server.listen(8888)
-    print("Listening on http://localhost:8888")
-    print("http://localhost:8888")
+    print("REST API Server started on: https://localhost:8888")
     tornado.ioloop.IOLoop.current().start()

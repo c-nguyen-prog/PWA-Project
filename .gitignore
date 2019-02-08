@@ -9,3 +9,5 @@ node_modules/
 .idea/mongoSettings.xml
 backend/__pycache__/PushSettings.cpython-36.pyc
 backend/__pycache__/Push.cpython-36.pyc
+.idea/dictionaries/Chi.xml
+backend/__pycache__/TransactionScheduler.cpython-36.pyc

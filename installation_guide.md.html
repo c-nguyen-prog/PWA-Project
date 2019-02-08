@@ -1,0 +1,80 @@
+<meta charset="utf-8">
+ **Digibank Installation Guide**
+
+Backend
+=========
+## Install MongoDB
+- Windows: https://docs.mongodb.com/manual/tutorial/install-mongodb-on-windows/
+- Linux: https://docs.mongodb.com/manual/administration/install-on-linux/
+- MacOS: https://docs.mongodb.com/manual/tutorial/install-mongodb-on-os-x/
+
+## Install Python and pip
+**Python 3.6 or above** is needed for backend server. 
+Due to the use of "async" functionality which is only available from python 3.6. 
+
+- Windows: 
+  - Install Python: https://www.python.org/downloads/
+  - Install pip: https://pip.pypa.io/en/stable/installing/
+  
+- Ubuntu: (other distros: https://www.tecmint.com/install-pip-in-linux/)
+~~~~ install python
+	sudo apt-get install python3.6
+	sudo apt install python3-pip
+~~~~
+
+- MacOS: 
+   - Install [Homebrew](https://brew.sh/)
+   - Install Python and pip
+~~~~ install python
+	/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+	
+	brew install python
+~~~~
+
+## Install project dependencies
+In order to install the dependencies, python package management tool `pip` is required.
+
+!!! WARNING
+    For Windows the command would be `pip`
+
+!!! WARNING
+    For Linux and MacOS the command would be `pip3`
+
+The following dependencies are to be installed:
+~~~~ Install dependencies
+pip3 install tornado
+pip3 install bcrypt
+pip3 install motor
+pip3 install pymongo
+pip3 install pywebpush
+pip3 install requests
+~~~~
+
+## Run the server
+
+Navigate to backend folder and run the following commands:
+
+~~~~ run server
+python3 Tornado.py
+~~~~
+
+Frontend
+=========
+
+## Install NodeJS
+	- Install Node JS: https://nodejs.org/en/download/
+	- Install Ionic: `npm install -g ionic`
+	
+## Install project dependencies
+Navigate to ionicApp and run command: `npm install`
+	
+## Run the website
+Navigate to ionicApp and run command: `ionic serve`
+
+The www folder is prebuilt from source code and can also be deployed/opened directly using index.html
+
+
+
+<style class="fallback">body{visibility:hidden;white-space:pre;font-family:monospace}</style><script src="markdeep.min.js" charset="utf-8"></script><script>markdeepOptions={tocStyle:'medium'};</script>
+<!-- Markdeep: --><script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?" charset="utf-8"></script>
+

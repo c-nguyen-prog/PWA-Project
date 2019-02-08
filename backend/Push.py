@@ -1,5 +1,5 @@
 from pywebpush import webpush, WebPushException
-from backend.PushSettings import *
+from PushSettings import *
 import logging
 
 
