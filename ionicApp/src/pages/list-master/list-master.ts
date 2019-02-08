@@ -24,6 +24,8 @@ export class ListMasterPage {
   public filterOption: string;
 
   constructor(public navCtrl: NavController, public http: HttpClient) {
+
+
     this.user = sessionStorage.getItem("username");
     this.arraySize = 9;
     if(navigator.onLine) {

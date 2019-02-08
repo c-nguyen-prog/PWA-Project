@@ -24,7 +24,7 @@
     console.log('[Service Worker] Push Received.');
     console.log(`[Service Worker] Push had this data: "${event.data.text()}"`);
 
-    const title = 'Jeb Bush sends his regards';
+    const title = 'Digibank';
     const options = {
       body: 'Please clap.',
       icon: 'images/icon.png',

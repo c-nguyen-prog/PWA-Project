@@ -262,13 +262,28 @@ export class NewTransactionPage {
 
 
    updateBtn() {
-
-    if (Notification.permission === 'denied') {
+    const notification = new Notification('Hello')
+    if (notification.permission === 'denied') {
       this.pushButton.textContent = 'Push Messaging Blocked.';
       this.disabledButton = true;
       this.updateSubscriptionOnServer(null);
       return;
     }
+    console.log("Requesting Permission")
+
+     Notification.requestPermission()
+       .then((result) => {
+          if(result === "denied"){
+            //Denied
+            return;
+          }
+          if(result === `default`){
+            //Closed
+            return;
+          }
+
+          //Yay granted
+         });
 
     if (this.isSubscribed) {
       this.pushButton.textContent = 'Disable Push Messaging';
