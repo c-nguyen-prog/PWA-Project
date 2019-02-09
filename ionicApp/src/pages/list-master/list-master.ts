@@ -162,9 +162,9 @@ export class ListMasterPage {
 
   ionViewDidLoad(){
 
-      const notification = new Notification('Notifications are enabled')
+      // const notification = new Notification('Notifications are enabled')
 
-      if (notification.permission === 'denied') {
+      if (Notification.permission === 'denied') {
 
        // this.pushButton.textContent = 'Push Messaging Blocked.';
         this.disabledButton = true;
@@ -188,6 +188,7 @@ export class ListMasterPage {
           }
 
           //Yay granted
+          console.log("Yay. Permission granted!")
         });
 
       if (this.isSubscribed) {

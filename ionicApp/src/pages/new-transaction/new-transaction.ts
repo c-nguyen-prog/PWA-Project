@@ -263,7 +263,7 @@ export class NewTransactionPage {
 
    updateBtn() {
     const notification = new Notification('Hello')
-    if (notification.permission === 'denied') {
+    if (Notification.permission === 'denied') {
       this.pushButton.textContent = 'Push Messaging Blocked.';
       this.disabledButton = true;
       this.updateSubscriptionOnServer(null);

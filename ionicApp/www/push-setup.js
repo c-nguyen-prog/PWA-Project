@@ -17,7 +17,7 @@
 *
 */
 
-import { Api } from '../api/api';
+// import { Api } from '../api/api';
 
 /* eslint-env browser, es6 */
 
@@ -37,12 +37,14 @@ pushSCript (formerly main.js) is the JS script where permissions, subscribe meth
   */
 
 
-isSubscribed = false;
+console.log("main.js invoked");
 
 
 setInterval(function attemptSubscription(){
 //what happens
   var username = sessionStorage.getItem("username");
+
+  console.log("Interval invoked for main.js:", username);
 
   if(!username){
 
