@@ -5,6 +5,7 @@ import { Item } from '../../models/item';
 import { Items } from '../../providers';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
+import {PushProvider} from "../../providers/push/pushProvider";
 
 @IonicPage()
 @Component({
@@ -31,8 +32,8 @@ export class ListMasterPage {
   swRegistration = null;
 
 
-  constructor(public navCtrl: NavController, public http: HttpClient) {
-
+  constructor(public navCtrl: NavController, public http: HttpClient, public pusherino: PushProvider) {
+    this.pusherino.initPush();
 
     this.user = sessionStorage.getItem("username");
     this.arraySize = 10;

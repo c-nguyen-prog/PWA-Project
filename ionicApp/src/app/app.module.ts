@@ -16,6 +16,7 @@ import {TemplateService} from "./services/template.service";
 import {SignupPage} from "../pages/signup/signup";
 import {SignupPage2} from "../pages/signup2/signup2";
 import {Template} from "./interfaces/template";
+import {PushProvider} from "../providers/push/pushProvider";
 //import {IonicRouteStrategy} from "@ionic/angular";
 //import { AppRoutingModule } from './app-routing.module';
 
@@ -72,6 +73,7 @@ export function provideSettings(storage: Storage) {
     SplashScreen,
     TransferService,
     TemplateService,
+    PushProvider,
   //  { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     StatusBar,
     { provide: Settings, useFactory: provideSettings, deps: [Storage] },
