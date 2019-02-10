@@ -206,7 +206,8 @@ class SignUpHandler(tornado.web.RequestHandler):
                                                   "status": "pending",
                                                   "pending_transaction": [],
                                                   "subscription_info": [],
-                                                  "online": False
+                                                  "online": False,
+                                                  "pending_notifications": []
                                                   })
             json_response = {
                 "status": "success"
@@ -660,6 +661,7 @@ POST /user/activate
 Endpoint to handle request for activating an user account, json format:
 {
     username: String,
+    balance: number
 }
 """
 class UserActivateHandler(tornado.web.RequestHandler):
@@ -681,6 +683,7 @@ class UserActivateHandler(tornado.web.RequestHandler):
         data = json.loads(self.request.body)
         print(data)
         username = data["username"]
+        balance = data["balance"]
         client = motor.motor_tornado.MotorClient('mongodb://localhost:27017')  # Connect to MongoDB server
         db = client.progappjs
         document = await db.users.find_one({"username": username})
@@ -689,6 +692,9 @@ class UserActivateHandler(tornado.web.RequestHandler):
             update_transaction = db.users.update_one(
                 {"username": username},
                 {"$set": {"status": "active"}})
+            update_transaction = db.users.update_one(
+                {"username": username},
+                {"$set": {"balance": balance}})
         json_response = {
             "status": status
         }
